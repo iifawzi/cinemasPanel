@@ -23,7 +23,14 @@ export default {
   ** Global CSS
   */
   css: [
+  '~/assets/scss/main.scss',
   ],
+    /*
+  ** Will be shared in all components
+  */
+ styleResources: {
+  scss: ['./assets/scss/variables.scss']
+},
   /*
   ** Plugins to load before mounting the App
   */
@@ -38,7 +45,15 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
+    '@nuxtjs/style-resources',
   ],
+        /*
+  ** Server Settings : 
+  */
+ server: {
+  // port: 3000, // wheen needed to change the port
+  host: '0.0.0.0' // default localhost, will be deleted on production
+ },
   /*
   ** Build configuration
   */
