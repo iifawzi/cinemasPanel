@@ -1,2 +1,2 @@
 # cinemasPanel
-Ehgzly's project - Cinemas' Control Panel
+Ehgzly's project - Cinemas' Control Panel 
