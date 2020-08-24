@@ -24,6 +24,7 @@ export default {
   */
   css: [
   '~/assets/scss/main.scss',
+  '~/assets/scss/all.scss',
   ],
     /*
   ** Will be shared in all components
