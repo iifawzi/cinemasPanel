@@ -1,0 +1,39 @@
+.inputField {
+    width: 100%;
+    height: 100%;
+    .input {
+        width: 100%;
+        height: 100%;
+        font-size: 1.6rem;
+        padding: 0px 1.2rem;
+        border: 1px solid $grey-2;
+        border-radius: 6px;
+        &:focus {
+            &::-webkit-input-placeholder { 
+                color: $grey-1;
+              }
+              &::-moz-placeholder { 
+                color: $grey-1;
+              }
+              &:-ms-input-placeholder { 
+                color: $grey-1;
+              }
+              &:-moz-placeholder { 
+                color: $grey-1;
+              }
+        }
+        &::-webkit-input-placeholder { 
+            color: $grey;
+          }
+          &::-moz-placeholder { 
+            color: $grey;
+          }
+          &:-ms-input-placeholder { 
+            color: $grey;
+          }
+          &:-moz-placeholder { 
+            color: $grey;
+          }
+        outline: none;
+    }
+}
