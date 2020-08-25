@@ -1,6 +1,8 @@
 <template>
     <div class="authPage">
-        Control Panel
+        <div class="authPage--container">
+            <img alt="website logo" src="~/assets/images/logo.png" class="logo" width="130px" />
+        </div>
     </div>
 </template>
 
@@ -16,5 +18,14 @@
     justify-content: center;
     align-items: center;
     font-size: 5rem;
+    &--container {
+        width: 400px;
+        height: 400px;
+        background-color: $white;
+        border-radius: 15px;
+        .logo {
+            margin: 60px 40px;
+        }
+    }
 }
 </style>
