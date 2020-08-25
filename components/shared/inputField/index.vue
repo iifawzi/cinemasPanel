@@ -1,14 +1,12 @@
 <template>
-    <div class="inputField">
-        <input @input="$emit('input', $event.target.value)" v-bind="$attrs" class="input" />
-    </div>
+  <div class="inputField">
+    <input @input="$emit('input', $event.target.value)" v-bind="$attrs" class="input" />
+  </div>
 </template>
 
 
 <script>
-export default {
-    
-}
+export default {};
 </script>
 
 
