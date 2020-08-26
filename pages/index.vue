@@ -1,12 +1,20 @@
 <template>
   <div class="authPage">
-    <span v-if="language == 'en'" :class="['authPage__languages', language]" @click="changeLang('ar')">اللغة العربية</span>
-    <span v-if="language == 'ar'" :class="['authPage__languages', language]" @click="changeLang('en')">English Language</span>
+    <span
+      v-if="language == 'en'"
+      :class="['authPage__languages', language]"
+      @click="changeLang('ar')"
+    >اللغة العربية</span>
+    <span
+      v-if="language == 'ar'"
+      :class="['authPage__languages', language]"
+      @click="changeLang('en')"
+    >English Language</span>
     <div class="authPage--container">
       <img alt="website logo" src="~/assets/images/logo.png" class="logo" width="130px" />
       <div class="login__message">
-        <span class="welcome">Welcome Back!</span>
-        <span class="continue">Login to continue</span>
+        <span class="welcome">{{$t("short_texts.welcomeBack")}}</span>
+        <span class="continue">{{$t("short_texts.loginContinue")}}</span>
       </div>
       <div class="loginForm__container">
         <loginForm />
@@ -17,6 +25,7 @@
 
 
 <script>
+import Cookie from "js-cookie";
 import loginForm from "~/components/forms/loginForm";
 export default {
   head() {
@@ -28,9 +37,11 @@ export default {
     loginForm,
   },
   methods: {
-    changeLang(language){
+    changeLang(language) {
+      Cookie.set("lang",language);
       this.$store.dispatch("changeLang", language);
-    }
+      this.$i18n.locale = language;
+    },
   },
   computed: {
     language() {

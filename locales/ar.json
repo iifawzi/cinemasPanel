@@ -1,3 +1,13 @@
 {
-    "name": "فوزي"
+    "forms":{
+        "username": "اسم المستخدم",
+        "password": "كلمة المرور"
+    },
+    "buttons": {
+        "login": "تسجيل دخول"
+    },
+    "short_texts": {
+        "welcomeBack": "اهلا بعودتك!",
+        "loginContinue": "تسجيل الدخول"
+    }
 }

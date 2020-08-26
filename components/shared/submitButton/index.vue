@@ -1,5 +1,5 @@
 <template>
-  <button :class="['submitButton', color]">Login</button>
+  <button :class="['submitButton', color]">{{title}}</button>
 </template>
 
 
@@ -8,6 +8,10 @@ export default {
   props: {
     color: {
       type: String,
+      required: true,
+    },
+    title: {
+      type:String,
       required: true,
     }
   }

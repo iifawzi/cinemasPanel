@@ -1,3 +1,13 @@
 {
-    "name": "Fawzu"
+    "forms":{
+        "username": "Username",
+        "password": "Password"
+    },
+    "buttons": {
+        "login": "Login"
+    },
+    "short_texts": {
+        "welcomeBack": "Welcome Back!",
+        "loginContinue": "Login to continue"
+    }
 }

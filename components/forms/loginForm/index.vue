@@ -1,13 +1,13 @@
 <template>
   <form class="loginForm">
     <div class="input--container">
-      <inputField type="text" autofocus placeholder="Username" required autocomplete="on" />
+      <inputField type="text" autofocus :placeholder="$t('forms.username')" required autocomplete="on" />
     </div>
     <div class="input--container">
-      <inputField type="password" placeholder="Password" required autocomplete="on" />
+      <inputField type="password" :placeholder="$t('forms.password')" required autocomplete="on" />
     </div>
     <div class="button--container">
-      <submitButton color="blue" />
+      <submitButton color="blue" :title="$t('buttons.login')"/>
     </div>
   </form>
 </template>
