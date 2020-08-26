@@ -55,6 +55,7 @@ export default {
       .welcome {
         font-size: 2rem;
         display: block;
+        color: $grey-2;
       }
       .continue {
         font-size: 1.4rem;
