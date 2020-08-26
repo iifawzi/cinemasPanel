@@ -11,7 +11,8 @@
       @click="changeLang('en')"
     >English Language</span>
     <div class="authPage--container">
-      <img alt="website logo" src="~/assets/images/logo.png" class="logo" width="130px" />
+      <img v-if="language == 'ar'" alt="website logo" src="~/assets/images/logo-ar.png" class="logo" width="130px" />
+      <img v-else alt="website logo" src="~/assets/images/logo.png" class="logo" width="130px" />
       <div class="login__message">
         <span class="welcome">{{$t("short_texts.welcomeBack")}}</span>
         <span class="continue">{{$t("short_texts.loginContinue")}}</span>
