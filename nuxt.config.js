@@ -38,6 +38,12 @@ export default {
   plugins: [
   ],
   /*
+  ** Routers configs
+  */
+  // router: {
+  //   middleware: ['language'],
+  // },
+  /*
   ** Nuxt.js dev-modules
   */
   buildModules: [
