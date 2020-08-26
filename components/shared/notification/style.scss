@@ -1,0 +1,72 @@
+.notification {
+  min-width: 300px;
+  padding: 10px 10px;
+  min-height: 50px;
+  background-color: $red;
+  position: fixed;
+  text-align: justify;
+  bottom: 0;
+  margin: 20px;
+  border-radius: 6px;
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+  align-items: center;
+  color: $white;
+  .dismiss {
+    color: $black;
+    padding-top: 2px;
+    cursor: pointer;
+  }
+  .text {
+    margin: 0px 10px;
+  }
+}
+.ar {
+  left: 0;
+}
+.en {
+    right: 0;
+}
+.show {
+    animation: showNotfication 0.5s ease-in forwards;
+}
+.hide {
+    animation: hideNotfication 0.5s ease-out forwards;
+}
+
+@keyframes hideNotfication {
+    0% {
+    opacity: 1;
+    }
+    25% {
+        opacity: 0.8;
+    }
+    50% {
+        opacity: 0.6;
+    }
+    75% {
+        opacity: 0.4;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes showNotfication {
+    0% {
+    opacity: 0;
+    }
+    25% {
+        opacity: 0.4;
+    }
+    50% {
+        opacity: 0.6;
+    }
+    75% {
+        opacity: 0.8;
+    }
+    100% {
+        opacity: 1;
+    }
+}

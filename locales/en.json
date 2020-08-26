@@ -9,5 +9,8 @@
     "short_texts": {
         "welcomeBack": "Welcome Back!",
         "loginContinue": "Login to continue"
+    },
+    "errors": {
+        "500": "Something wrong happened, please try again later."
     }
 }

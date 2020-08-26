@@ -1,5 +1,5 @@
 <template>
-  <form class="loginForm">
+  <form class="loginForm" @click="showError">
     <div class="input--container">
       <inputField type="text" autofocus :placeholder="$t('forms.username')" required autocomplete="on" />
     </div>
@@ -9,6 +9,7 @@
     <div class="button--container">
       <submitButton color="blue" :title="$t('buttons.login')"/>
     </div>
+    <notification :label="$t('errors.500')" v-if="error === true"/>
   </form>
 </template>
 
@@ -16,11 +17,23 @@
 <script>
 import inputField from "~/components/shared/inputField";
 import submitButton from "~/components/shared/submitButton";
+import notification from "~/components/shared/notification";
 export default {
   components: {
     inputField,
     submitButton,
+    notification
   },
+  data(){
+    return {
+      error: false
+    }
+  },
+  methods: {
+    showError(){
+      this.error = true;
+    }
+  }
 };
 </script>
 
