@@ -57,9 +57,6 @@ export default {
     font-size: 1.8rem;
     color: $grey-2;
     cursor: pointer;
-    &:hover {
-      color: $blue;
-    }
     &.ar {
       left: 0;
       margin-left: 20px;
