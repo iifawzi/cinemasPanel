@@ -87,6 +87,9 @@ export default {
     box-shadow: 0px 0px 20px 0px $grey-1;
     border-radius: 15px;
     padding: 0px 40px;
+    display: flex;
+    flex-flow: column;
+    align-items: center;;
     .logo {
       margin-top: 60px;
     }
