@@ -1,5 +1,5 @@
 <template>
-  <form class="loginForm" @click="showError">
+  <form class="loginForm">
     <div class="input--container">
       <inputField type="text" autofocus :placeholder="$t('forms.username')" required autocomplete="on" />
     </div>
@@ -7,7 +7,7 @@
       <inputField type="password" :placeholder="$t('forms.password')" required autocomplete="on" />
     </div>
     <div class="button--container">
-      <submitButton color="blue" :title="$t('buttons.login')"/>
+      <submitButton color="blue" :title="$t('buttons.login')" @click="showError"/>
     </div>
     <notification :label="$t('errors.500')" v-if="error === true"/>
   </form>
