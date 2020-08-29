@@ -8,6 +8,14 @@
         padding: 0px 1.2rem;
         border: 0.5px solid $grey-1;
         border-radius: 6px;
+        height: 4rem;
+        &__error {
+          color: $red;
+          font-size: 1.4rem;
+          margin-top: 5px;
+        }
+
+
         &:focus {
             &::-webkit-input-placeholder { 
                 color: $grey-1;

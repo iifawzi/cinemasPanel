@@ -1,15 +1,32 @@
 <template>
   <form class="loginForm">
     <div class="input--container">
-      <inputField type="text" autofocus :placeholder="$t('forms.username')" required autocomplete="on" />
+      <inputField
+        type="text"
+        autofocus
+        :placeholder="$t('forms.username')"
+        required
+        autocomplete="on"
+        v-model="$v.loginForm.username.$model"
+      >
+       <div class="error" v-if="$v.loginForm.username.$dirty && !$v.loginForm.username.required">{{$t("errors.username")}}</div>
+      </inputField>
     </div>
     <div class="input--container">
-      <inputField type="password" :placeholder="$t('forms.password')" required autocomplete="on" />
+      <inputField
+        type="password"
+        :placeholder="$t('forms.password')"
+        required
+        autocomplete="on"
+        v-model="$v.loginForm.password.$model"
+      >
+        <div class="error" v-if="$v.loginForm.password.$dirty && !$v.loginForm.password.required">{{$t("errors.password")}}</div>
+      </inputField>
     </div>
     <div class="button--container">
-      <submitButton color="blue" :title="$t('buttons.login')" @click="showError"/>
+      <submitButton color="blue" :title="$t('buttons.login')" @click="submitForm" />
     </div>
-    <notification :label="$t('errors.500')" v-if="error === true"/>
+    <notification :label="$t('errors.500')" v-if="error === true" />
   </form>
 </template>
 
@@ -18,22 +35,37 @@
 import inputField from "~/components/shared/inputField";
 import submitButton from "~/components/shared/submitButton";
 import notification from "~/components/shared/notification";
+import { required } from "vuelidate/lib/validators";
 export default {
   components: {
     inputField,
     submitButton,
-    notification
+    notification,
   },
-  data(){
+  data() {
     return {
-      error: false
-    }
+      error: false,
+      loginForm: {
+        username: "",
+        password: "",
+      },
+    };
   },
   methods: {
-    showError(){
-      this.error = true;
-    }
-  }
+    submitForm() {
+      this.$v.username.$touch;
+    },
+  },
+  validations: {
+    loginForm: {
+      username: {
+        required,
+      },
+      password: {
+        required,
+      },
+    },
+  },
 };
 </script>
 

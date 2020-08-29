@@ -11,6 +11,8 @@
         "loginContinue": "Login to continue"
     },
     "errors": {
-        "500": "Something wrong happened, please try again later."
+        "500": "Something wrong happened, please try again later.",
+        "username": "Username is required.", 
+        "password": "Password is required."
     }
 }

@@ -37,6 +37,7 @@ export default {
   */
   plugins: [
     '~/plugins/i18n.js',
+    "~/plugins/vuelidate.js"
   ],
   /*
   ** Routers configs
