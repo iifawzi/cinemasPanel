@@ -55,7 +55,14 @@ export default {
   */
   modules: [
     '@nuxtjs/style-resources',
+    "@nuxtjs/axios"
   ],
+    /*
+  ** Axios Settings: 
+  */
+ axios: {
+  baseURL: 'http://localhost:3000/api/'
+},
         /*
   ** Server Settings : 
   */
