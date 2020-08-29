@@ -33,7 +33,7 @@
       <submitButton color="blue" :title="$t('buttons.login')" @click="submitForm" />
     </div>
     <notification :label="error.message" v-if="error.status === true && error.message != ''" />
-    <loading type="circles" v-if="loading"/>
+    <loading type="circles" v-if="loading" />
   </form>
 </template>
 
@@ -49,14 +49,14 @@ export default {
     inputField,
     submitButton,
     notification,
-    loading
+    loading,
   },
   data() {
     return {
       loading: false,
       error: {
         status: false,
-        message: ""
+        message: "",
       },
       loginForm: {
         username: "",
@@ -70,14 +70,14 @@ export default {
       if (!this.$v.$invalid) {
         this.loading = true;
         this.error.status = false;
-                  this.$axios
+        this.$axios
           .post("cinemas/signinCinema", this.loginForm)
           .then((respond) => {
             console.log(respond);
           })
           .catch((error) => {
             this.loading = false;
-             this.error.status = true;
+            this.error.status = true;
             switch (error.response.status) {
               case 400:
                 this.error.message = this.$i18n.t("errors.400");
