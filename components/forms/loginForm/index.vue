@@ -1,6 +1,6 @@
 <template>
   <form class="loginForm">
-    <div class="input--container">
+    <div class="input--container" v-if="!loading">
       <inputField
         type="text"
         autofocus
@@ -15,7 +15,7 @@
         >{{$t("errors.username")}}</div>
       </inputField>
     </div>
-    <div class="input--container">
+    <div class="input--container" v-if="!loading">
       <inputField
         type="password"
         :placeholder="$t('forms.password')"
@@ -29,10 +29,11 @@
         >{{$t("errors.password")}}</div>
       </inputField>
     </div>
-    <div class="button--container">
+    <div class="button--container" v-if="!loading">
       <submitButton color="blue" :title="$t('buttons.login')" @click="submitForm" />
     </div>
     <notification :label="error.message" v-if="error.status === true && error.message != ''" />
+    <loading type="circles" v-if="loading"/>
   </form>
 </template>
 
@@ -40,6 +41,7 @@
 <script>
 import inputField from "~/components/shared/inputField";
 import submitButton from "~/components/shared/submitButton";
+import loading from "~/components/shared/loading";
 import notification from "~/components/shared/notification";
 import { required } from "vuelidate/lib/validators";
 export default {
@@ -47,9 +49,11 @@ export default {
     inputField,
     submitButton,
     notification,
+    loading
   },
   data() {
     return {
+      loading: false,
       error: {
         status: false,
         message: ""
@@ -64,13 +68,16 @@ export default {
     submitForm() {
       this.$v.$touch();
       if (!this.$v.$invalid) {
+        this.loading = true;
         this.error.status = false;
-        this.$axios
+        setTimeout(() => {
+                  this.$axios
           .post("cinemas/signinCinema", this.loginForm)
           .then((respond) => {
             console.log(respond);
           })
           .catch((error) => {
+            this.loading = false;
              this.error.status = true;
             switch (error.response.status) {
               case 400:
@@ -83,6 +90,8 @@ export default {
                 this.error.message = this.$i18n.t("errors.500");
             }
           });
+        }, 10000);
+
       }
     },
   },

@@ -12,7 +12,7 @@
     },
     "errors": {
         "500": "Something wrong happened, please try again later.",
-        "401": "You're Unauthorized",
+        "401": "You're unauthorized",
         "400": "Please make sure you fill the required data correctly",
         "username": "Username is required.", 
         "password": "Password is required."
