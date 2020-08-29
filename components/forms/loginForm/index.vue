@@ -70,7 +70,6 @@ export default {
       if (!this.$v.$invalid) {
         this.loading = true;
         this.error.status = false;
-        setTimeout(() => {
                   this.$axios
           .post("cinemas/signinCinema", this.loginForm)
           .then((respond) => {
@@ -90,8 +89,6 @@ export default {
                 this.error.message = this.$i18n.t("errors.500");
             }
           });
-        }, 10000);
-
       }
     },
   },
