@@ -44,6 +44,7 @@ import submitButton from "~/components/shared/submitButton";
 import loading from "~/components/shared/loading";
 import notification from "~/components/shared/notification";
 import { required } from "vuelidate/lib/validators";
+import Cookie from "js-cookie";
 export default {
   components: {
     inputField,
@@ -73,20 +74,28 @@ export default {
         this.$axios
           .post("cinemas/signinCinema", this.loginForm)
           .then((respond) => {
-            console.log(respond);
+            const cinemaData = respond.data.data;
+            Cookie.set("authorization", cinemaData.token);
+            this.$store.dispatch("setCinemaData", cinemaData);
+            this.$router.push("/dashboard");
           })
-          .catch((error) => {
+          .catch((err) => {
             this.loading = false;
             this.error.status = true;
-            switch (error.response.status) {
-              case 400:
-                this.error.message = this.$i18n.t("errors.400");
-                break;
-              case 401:
-                this.error.message = this.$i18n.t("errors.401");
-                break;
-              default:
-                this.error.message = this.$i18n.t("errors.500");
+            if (!err.response || !err.response.status) {
+              (this.error.status = true),
+                (this.error.message = this.$i18n.t("errors.500"));
+            } else {
+              switch (err.response.status) {
+                case 400:
+                  this.error.message = this.$i18n.t("errors.400");
+                  break;
+                case 401:
+                  this.error.message = this.$i18n.t("errors.401");
+                  break;
+                default:
+                  this.error.message = this.$i18n.t("errors.500");
+              }
             }
           });
       }
