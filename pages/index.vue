@@ -49,6 +49,7 @@ export default {
       return this.$store.getters.getLocale;
     },
   },
+  middleware: ['isAllowed']
 };
 </script>
 
