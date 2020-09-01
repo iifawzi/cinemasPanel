@@ -4,12 +4,12 @@
       v-if="language == 'en'"
       :class="['authPage__languages', language]"
       @click="changeLang('ar')"
-    >اللغة العربية</span>
+    ><img src="~/assets/images/arabic.png" width="25px" /></span>
     <span
       v-if="language == 'ar'"
       :class="['authPage__languages', language]"
       @click="changeLang('en')"
-    >English Language</span>
+    ><img src="~/assets/images/english.png" width="25px" /></span>
     <div class="authPage--container">
       <img v-if="language == 'ar'" alt="website logo" src="~/assets/images/logo-ar.png" class="logo" width="130px" />
       <img v-else alt="website logo" src="~/assets/images/logo.png" class="logo" width="130px" />
