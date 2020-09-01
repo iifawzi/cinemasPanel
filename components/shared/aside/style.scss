@@ -1,17 +1,30 @@
 .aside {
-    background-color: $white;
+    background-color: $white-1;
     height: 100vh;
+    display: flex;
+    flex-flow: column;
+    box-shadow: 0px 0px 20px 0px #d6d7e0;
+    z-index: 400;
+    .top {
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: $white;
+    }
+    .bottom {
+        width: 100%;
+        flex-grow: 1;
+    }
 }
 
 .opened {
     width: $aside-width;
     
 }
-
 .closed {
     width: 80px;
 }
-
 .fixed {
     position: fixed;
 }
