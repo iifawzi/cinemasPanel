@@ -1,12 +1,9 @@
 <template>
-    <div>
-        welcome to the dashboard
+    <div class="container">
     </div>
 </template>
-
-
 <script>
 export default {
-    middleware: ['isAuth'],
+    layout: 'dashboard'
 }
 </script>

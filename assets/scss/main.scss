@@ -5,6 +5,7 @@ html {
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
   font-family:  Tajawal;
+  background-color: $white-1;
 }
 
 body {
@@ -16,4 +17,11 @@ body {
 *:after {
   margin: 0;
   box-sizing: border-box;
+}
+
+.container {
+  height: 100vh;
+  width: calc(100% - $aside-width);
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
