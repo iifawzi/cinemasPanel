@@ -10,7 +10,7 @@
             @click="changeLang('en')" src="~/assets/images/english.png" width="18px" />
         </div>
         <div class="logout">
-           <i :class="['fas fa-sign-out-alt icon', language]"></i>
+           <i :class="['fas fa-sign-out-alt icon', language]" @click="logout"></i>
         </div>
       </div>
     </div>
@@ -27,6 +27,10 @@ export default {
       this.$store.dispatch("changeLang", language);
       this.$i18n.locale = language;
     },
+    logout(){
+        Cookie.remove("authorization");
+        this.$router.push("/");
+    }
   },
   computed: {
     language() {
