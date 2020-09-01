@@ -25,5 +25,25 @@
                 color: $white-1;
             }
         }
+        .right {
+          display: flex;
+          flex-flow: row;
+          align-items: center;
+          .languages {
+              cursor: pointer;
+              display: flex;
+          }
+          .logout {
+padding-top: 3.5px;
+margin: 0px 20px;
+cursor: pointer;
+              .icon {
+                  font-size: 1.9rem;
+                  &:hover {
+                      color: $blue;
+                  }
+              }
+          }
+        }
     }
 }
