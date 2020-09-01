@@ -1,7 +1,7 @@
 export const state = () => ({
     locales: ['en', 'ar'],
     locale: 'ar',
-    cinema: "",
+    account: "",
   })
   
   export const mutations = {
@@ -10,8 +10,8 @@ export const state = () => ({
         state.locale = locale
       }
     },
-    setCinemaData (state,data) {
-      state.cinema = data;
+    setAccountData (state,data) {
+      state.account = data;
     }
   }
 
@@ -19,8 +19,8 @@ export const state = () => ({
     changeLang(vuexContext,lang){
       vuexContext.commit('changeLang',lang);
     },
-    setCinemaData(vuexContext, data){
-      vuexContext.commit('setCinemaData', data);
+    setAccountData(vuexContext, data){
+      vuexContext.commit('setAccountData', data);
     },
   }
 
@@ -28,7 +28,7 @@ export const state = () => ({
     getLocale (state) {
       return state.locale;
     },
-    getCinemaData(state){
-      return state.cinema;
+    getAccountData(state){
+      return state.account;
     }
   }

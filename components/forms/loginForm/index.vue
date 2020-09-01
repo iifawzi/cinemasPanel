@@ -76,7 +76,7 @@ export default {
           .then((respond) => {
             const cinemaData = respond.data.data;
             Cookie.set("authorization", 'Bearer '+cinemaData.token);
-            this.$store.dispatch("setCinemaData", cinemaData);
+            this.$store.dispatch("setAccountData", {username: cinemaData.username,account_id: cinemaData.cinemaAccount_id,cinema_id: cinemaData.cinema_id,role: cinemaData.role});
             this.$router.push("/dashboard");
           })
           .catch((err) => {

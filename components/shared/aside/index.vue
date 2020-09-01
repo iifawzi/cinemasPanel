@@ -4,12 +4,20 @@
     @mouseenter="$store.dispatch('dashboard/toggleHover')"
     @mouseleave="$store.dispatch('dashboard/toggleHover')"
   >
-  <div class="top">
-           <img v-if="getAsideStatus === true || isAsideHovered === true" alt="website logo" src="~/assets/images/logo.png" class="logo" width="100px" /><img v-else alt="website logo" src="~/assets/images/letter.png" class="logo" width="20px" />
-  </div>
-  <div class="bottom">
-
-  </div>
+    <div class="top">
+      <img
+        v-if="getAsideStatus === true || isAsideHovered === true"
+        alt="website logo"
+        src="~/assets/images/logo.png"
+        class="logo"
+        width="100px"
+      />
+      <img v-else alt="website logo" src="~/assets/images/letter.png" class="logo" width="20px" />
+    </div>
+    <div class="middle">
+      <span class="name">Fawzi Abdulfattah</span>
+    </div>
+    <div class="bottom"></div>
   </aside>
 </template>
 
@@ -21,6 +29,9 @@ export default {
     },
     isAsideHovered() {
       return this.$store.getters["dashboard/isAsideHovered"];
+    },
+    getAccountData() {
+      return this.$store.getters.getAccountData;
     },
   },
 };

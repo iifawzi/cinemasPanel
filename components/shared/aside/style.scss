@@ -1,5 +1,5 @@
 .aside {
-    background-color: $white-1;
+    background-color: $white;
     height: 100vh;
     display: flex;
     flex-flow: column;
@@ -11,6 +11,17 @@
         align-items: center;
         justify-content: center;
         background-color: $white;
+    }
+    .middle {
+        height: 130px;
+        display: flex;
+        flex-flow: column;
+        justify-content: center;
+        align-items: center;
+        background-color: $white-1;
+        .name {
+            font-size: 2rem;
+        }
     }
     .bottom {
         width: 100%;
