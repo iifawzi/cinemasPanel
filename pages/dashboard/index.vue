@@ -1,9 +1,9 @@
 <template>
-    <div class="container">
+    <div>
     </div>
 </template>
 <script>
 export default {
-    layout: 'dashboard'
+    layout: 'dashboard',
 }
 </script>

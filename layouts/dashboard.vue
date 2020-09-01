@@ -1,11 +1,15 @@
 <template>
   <div class="layout">
       <daside/>
+      <div class="contents">
+  <dnavbar/>
     <nuxt />
+      </div>
   </div>
 </template>
 <script>
 import daside from "~/components/shared/aside";
+import dnavbar from "~/components/shared/navbar";
 export default {
   head() {
     return {
@@ -24,6 +28,7 @@ export default {
   },
   components: {
     daside,
+    dnavbar
   },
   middleware: ["isAuth"],
 };
@@ -34,5 +39,13 @@ export default {
 .layout {
   display: flex;
   flex-flow: row;
+}
+.contents {
+  display: flex;
+  flex-flow: column;
+  height: 100vh;
+  flex-grow: 1;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 </style>

@@ -1,5 +1,17 @@
 .aside {
     background-color: $white;
-    width: $aside-width;
     height: 100vh;
+}
+
+.opened {
+    width: $aside-width;
+    
+}
+
+.closed {
+    width: 80px;
+}
+
+.fixed {
+    position: fixed;
 }
