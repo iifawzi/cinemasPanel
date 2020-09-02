@@ -6,6 +6,7 @@
   box-shadow: 0px 0px 20px 0px #d6d7e0;
   z-index: 400;
   overflow-y: scroll;
+
   .top {
     height: 60px;
     display: flex;
@@ -45,6 +46,7 @@
         display: flex;
         flex-flow: row;
         align-items: center;
+
         .icon {
           color: $purple-1;
           margin-right: 20px;
@@ -69,7 +71,6 @@
 
 .opened {
   width: $aside-width;
-
 }
 
 .closed {
