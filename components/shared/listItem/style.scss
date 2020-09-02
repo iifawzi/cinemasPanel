@@ -23,6 +23,8 @@
       .icon {
         color: $purple-1;
         width: 30px;
+  transition: 0.1s;
+
       }
       .closed {
           &__title {
