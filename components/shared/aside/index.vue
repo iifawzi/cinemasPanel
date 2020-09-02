@@ -15,7 +15,7 @@
       <img v-else alt="website logo" src="~/assets/images/letter.png" class="logo" width="20px" />
     </div>
     <div class="middle">
-      <span class="name">Fawzi Abdulfattah</span>
+      <span class="name">{{getAccountData.username[0].toUpperCase()+getAccountData.username.slice(1)}}</span>
     </div>
     <div class="bottom"></div>
   </aside>
