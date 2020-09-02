@@ -1,31 +1,39 @@
 export const state = () => ({
 asideStatus: false,
-isAsideHovered: false,
+animation: ""
   })
   
   export const mutations = {
    toggleAside(state){
     state.asideStatus = !state.asideStatus;
    },
-   toggleHover(state){
-    state.isAsideHovered = !state.isAsideHovered;
-   }
+   changeAnimation(state,animation){
+    state.animation = animation;
+   },
   }
 
   export const actions = {
-    toggleAside({commit}){
-      commit('toggleAside');
+    toggleAside({commit,state}){
+      if (state.asideStatus === false) {
+        commit('changeAnimation','show-animation');
+        commit('toggleAside');
+      }else {
+        commit('changeAnimation','hide-animation');
+        setTimeout(() => {
+        commit('toggleAside');
+        }, 400);
+      }
     },
-    toggleHover({commit}){
-      commit('toggleHover');
-    },
+    changeAnimation({commit},animation){
+      commit('changeAnimation',animation);
+     },
   }
 
   export const getters =  {
     getAsideStatus(state){
       return state.asideStatus;
     },
-    isAsideHovered(state){
-      return state.isAsideHovered;
-    }
+    getAnimation(state){
+      return state.animation;
+    },
   }

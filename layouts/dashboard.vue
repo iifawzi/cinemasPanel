@@ -43,9 +43,7 @@ export default {
 .contents {
   display: flex;
   flex-flow: column;
-  height: 100vh;
   flex-grow: 1;
   overflow-y: scroll;
-  overflow-x: hidden;
 }
 </style>

@@ -6,7 +6,7 @@
   box-shadow: 0px 0px 20px 0px #d6d7e0;
   z-index: 400;
   overflow-y: scroll;
-  transition: 0.3s ease-out;
+  width: $aside-width;
   .top {
     height: 60px;
     display: flex;
@@ -31,14 +31,29 @@
   }
 }
 
-.opened {
-  width: $aside-width;
+.show-animation {
+  animation: show 0.3s forwards ease-in-out;
+}
+.hide-animation {
+  animation: hide 0.3s forwards ease-in-out;
 }
 
-.closed {
-  width: 80px;
-}
 
-.fixed {
-  position: fixed;
+@keyframes show {
+  0% {
+    width: 0px;
+    display: none;
+  }
+  100% {
+    width: $aside-width;
+    display: flex;
+  }
+}
+@keyframes hide {
+  0% {
+    width: $aside-width;
+  }
+  100% {
+    width: 0px;
+  }
 }

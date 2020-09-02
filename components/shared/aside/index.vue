@@ -1,17 +1,14 @@
 <template>
-  <aside
-    :class="['aside',getAsideStatus === true || isAsideHovered === true ? 'opened' : 'closed', isAsideHovered === true && getAsideStatus === false ? 'fixed' : '']"
-    @mouseenter="$store.dispatch('dashboard/toggleHover')"
-    @mouseleave="$store.dispatch('dashboard/toggleHover')"
-  >
+  <aside v-if="getAsideStatus"
+    :class="['aside',getAnimation]">
     <div class="top">
       <img
-        v-if="getAsideStatus === true || isAsideHovered === true"
+        v-if="getAsideStatus === true"
         alt="website logo"
         src="~/assets/images/logo.png"
         class="logo-main"
       />
-      <img v-if="getAsideStatus === false && isAsideHovered === false" alt="website logo" src="~/assets/images/letter.png" class="logo"/>
+      <img v-else alt="website logo" src="~/assets/images/letter.png" class="logo"/>
     </div>
     <ul class="bottom">
 
@@ -41,8 +38,8 @@ export default {
     getAsideStatus() {
       return this.$store.getters["dashboard/getAsideStatus"];
     },
-    isAsideHovered() {
-      return this.$store.getters["dashboard/isAsideHovered"];
+    getAnimation(){
+      return this.$store.getters["dashboard/getAnimation"];
     },
     getAccountData() {
       return this.$store.getters.getAccountData;

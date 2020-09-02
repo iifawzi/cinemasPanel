@@ -14,7 +14,7 @@
     .aside__button {
       cursor: pointer;
       background-color: $grey-2;
-      padding: 10px;
+      padding: 5px 10px;
       border-radius: 5px;
       color: $white;
       transition: 0.3s ease-in-out;
@@ -22,11 +22,9 @@
       -moz-transition: 0.3s ease-in-out;
       -ms-transition: 0.3s ease-in-out;
       -o-transition: 0.3s ease-in-out;
-
-      &:hover {
-        background-color: $blue;
-        color: $white;
-      }
+    }
+    .opened {
+      background-color: $blue;
     }
 
     .right {
