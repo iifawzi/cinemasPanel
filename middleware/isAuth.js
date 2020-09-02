@@ -11,7 +11,7 @@ export default function ({redirect,store}){
             redirect("/");
         }
         if(store.getters.getAccountData === ''){
-            store.dispatch('setAccountData', {username: decoded.username,account_id: decoded.account_id,cinema_id: decoded.cinema_id,role: decoded.role})
+            store.dispatch('setAccountData', {username: decoded.username,account_id: decoded.cinemaAccount_id,cinema_id: decoded.cinema_id,name_ar: decoded.name_ar,name_en: decoded.name_en,role: decoded.role})
         }
     }catch(err){
         redirect("/");
