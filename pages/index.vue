@@ -11,7 +11,7 @@
       @click="changeLang('en')"
     ><img src="~/assets/images/english.png" width="18px" /></span>
     <div class="authPage--container">
-      <img alt="website logo" src="~/assets/images/logo.png" class="logo" width="130px" />
+      <img alt="website logo" src="~/assets/images/logo-dark.png" class="logo" width="130px" />
       <div class="login__message">
         <span class="welcome">{{$t("short_texts.welcomeBack")}}</span>
         <span class="continue">{{$t("short_texts.loginContinue")}}</span>

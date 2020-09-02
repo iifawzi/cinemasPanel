@@ -13,10 +13,10 @@
 
     .aside__button {
       cursor: pointer;
-      background-color: $white-1;
+      background-color: $grey-2;
       padding: 10px;
       border-radius: 5px;
-      color: $blue;
+      color: $white;
       transition: 0.3s ease-in-out;
       -webkit-transition: 0.3s ease-in-out;
       -moz-transition: 0.3s ease-in-out;
@@ -25,7 +25,7 @@
 
       &:hover {
         background-color: $blue;
-        color: $white-1;
+        color: $white;
       }
     }
 
