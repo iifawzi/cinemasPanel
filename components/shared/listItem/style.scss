@@ -22,12 +22,7 @@
         }
       .icon {
         color: $purple-1;
-      }
-      .icon-en {
-        margin-right: 20px;
-      }
-      .icon-ar {
-        margin-left: 20px;
+        width: 30px;
       }
       .closed {
           &__title {
@@ -74,11 +69,5 @@
     .icon {
       color: $blue !important;
     }
-    .icon-en {
-        margin-right: 20px;
-      }
-      .icon-ar {
-        margin-left: 20px;
-      }
   }
   

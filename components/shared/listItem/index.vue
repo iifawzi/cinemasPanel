@@ -7,7 +7,7 @@
 
   <li v-else class="section">
     <nuxt-link class="link" :to="goto">
-      <span :class="['icon',getAsideStatus === true || isAsideHovered === true ? '' : 'closed__icon', 'icon-'+language]">
+      <span :class="['icon',getAsideStatus === true || isAsideHovered === true ? '' : 'closed__icon']">
         <i :class="icon"></i>
       </span>
       <span
@@ -41,9 +41,6 @@ export default {
     },
     getAccountData() {
       return this.$store.getters.getAccountData;
-    },
-     language(){
-      return this.$store.getters.getLocale;
     }
   },
 };
