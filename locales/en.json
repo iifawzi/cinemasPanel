@@ -16,5 +16,19 @@
         "400": "Please make sure you fill the required data correctly",
         "username": "Username is required.", 
         "password": "Password is required."
+    },
+    "aside":{
+        "dashboard":"Dashboard",
+        "halls": "Halls",
+        "preferences": "Preferences",
+        "shows": "Shows",
+        "tickets": "Booked Tickets",
+        "payments": "Payments",
+        "diposits": "Diposits",
+        "reports": "Reports",
+        "control": "Control",
+        "admins": "Workers",
+        "support": "Support",
+        "addTicket": "Book a ticket"
     }
 }

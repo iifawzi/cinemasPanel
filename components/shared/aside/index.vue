@@ -16,20 +16,21 @@
     </div>
     <ul class="bottom">
 
-      <listItem itemType="section" icon="fas fa-home" title="Dashboard" goto="/dashboard" />
+      <listItem itemType="section" icon="fas fa-home" :title="$t('aside.dashboard')" goto="/dashboard" />
 
-       <listItem itemType="main" title="Preferences" />
-       <listItem itemType="section" icon="fas fa-film" title="Halls"  goto="/halls"/>
-       <listItem itemType="section" icon="fas fa-calendar-check" title="Shows" goto="halls"  />
-       <listItem itemType="section" icon="fas fa-ticket-alt" title="Tickets" goto="tickets" />
+       <listItem itemType="main" :title="$t('aside.preferences')" />
+       <listItem itemType="section" icon="fas fa-film" :title="$t('aside.halls')"  goto="/halls"/>
+       <listItem itemType="section" icon="fas fa-calendar-check" :title="$t('aside.shows')" goto="shows"  />
+       <listItem itemType="section" icon="fas fa-ticket-alt" :title="$t('aside.tickets')" goto="tickets" />
+       <listItem itemType="section" icon="fas fa-plus" :title="$t('aside.addTicket')" goto="addTicket" />
 
-       <listItem itemType="main" title="Payments" />
-       <listItem itemType="section" icon="fas fa-money-check-alt" title="Diposits" goto="diposits"/>
-       <listItem itemType="section" icon="fas fa-file-signature" title="Reports" goto="/reports"/>
+       <listItem itemType="main" :title="$t('aside.payments')" />
+       <listItem itemType="section" icon="fas fa-money-check-alt" :title="$t('aside.diposits')" goto="diposits"/>
+       <listItem itemType="section" icon="fas fa-file-signature" :title="$t('aside.reports')" goto="/reports"/>
 
-          <listItem itemType="main" title="Control" />
-          <listItem itemType="section" icon="fas fa-user-astronaut" title="Admins & Modirators" goto="/admin"/>
-          <listItem itemType="section" icon="fas fa-question-circle" title="Support"  goto="/support" />
+          <listItem itemType="main" :title="$t('aside.control')" />
+          <listItem itemType="section" icon="fas fa-user-astronaut" :title="$t('aside.admins')" goto="/admin"/>
+          <listItem itemType="section" icon="fas fa-question-circle" :title="$t('aside.support')"  goto="/support" />
     </ul>
   </aside>
 </template>
