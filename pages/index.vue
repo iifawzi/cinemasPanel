@@ -11,7 +11,7 @@
       @click="changeLang('en')"
     ><img src="~/assets/images/english.png" width="18px" /></span>
     <div class="authPage--container">
-      <img alt="website logo" src="~/assets/images/logo-dark.png" class="logo" width="130px" />
+      <img alt="website logo" src="~/assets/images/logo.png" class="logo" width="130px" />
       <div class="login__message">
         <span class="welcome">{{$t("short_texts.welcomeBack")}}</span>
         <span class="continue">{{$t("short_texts.loginContinue")}}</span>
@@ -55,7 +55,7 @@ export default {
 
 <style lang="scss" scoped>
 .authPage {
-  background-color: $blue-1;
+  background-color: $grey-2;
   height: 100%;
   min-height: 100vh;
   width: 100%;
@@ -83,8 +83,8 @@ export default {
   &--container {
     width: 350px;
     height: 500px;
-    background-color: $white;
-    box-shadow: 0px 0px 20px 0px $grey-1;
+    background-color: $grey-3;
+    box-shadow: 0px 0px 20px 0px $grey-3;
     border-radius: 15px;
     padding: 0px 40px;
     display: flex;
@@ -99,7 +99,7 @@ export default {
       .welcome {
         font-size: 2rem;
         display: block;
-        color: $grey-2;
+        color: $white;
       }
       .continue {
         font-size: 1.4rem;
