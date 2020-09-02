@@ -10,18 +10,16 @@
         alt="website logo"
         src="~/assets/images/logo.png"
         class="logo"
-        width="100px"
+        width="90px"
       />
       <img v-else alt="website logo" src="~/assets/images/letter.png" class="logo" width="20px" />
-    </div>
-    <div class="middle">
-      <span class="name">{{getAccountData.username[0].toUpperCase()+getAccountData.username.slice(1)}}</span>
     </div>
     <div class="bottom"></div>
   </aside>
 </template>
 
 <script>
+import badge from "~/components/shared/badge"
 export default {
   computed: {
     getAsideStatus() {
@@ -34,6 +32,9 @@ export default {
       return this.$store.getters.getAccountData;
     },
   },
+  components: {
+      badge,
+  }
 };
 </script>
 
