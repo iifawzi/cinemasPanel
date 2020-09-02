@@ -8,7 +8,6 @@
         src="~/assets/images/logo.png"
         class="logo-main"
       />
-      <img v-else alt="website logo" src="~/assets/images/letter.png" class="logo"/>
     </div>
     <ul class="bottom">
 
