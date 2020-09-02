@@ -1,5 +1,5 @@
 export const state = () => ({
-asideStatus: true,
+asideStatus: false,
 isAsideHovered: false,
   })
   

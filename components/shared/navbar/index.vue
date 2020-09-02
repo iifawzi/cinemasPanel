@@ -5,9 +5,9 @@
       <div class="right">
         <div class="languages">
             <img   v-if="language == 'en'"
-            @click="changeLang('ar')" src="~/assets/images/arabic.png" width="18px" />
+            @click="changeLang('ar')" src="~/assets/images/arabic.png" width="18px" height="18px"/>
             <img v-if="language == 'ar'"
-            @click="changeLang('en')" src="~/assets/images/english.png" width="18px" />
+            @click="changeLang('en')" src="~/assets/images/english.png" width="18px" height="18px" />
         </div>
         <div class="logout">
            <i :class="['fas fa-sign-out-alt icon', language]" @click="logout"></i>

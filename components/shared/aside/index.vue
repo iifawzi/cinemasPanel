@@ -9,10 +9,9 @@
         v-if="getAsideStatus === true || isAsideHovered === true"
         alt="website logo"
         src="~/assets/images/logo.png"
-        class="logo"
-        width="90px"
+        class="logo-main"
       />
-      <img v-else alt="website logo" src="~/assets/images/letter.png" class="logo" width="20px" />
+      <img v-else alt="website logo" src="~/assets/images/letter.png" class="logo"/>
     </div>
     <ul class="bottom">
 
