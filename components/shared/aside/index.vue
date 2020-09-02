@@ -16,97 +16,26 @@
     </div>
     <ul class="bottom">
 
-      <li class="section">
-        <nuxt-link class="link" to="/dashboard">
-          <span class="icon">
-            <i class="fas fa-home"></i>
-          </span>
-          <span class="title">Dashboard</span>
-        </nuxt-link>
-      </li>
+      <listItem itemType="section" icon="fas fa-home" title="Dashboard" goto="/dashboard" />
 
-      <li class="main-section">
-        <span class="title">Preferences</span>
-      </li>
+       <listItem itemType="main" title="Preferences" />
+       <listItem itemType="section" icon="fas fa-film" title="Halls"  goto="/halls"/>
+       <listItem itemType="section" icon="fas fa-calendar-check" title="Shows" goto="halls"  />
+       <listItem itemType="section" icon="fas fa-ticket-alt" title="Tickets" goto="tickets" />
 
-      <li class="section">
-        <nuxt-link class="link" to="/dashboardddd">
-          <span class="icon">
-            <i class="fas fa-film"></i>
-          </span>
-          <span class="title">Halls</span>
-        </nuxt-link>
-      </li>
+       <listItem itemType="main" title="Payments" />
+       <listItem itemType="section" icon="fas fa-money-check-alt" title="Diposits" goto="diposits"/>
+       <listItem itemType="section" icon="fas fa-file-signature" title="Reports" goto="/reports"/>
 
-      <li class="section">
-        <nuxt-link class="link" to="/dashboardddd">
-          <span class="icon">
-            <i class="fas fa-calendar-check"></i>
-          </span>
-          <span class="title">Shows</span>
-        </nuxt-link>
-      </li>
-      
-      <li class="section">
-        <nuxt-link class="link" to="/dashboardddd">
-          <span class="icon">
-            <i class="fas fa-ticket-alt"></i>
-          </span>
-          <span class="title">Tickets</span>
-        </nuxt-link>
-      </li>
-
-<li class="main-section">
-        <span class="title">Payments</span>
-      </li>
-
-      <li class="section">
-        <nuxt-link class="link" to="/dashboardddd">
-          <span class="icon">
-            <i class="fas fa-money-check-alt"></i>
-          </span>
-          <span class="title">Diposits</span>
-        </nuxt-link>
-      </li>
-
-        <li class="section">
-        <nuxt-link class="link" to="/dashboardddd">
-          <span class="icon">
-            <i class="fas fa-file-pdf"></i>
-          </span>
-          <span class="title">Reports</span>
-        </nuxt-link>
-      </li>
-
-      <li class="main-section">
-        <span class="title">Control</span>
-      </li>
-
-      <li class="section">
-        <nuxt-link class="link" to="/dashboardddd">
-          <span class="icon">
-            <i class="fas fa-user-astronaut"></i>
-          </span>
-          <span class="title">Admins & Modirators</span>
-        </nuxt-link>
-      </li>
-
-        <li class="section">
-        <nuxt-link class="link" to="/dashboardddd">
-          <span class="icon">
-            <i class="fas fa-question-circle"></i>
-          </span>
-          <span class="title">Support</span>
-        </nuxt-link>
-      </li>
-      
-
+          <listItem itemType="main" title="Control" />
+          <listItem itemType="section" icon="fas fa-user-astronaut" title="Admins & Modirators" goto="/admin"/>
+          <listItem itemType="section" icon="fas fa-question-circle" title="Support"  goto="/support" />
     </ul>
   </aside>
 </template>
 
 <script>
-import badge from "~/components/shared/badge";
+import listItem from "~/components/shared/listItem";
 export default {
   computed: {
     getAsideStatus() {
@@ -117,10 +46,10 @@ export default {
     },
     getAccountData() {
       return this.$store.getters.getAccountData;
-    },
+    }
   },
   components: {
-    badge,
+    listItem
   },
 };
 </script>
