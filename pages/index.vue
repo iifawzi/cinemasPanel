@@ -17,7 +17,7 @@
         <span class="continue">{{$t("short_texts.loginContinue")}}</span>
       </div>
       <div class="loginForm__container">
-        <loginForm />
+        <login />
       </div>
     </div>
   </div>
@@ -26,7 +26,7 @@
 
 <script>
 import Cookie from "js-cookie";
-import loginForm from "~/components/forms/loginForm";
+import login from "~/components/forms/login";
 export default {
   head() {
     return {
@@ -34,7 +34,7 @@ export default {
     };
   },
   components: {
-    loginForm,
+    login,
   },
   methods: {
     changeLang(language) {
