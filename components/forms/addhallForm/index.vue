@@ -1078,7 +1078,7 @@
         </div>
         <div class="switcher">
             <div class="btn-container">
-     <submitButton color="blue" title="Next" />
+     <submitButton color="green" title="Next" />
             </div>
         </div>
       </div>
