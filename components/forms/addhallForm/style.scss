@@ -12,13 +12,15 @@
                 display: flex;
                 flex-flow: column;
                 align-items: center;;
-                color: $white-1;
                 .icon {
                     fill: $white-1;
+                    transition: 0.3s ease-in-out;
                 }
                 .title {
                     margin-top: 15px;
                     font-size: 1.8rem;
+                    color: $white-1;
+                    transition: 0.3s ease-in-out;
                 }
                 .active {
                     fill: $blue;
@@ -28,6 +30,7 @@
             .next {
                 font-size: 3rem;
                 fill: $white-1;
+                transition: 0.3s ease-in-out;
             }
             .active {
                 fill: $blue;
