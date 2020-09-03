@@ -1,6 +1,6 @@
 <template>
   <aside v-if="getAsideStatus"
-    :class="['aside',getAnimation]">
+    :class="['aside',getAnimation, getAsideStatus === true ? 'fixed' : '']">
     <div class="top">
       <img
         v-if="getAsideStatus === true"

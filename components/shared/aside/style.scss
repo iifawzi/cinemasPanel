@@ -55,3 +55,9 @@
     width: 0px;
   }
 }
+
+@media (max-width: $small-devices){
+  .fixed {
+    position: fixed;
+  }
+}

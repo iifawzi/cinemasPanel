@@ -23,7 +23,10 @@
       -ms-transition: 0.3s ease-in-out;
       -o-transition: 0.3s ease-in-out;
     }
-    .opened {
+    .opened-ar {
+      background-color: $blue;
+    }
+    .opened-en {
       background-color: $blue;
     }
 
@@ -53,5 +56,14 @@
         }
       }
     }
+  }
+}
+
+@media (max-width: $small-devices){
+  .opened-ar {
+    margin-right: 220px;
+  }
+  .opened-en {
+    margin-left: 220px;
   }
 }

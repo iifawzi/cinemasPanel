@@ -1,7 +1,7 @@
 <template>
   <div class="navbar">
     <div class="navbar__contnet">
-      <i :class="['fas fa-bars aside__button', getAsideStatus === true ? 'opened' : '']" @click="$store.dispatch('dashboard/toggleAside')"></i>
+      <i :class="['fas fa-bars aside__button', getAnimation === 'show-animation' ? 'opened-'+language : '']" @click="$store.dispatch('dashboard/toggleAside')"></i>
       <div class="right">
         <div class="languages">
           <img
@@ -46,8 +46,8 @@ export default {
     language() {
       return this.$store.getters.getLocale;
     },
-     getAsideStatus() {
-      return this.$store.getters["dashboard/getAsideStatus"];
+     getAnimation() {
+      return this.$store.getters["dashboard/getAnimation"];
     },
   },
 };
