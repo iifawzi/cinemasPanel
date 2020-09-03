@@ -3,7 +3,10 @@
       <daside/>
       <div class="contents">
   <dnavbar/>
+  <div class="scrollable">
     <nuxt />
+
+  </div>
       </div>
   </div>
 </template>
@@ -44,6 +47,10 @@ export default {
   display: flex;
   flex-flow: column;
   flex-grow: 1;
+  height: 100vh;
+  .scrollable {
   overflow-y: scroll;
+  }
+
 }
 </style>

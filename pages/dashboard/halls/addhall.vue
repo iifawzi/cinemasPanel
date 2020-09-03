@@ -1,6 +1,8 @@
 <template>
     <div class="addhall">
         <pageInfo :title="$t('pages.addhall.title')" :desc="$t('pages.addhall.desc')"/>
+        <div class="content">
+        </div>
     </div>
 </template>
 
@@ -19,3 +21,15 @@ export default {
     }
 }
 </script>
+
+
+<style lang="scss" scoped>
+.content {
+  background-color: $white;
+  width: 95%;
+  margin: 25px auto;
+  height: 500px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 20px 0px $grey-1;
+}
+</style>
