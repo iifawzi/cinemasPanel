@@ -29,7 +29,6 @@
 
 <script>
 import Cookie from "js-cookie";
-import loginForm from "~/components/forms/loginForm";
 export default {
   methods: {
     changeLang(language) {
