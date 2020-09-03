@@ -2,7 +2,7 @@
     <div class="addhall">
         <pageInfo :title="$t('pages.addhall.title')" :desc="$t('pages.addhall.desc')"/>
         <div class="content">
-          <addHallForm/>
+          <addhallForm/>
         </div>
     </div>
 </template>
@@ -10,7 +10,7 @@
 
 <script>
 import pageInfo from "~/components/shared/pageInfo"
-import addHallForm from "~/components/forms/addHall"
+import addhallForm from "~/components/forms/addhallForm"
 export default {
     head() {
     return {
@@ -20,7 +20,7 @@ export default {
     layout: 'dashboard',
     components: {
         pageInfo,
-        addHallForm
+        addhallForm
     }
 }
 </script>
