@@ -1,6 +1,6 @@
 <template>
     <div class="addhall">
-        <pageInfo/>
+        <pageInfo :title="$t('pages.addhall.title')" :desc="$t('pages.addhall.desc')"/>
     </div>
 </template>
 

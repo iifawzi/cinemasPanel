@@ -31,5 +31,11 @@
         "admins": "Workers",
         "support": "Support",
         "addTicket": "Book a ticket"
+    },
+    "pages": {
+        "addhall": {
+            "title": "Add Hall", 
+            "desc": "Add a new hall to your cinema"
+        }
     }
 }
