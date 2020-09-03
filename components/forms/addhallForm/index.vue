@@ -1073,14 +1073,26 @@
 
       </div>
       <div class="tabs__content">
-        <div class="content"></div>
+        <div class="content">
+
+        </div>
+        <div class="switcher">
+            <div class="btn-container">
+     <submitButton color="blue" title="Next" />
+            </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+import submitButton from "~/components/shared/submitButton";
+export default {
+    components: {
+        submitButton,
+    }
+};
 </script>
 
 <style src='./style.scss' lang='scss' scoped />
