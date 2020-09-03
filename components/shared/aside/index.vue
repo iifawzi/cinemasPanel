@@ -13,8 +13,10 @@
 
       <listItem itemType="section" icon="fas fa-home" :title="$t('aside.dashboard')" goto="/dashboard" />
 
-       <listItem itemType="main" :title="$t('aside.preferences')" />
+       <listItem itemType="main" :title="$t('aside.halls')" />
        <listItem itemType="section" icon="fas fa-film" :title="$t('aside.halls')"  goto="/halls"/>
+       <listItem itemType="section" icon="fas fa-plus-square" :title="$t('aside.addhall')"  goto="/dashboard/halls/addhall"/>
+       <listItem itemType="main" :title="$t('aside.preferences')" />
        <listItem itemType="section" icon="fas fa-calendar-check" :title="$t('aside.shows')" goto="shows"  />
        <listItem itemType="section" icon="fas fa-ticket-alt" :title="$t('aside.tickets')" goto="tickets" />
        <listItem itemType="section" icon="fas fa-plus" :title="$t('aside.addTicket')" goto="addTicket" />

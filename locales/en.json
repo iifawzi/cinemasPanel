@@ -20,6 +20,7 @@
     "aside":{
         "dashboard":"Dashboard",
         "halls": "Halls",
+        "addhall": "Add hall",
         "preferences": "Preferences",
         "shows": "Shows",
         "tickets": "Booked Tickets",

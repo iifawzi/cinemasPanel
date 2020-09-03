@@ -20,6 +20,7 @@
     "aside":{
         "dashboard":"الرئيسية",
         "halls": "القاعات",
+        "addhall": "إضافة قاعه",
         "preferences": "الاعدادات",
         "shows": "العروض",
         "tickets": "التذاكر المحجوزة",
