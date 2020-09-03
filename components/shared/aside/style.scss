@@ -1,6 +1,7 @@
 .aside {
   background-color: $grey-2;
-  height: 100vh;
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
   display: flex;
   flex-flow: column;
   box-shadow: 0px 0px 20px 0px #d6d7e0;

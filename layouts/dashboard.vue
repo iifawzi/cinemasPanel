@@ -48,6 +48,7 @@ export default {
   flex-flow: column;
   flex-grow: 1;
   height: 100vh;
+  height: -webkit-fill-available;
   .scrollable {
   overflow-y: scroll;
   }
