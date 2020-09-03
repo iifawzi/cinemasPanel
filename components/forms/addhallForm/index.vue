@@ -1068,7 +1068,7 @@
               <path d="m305 300h135v30h-135z" />
             </g>
           </svg>
-          <span :class="['title', activeTab >= 3 ? 'active' : '']">Check and Confirm</span>
+          <span :class="['title', activeTab >= 3 ? 'active' : '']">Review and Submit</span>
         </div>
 
       </div>

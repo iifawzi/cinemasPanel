@@ -23,8 +23,8 @@
                     transition: 0.3s ease-in-out;
                 }
                 .active {
-                    fill: $blue;
-                    color: $grey-2;
+                    fill: $green-2;
+                    color: $grey-5;
                 }
             }
             .next {
@@ -33,7 +33,7 @@
                 transition: 0.3s ease-in-out;
             }
             .active {
-                fill: $blue;
+                fill: $green-2;
             }
             &__content {
                 border-top: 1px solid $white-1;
