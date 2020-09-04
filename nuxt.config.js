@@ -61,14 +61,13 @@ export default {
   ** Axios Settings: 
   */
  axios: {
-  baseURL: 'http://192.168.1.2:3000/api/'
+  baseURL: 'http://localhost:3000/api/'
 },
         /*
   ** Server Settings : 
   */
  server: {
-  // port: 3000, // wheen needed to change the port
-  host: '0.0.0.0' // default localhost, will be deleted on production
+  port: 4000, // wheen needed to change the port
  },
   /*
   ** Build configuration

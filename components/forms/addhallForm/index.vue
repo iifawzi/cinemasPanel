@@ -1074,10 +1074,16 @@
       </div>
       <div class="tabs__content">
 
+
+
         <div class="content">
             <info v-show="activeTab === 1" @iscorrect="checkTab1" />
+              <seats v-show="activeTab === 2" />
         </div>
         
+
+
+
         <div class="switcher">
              <div class="btn-container">
      <submitButton v-if="activeTab > 1" color="light-green" :title="$t('buttons.previous')" @click="prevTab" />
@@ -1094,6 +1100,7 @@
 <script>
 import submitButton from "~/components/shared/submitButton";
 import info from "~/components/forms/info/";
+import seats from "~/components/general/seats/";
 export default {
     data(){
         return {
@@ -1110,7 +1117,8 @@ export default {
     },
     components: {
         submitButton,
-        info
+        info,
+        seats
     }, 
     methods: {
         nextTab(){
