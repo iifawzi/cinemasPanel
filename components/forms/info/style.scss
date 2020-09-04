@@ -1,0 +1,19 @@
+.info {
+  .title {
+    font-size: 2rem;
+    margin-bottom: 30px;
+    display: inline-block;
+  }
+  .inputs {
+    display: flex;
+    flex-flow: row;
+    width: 100%;
+  }
+  .input--container {
+      width: 250px;
+  }
+  .input--container:not(:first-child){
+    margin: 0px 10px;
+  }
+  margin-bottom: 20px;
+}

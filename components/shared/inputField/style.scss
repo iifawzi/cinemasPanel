@@ -17,6 +17,7 @@
 
 
         &:focus {
+        border: 0.5px solid $blue;
             &::-webkit-input-placeholder { 
                 color: $grey-1;
               }

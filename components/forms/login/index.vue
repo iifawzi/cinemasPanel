@@ -4,7 +4,7 @@
       <inputField
         type="text"
         autofocus
-        :placeholder="$t('forms.username')"
+        :placeholder="$t('general.username')"
         required
         autocomplete="on"
         v-model="$v.loginForm.username.$model"
@@ -18,7 +18,7 @@
     <div class="input--container" v-if="!loading">
       <inputField
         type="password"
-        :placeholder="$t('forms.password')"
+        :placeholder="$t('general.password')"
         required
         autocomplete="on"
         v-model="$v.loginForm.password.$model"

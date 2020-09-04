@@ -25,10 +25,10 @@
             <path d="m152 440h88v16h-88zm0 0" />
             <path d="m168 216h104v16h-104zm0 0" />
           </svg>
-          <span :class="['title', activeTab >= 1 ? 'active' : '']">Essential Information</span>
+          <span :class="['title', activeTab >= 1 ? 'active' : '']">{{$t("general.essential")}}</span>
         </div>
 
-        <svg viewBox="0 0 490.816 490.816" height="40" width="40" :class="['next',activeTab >= 1 ? 'active' : '']">
+        <svg viewBox="0 0 490.816 490.816" height="40" width="40" :class="['next',activeTab >= 1 ? 'active' : '', language === 'ar' ? 'next-ar' : '']">
                 <path
                     style="fill:#009688;"
                     d="M480.149,234.741h-0.213c-5.891,0-10.667,4.776-10.667,10.667c0,5.891,4.776,10.667,10.667,10.667
@@ -561,10 +561,10 @@
                     <path d="m432 240h16v16h-16z" />
                     </g>
         </svg>
-                <span :class="['title', activeTab >= 2 ? 'active' : '']">Seats</span>
+                <span :class="['title', activeTab >= 2 ? 'active' : '']">{{$t("general.seats")}}</span>
                 </div>
 
-        <svg viewBox="0 0 490.816 490.816" height="40" width="40" :class="['next',activeTab >= 2 ? 'active' : '']">
+        <svg viewBox="0 0 490.816 490.816" height="40" width="40" :class="['next',activeTab >= 2 ? 'active' : '', language === 'ar' ? 'next-ar' : '' ]">
                 <path
                     style="fill:#009688;"
                     d="M480.149,234.741h-0.213c-5.891,0-10.667,4.776-10.667,10.667c0,5.891,4.776,10.667,10.667,10.667
@@ -1068,14 +1068,19 @@
               <path d="m305 300h135v30h-135z" />
             </g>
           </svg>
-          <span :class="['title', activeTab >= 3 ? 'active' : '']">Review and Submit</span>
+          <span :class="['title', activeTab >= 3 ? 'active' : '']">{{$t("general.review")}}</span>
         </div>
 
       </div>
       <div class="tabs__content">
-        <div class="content">
 
+
+        <div class="content">
+            <info v-if="activeTab === 1" />
         </div>
+
+
+        
         <div class="switcher">
              <div class="btn-container">
      <submitButton v-if="activeTab > 1" color="light-green" title="Previous" @click="prevTab" />
@@ -1091,6 +1096,7 @@
 
 <script>
 import submitButton from "~/components/shared/submitButton";
+import info from "~/components/forms/info/";
 export default {
     data(){
         return {
@@ -1099,6 +1105,7 @@ export default {
     },
     components: {
         submitButton,
+        info
     }, 
     methods: {
         nextTab(){
@@ -1111,7 +1118,12 @@ export default {
                  this.activeTab --;
             }
         }
+    },
+     computed:{
+    language(){
+      return this.$store.getters.getLocale;
     }
+  }
 };
 </script>
 

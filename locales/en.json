@@ -1,7 +1,12 @@
 {
-    "forms":{
+    "general":{
         "username": "Username",
-        "password": "Password"
+        "password": "Password",
+        "hall_name": "Hall name",
+        "hall_description":"Hall description",
+        "essential": "Essential Information",
+        "seats": "Seats",
+        "review": "Review and submit"
     },
     "buttons": {
         "login": "Login"
@@ -15,7 +20,9 @@
         "401": "You're unauthorized",
         "400": "Please make sure you fill the required data correctly",
         "username": "Username is required.", 
-        "password": "Password is required."
+        "password": "Password is required.",
+        "hall_name": "Hall name is required.",
+        "hall_description": "Hall description is required."
     },
     "aside":{
         "dashboard":"Dashboard",

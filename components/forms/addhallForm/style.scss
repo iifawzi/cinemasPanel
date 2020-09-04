@@ -32,6 +32,9 @@
                 fill: $white-1;
                 transition: 0.3s ease-in-out;
             }
+            .next-ar {
+                transform: rotate(180deg);
+            }
             .active {
                 fill: $green-2;
             }
