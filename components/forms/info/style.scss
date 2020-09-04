@@ -17,3 +17,19 @@
   }
   margin-bottom: 20px;
 }
+
+
+@media (max-width: $small-devices) {
+  .info {
+    .inputs {
+      flex-flow: column;
+    }
+    .input--container {
+      max-width: 100%;
+    }
+    .input--container:not(:first-child){
+      margin: 10px 0px 0px;
+
+    }
+  }  
+}

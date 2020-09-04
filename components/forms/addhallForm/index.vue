@@ -518,7 +518,7 @@
     </svg>
 
                 <div class="tab">
-        <svg height="50px" viewBox="0 0 512 512" width="50" :class="['icon', activeTab >= 2 ? 'active' : '']">
+        <svg height="50" viewBox="0 0 512 512" width="50" :class="['icon', activeTab >= 2 ? 'active' : '']">
                     <g>
                     <path
                         d="m104 112a7.9746 7.9746 0 0 0 5.6567-2.3433l32-32-11.3134-11.3134-26.3433 26.3432-10.3433-10.3432-11.3134 11.3134 16 16a7.9746 7.9746 0 0 0 5.6567 2.3433z"
@@ -1074,12 +1074,9 @@
       </div>
       <div class="tabs__content">
 
-
         <div class="content">
             <info v-show="activeTab === 1" @iscorrect="checkTab1" />
         </div>
-
-
         
         <div class="switcher">
              <div class="btn-container">

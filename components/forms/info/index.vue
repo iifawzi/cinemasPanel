@@ -10,6 +10,7 @@
         required
         autocomplete="on"
         v-model="$v.hall_info.hall_name.$model"
+        inputStyle="blueBorder"
         @input="checkCorrectance"
       >
         <div
@@ -26,6 +27,7 @@
         required
         autocomplete="on"
         v-model="$v.hall_info.hall_description.$model"
+        inputStyle="blueBorder"
         @input="checkCorrectance"
       >
         <div

@@ -108,6 +108,7 @@ export default {
       }
     }
     .loginForm__container {
+      width: 200px;
       margin-top: 30px;
     }
   }

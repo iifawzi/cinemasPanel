@@ -1,4 +1,5 @@
 .addhall__form {
+    width: 100%;
     .content {
         .tabs {
             height: 180px;
@@ -39,6 +40,7 @@
                 fill: $green-2;
             }
             &__content {
+                width: 100%;
                 border-top: 1px solid $white-1;
                 padding-top: 40px;
                 .content {
@@ -60,5 +62,30 @@
             }
         }
 
+    }
+}
+
+@media (max-width: $small-devices){
+    .addhall__form {
+        .content {
+            .tabs {
+                width: 100%;
+                height: 100%;
+                margin: 0 auto;
+                padding: 20px 0px;
+                flex-flow: column;
+                .next {
+                    transform: rotate(-270deg);
+                    margin-bottom: 15px;
+                }
+                .next-ar {
+                    transform: rotate(-270deg);
+                }
+                &__content {
+                padding-bottom: 40px;
+                }
+            }
+    
+        }
     }
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="inputField">
-    <input @input="$emit('input', $event.target.value)" v-bind="$attrs" class="input" />
+    <input @input="$emit('input', $event.target.value)" v-bind="$attrs" :class="['input', inputStyle]" />
     <div class="input__error">
      <slot/>
     </div>
@@ -9,7 +9,14 @@
 
 
 <script>
-export default {};
+export default {
+  props: {
+    inputStyle: {
+    type: String,
+    default: ""
+    }
+  }
+};
 </script>
 
 

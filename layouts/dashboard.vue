@@ -3,7 +3,7 @@
       <daside/>
       <div class="contents">
   <dnavbar/>
-  <div class="scrollable">
+  <div>
     <nuxt />
 
   </div>
@@ -47,9 +47,5 @@ export default {
   display: flex;
   flex-flow: column;
   flex-grow: 1;
-  height: 100vh;
-  .scrollable {
-  overflow-y: scroll;
-  }
 }
 </style>

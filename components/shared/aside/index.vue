@@ -1,7 +1,8 @@
 <template>
   <aside v-if="getAsideStatus"
     :class="['aside',getAnimation, getAsideStatus === true ? 'fixed' : '']">
-    <div class="top">
+    <div class="contents">
+<div class="top">
       <img
         v-if="getAsideStatus === true"
         alt="website logo"
@@ -29,6 +30,8 @@
           <listItem itemType="section" icon="fas fa-user-astronaut" :title="$t('aside.admins')" goto="/admin"/>
           <listItem itemType="section" icon="fas fa-question-circle" :title="$t('aside.support')"  goto="/support" />
     </ul>
+    </div>
+    
   </aside>
 </template>
 

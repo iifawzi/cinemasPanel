@@ -15,6 +15,12 @@ body {
 input {
   font-family:  Tajawal;
 }
+input[type=text] {   
+  /* Remove First */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
 
 *,
 *:before,
