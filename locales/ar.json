@@ -9,7 +9,8 @@
         "review": "المراجعه والتأكيد"
     },
     "buttons": {
-        "login": "تسجيل دخول"
+        "login": "تسجيل دخول",
+        "next": "التالي"
     },
     "short_texts": {
         "welcomeBack": "اهلا بعودتك!",

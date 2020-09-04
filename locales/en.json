@@ -9,7 +9,8 @@
         "review": "Review and submit"
     },
     "buttons": {
-        "login": "Login"
+        "login": "Login",
+        "next": "Next"
     },
     "short_texts": {
         "welcomeBack": "Welcome Back!",

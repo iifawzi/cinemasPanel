@@ -9,11 +9,12 @@
         :placeholder="$t('general.hall_name')"
         required
         autocomplete="on"
-        v-model="$v.hallInfo.hall_name.$model"
+        v-model="$v.hall_info.hall_name.$model"
+        @input="checkCorrectance"
       >
         <div
           class="error"
-          v-if="$v.hallInfo.hall_name.$dirty && !$v.hallInfo.hall_name.required"
+          v-if="$v.hall_info.hall_name.$dirty && !$v.hall_info.hall_name.required"
         >{{$t("errors.hall_name")}}</div>
       </inputField>
     </div>
@@ -24,11 +25,12 @@
         :placeholder="$t('general.hall_description')"
         required
         autocomplete="on"
-        v-model="$v.hallInfo.hall_description.$model"
+        v-model="$v.hall_info.hall_description.$model"
+        @input="checkCorrectance"
       >
         <div
           class="error"
-          v-if="$v.hallInfo.hall_description.$dirty && !$v.hallInfo.hall_description.required"
+          v-if="$v.hall_info.hall_description.$dirty && !$v.hall_info.hall_description.required"
         >{{$t("errors.hall_description")}}</div>
       </inputField>
     </div>
@@ -47,14 +49,23 @@ export default {
   },
   data() {
     return {
-      hallInfo: {
+      hall_info: {
         hall_name: "",
         hall_description: "",
       },
     };
   },
+  methods:{
+    checkCorrectance(){
+      if (this.$v.$invalid === false){
+      this.$emit("iscorrect", {...this.hall_info}); // if correct send data else send false
+      }else {
+      this.$emit("iscorrect", false); // if correct send data else send false
+      }
+    }
+  },
   validations: {
-    hallInfo: {
+    hall_info: {
       hall_name: {
         required,
       },

@@ -1,5 +1,5 @@
 <template>
-  <button :class="['submitButton', color]" @click.prevent="$emit('click')">{{title}}</button>
+  <button :class="['submitButton', color,disabledClass]" :disabled="isDisabled" @click.prevent="$emit('click')">{{title}}</button>
 </template>
 
 
@@ -13,6 +13,14 @@ export default {
     title: {
       type:String,
       required: true,
+    },
+    isDisabled: {
+      type: Boolean,
+      default: false,
+    },
+    disabledClass: {
+      type: String,
+      default: '',
     }
   }
 };

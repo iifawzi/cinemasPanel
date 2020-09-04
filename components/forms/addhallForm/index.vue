@@ -1076,7 +1076,7 @@
 
 
         <div class="content">
-            <info v-if="activeTab === 1" />
+            <info v-show="activeTab === 1" @iscorrect="checkTab1" />
         </div>
 
 
@@ -1086,7 +1086,7 @@
      <submitButton v-if="activeTab > 1" color="light-green" title="Previous" @click="prevTab" />
             </div>
             <div class="btn-container">
-     <submitButton v-if="activeTab < 3" color="green" title="Next" @click="nextTab" />
+     <submitButton v-if="activeTab < 3" color="green" :disabledClass="isDisabled ? 'disabled' : ''"  :title="$t('buttons.next')" @click="nextTab" :isDisabled="isDisabled"/>
             </div>
         </div>
       </div>
@@ -1101,6 +1101,14 @@ export default {
     data(){
         return {
             activeTab: 1,
+            tabs: {
+                tab1: false,
+                tab2: false,
+            },
+            hall_info: {
+                hall_name: "",
+                hall_description: "",
+            }
         }
     },
     components: {
@@ -1117,11 +1125,39 @@ export default {
             if (this.activeTab != 0){
                  this.activeTab --;
             }
-        }
+        },
+        checkTab1(data){
+            if (data === false){
+                this.tabs.tab1 = false;
+            }else {
+            this.hall_info.hall_name = data.hall_name;
+            this.hall_info.hall_description = data.hall_description;
+            this.tabs.tab1 = true
+            }
+
+        },
     },
      computed:{
     language(){
       return this.$store.getters.getLocale;
+    },
+    isDisabled(){
+        const tab = this.activeTab;
+        let status = true;
+        switch (tab) {
+            case 1:
+                this.tabs.tab1 ? status = false : status = true
+                break;
+            case 2:
+                this.tabs.tab2 ? status = false : status = true
+                break;
+             case 3:
+                this.tabs.tab3 ? status = false : status = true
+                break;
+            default:
+                break;
+        }
+        return status
     }
   }
 };
