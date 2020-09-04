@@ -62,12 +62,9 @@
     }
   }
 }
-
-@media (max-width: $small-devices){
-  .opened-ar {
-    margin-right: 220px;
-  }
-  .opened-en {
-    margin-left: 220px;
-  }
+.opened-ar {
+  margin-right: 220px;
+}
+.opened-en {
+  margin-left: 220px;
 }

@@ -1078,7 +1078,7 @@
 
         <div class="content">
             <info v-show="activeTab === 1" @iscorrect="checkTab1" />
-              <seats v-show="activeTab === 2" />
+              <seats v-show="activeTab === 2" class="seats" />
         </div>
         
 
@@ -1104,7 +1104,7 @@ import seats from "~/components/general/seats/";
 export default {
     data(){
         return {
-            activeTab: 1,
+            activeTab: 2,
             tabs: {
                 tab1: false,
                 tab2: false,

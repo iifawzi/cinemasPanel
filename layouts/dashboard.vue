@@ -1,7 +1,7 @@
 <template>
   <div class="layout">
       <daside/>
-      <div class="contents">
+      <div :class="['contents']">
   <dnavbar/>
   <div>
     <nuxt />
@@ -46,6 +46,7 @@ export default {
 .contents {
   display: flex;
   flex-flow: column;
-  flex-grow: 1;
+  width: 100%;
 }
 </style>
+
