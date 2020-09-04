@@ -13,7 +13,7 @@
       </div>
           <div v-for="{key,seats} of seatsArray" :key="key" class="row">
             <div v-for="val of seats" :key="val" :class="['seat--container', 'seat-margin-'+language]">
-              <seat />
+              <seat :color="val === 0 ? 'closed' : ''" />
             </div>
           </div>
         </div>

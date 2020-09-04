@@ -31,7 +31,7 @@
                 .columnsNumbers{
                     display: flex;
                     flex-flow: row;
-                    width: 100%;
+                    justify-content: space-between;
                     margin-bottom: 30px;
                     color: $green-2;
                     .columnNumber {
@@ -43,12 +43,10 @@
                 display: flex;
                 flex-flow: column;
                 overflow-x: scroll;
-                width: 100%;
                 .row {
                     display: flex;
                     flex-flow: row;
                     justify-content: space-between;
-                    width: 100%;
                     padding-top: -1px;
                     height: 20px;
                     .corridor {
