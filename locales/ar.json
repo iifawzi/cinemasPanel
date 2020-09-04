@@ -10,7 +10,8 @@
     },
     "buttons": {
         "login": "تسجيل دخول",
-        "next": "التالي"
+        "next": "التالي",
+        "previous": "السابق"
     },
     "short_texts": {
         "welcomeBack": "اهلا بعودتك!",

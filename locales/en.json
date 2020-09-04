@@ -10,7 +10,9 @@
     },
     "buttons": {
         "login": "Login",
-        "next": "Next"
+        "next": "Next",
+        "previous": "Previous"
+
     },
     "short_texts": {
         "welcomeBack": "Welcome Back!",

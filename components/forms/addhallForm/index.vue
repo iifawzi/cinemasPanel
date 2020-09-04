@@ -1083,7 +1083,7 @@
         
         <div class="switcher">
              <div class="btn-container">
-     <submitButton v-if="activeTab > 1" color="light-green" title="Previous" @click="prevTab" />
+     <submitButton v-if="activeTab > 1" color="light-green" :title="$t('buttons.previous')" @click="prevTab" />
             </div>
             <div class="btn-container">
      <submitButton v-if="activeTab < 3" color="green" :disabledClass="isDisabled ? 'disabled' : ''"  :title="$t('buttons.next')" @click="nextTab" :isDisabled="isDisabled"/>

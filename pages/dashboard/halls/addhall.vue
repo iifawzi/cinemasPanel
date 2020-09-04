@@ -31,7 +31,7 @@ export default {
   background-color: $white;
   width: 95%;
   margin: 25px auto;
-  height: 1000px;
+  min-height: 500px;
   border-radius: 10px;
   box-shadow: 0px 0px 20px 0px $grey-1;
 }
