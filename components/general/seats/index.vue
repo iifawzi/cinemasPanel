@@ -31,14 +31,15 @@
                 </div>
                 <div
                   class="function"
-                  v-if=" key != 'corridor' && checkNotRowCorridor(index+1-1) && checkNotRowCorridor(index+1+1)"
+                  v-if=" key != 'corridor' && index+1 != 1  && index+1 != hallInfo.rowsNumber && checkNotRowCorridor(index+1-1) && checkNotRowCorridor(index+1+1)"
+                  @click.stop="convertToCorridor(index+1)"
                 >
                   <span class="icon">
                     <i class="fas fa-exchange-alt blue"></i>
                   </span>
                   <span class="name">Convert To Corridor</span>
                 </div>
-                <div class="function" v-if=" key === 'corridor'">
+                <div class="function" v-if=" key === 'corridor'"  @click.stop="convertToRow(index+1)">
                   <span class="icon">
                     <i class="fas fa-exchange-alt blue"></i>
                   </span>
@@ -56,13 +57,13 @@
                   </span>
                   <span class="name">Add Row Below</span>
                 </div>
-                <div class="function" v-if=" key != 'corridor' && checkNotRowCorridor(index+1-1)">
+                <div class="function" v-if=" key != 'corridor' && checkNotRowCorridor(index+1-1) && index+1 != 1">
                   <span class="icon">
                     <i class="fas fa-walking orange"></i>
                   </span>
                   <span class="name">Add Corridor Above</span>
                 </div>
-                <div class="function" v-if=" key != 'corridor' && checkNotRowCorridor(index+1+1)">
+                <div class="function" v-if=" key != 'corridor' && checkNotRowCorridor(index+1+1)  && index+1 != hallInfo.rowsNumber">
                   <span class="icon">
                     <i class="fas fa-walking green-2"></i>
                   </span>
@@ -193,6 +194,17 @@ export default {
       ];
       console.log(this.hallInfo.rowCorridors);
     },
+    convertToCorridor(rowNumber){
+      this.hallInfo.rowCorridors.push(rowNumber);
+    },
+    convertToRow(rowNumber){
+      console.log("hala");
+      console.log(rowNumber);
+      const corridorIndex = this.hallInfo.rowCorridors.indexOf(rowNumber);
+      if (corridorIndex > -1){
+      this.hallInfo.rowCorridors.splice(corridorIndex,1);
+      }
+    }
   },
 };
 </script>
