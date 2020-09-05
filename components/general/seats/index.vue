@@ -19,7 +19,11 @@
                     <i class="fas fa-window-close close"></i>
                   </span>
                 </div>
-                <div class="function" v-if="hallInfo.rowsNumber != 1" @click.stop="deleteRow(index+1)">
+                <div
+                  class="function"
+                  v-if="hallInfo.rowsNumber != 1"
+                  @click.stop="deleteRow(index+1)"
+                >
                   <span class="icon">
                     <i class="fas fa-minus-circle red"></i>
                   </span>
@@ -170,20 +174,25 @@ export default {
       }
       return startNumber++;
     },
-    deleteRow(rowNumber){ // using `index+1` because index starts from 0
+    deleteRow(rowNumber) {
+      // using `index+1` because index starts from 0
       this.hallInfo.rowsNumber--;
-      this.hallInfo.rowCorridors = [...this.hallInfo.rowCorridors.map(corridorNumber=> {
-        if (corridorNumber > rowNumber ){ // if we are deleting a row (not corridor) which is above the corridors
-          corridorNumber--; // shift each corridor after the deleted row one step above.
-          return corridorNumber;
-        }else if (corridorNumber === rowNumber) { // if we are deleting a corridor: 
-        return null;
-        }else {
-          return corridorNumber;
-        }
-      })];
+      this.hallInfo.rowCorridors = [
+        ...this.hallInfo.rowCorridors.map((corridorNumber) => {
+          if (corridorNumber > rowNumber) {
+            // if we are deleting a row (not corridor) which is above the corridors
+            corridorNumber--; // shift each corridor after the deleted row one step above.
+            return corridorNumber;
+          } else if (corridorNumber === rowNumber) {
+            // if we are deleting a corridor:
+            return null;
+          } else {
+            return corridorNumber;
+          }
+        }),
+      ];
       console.log(this.hallInfo.rowCorridors);
-    }
+    },
   },
 };
 </script>
