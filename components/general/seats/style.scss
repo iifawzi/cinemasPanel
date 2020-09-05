@@ -17,6 +17,7 @@
       text-align: center;
       font-size: 4rem;
     }
+
     .data {
       display: flex;
       flex-flow: row;
@@ -29,19 +30,65 @@
         display: flex;
         flex-flow: column;
         color: $blue;
-        margin-right:50px;
+        margin-right: 50px;
         margin-top: 30px;
+
         .rowNumber {
           height: 20px;
           font-size: 2rem;
-          min-width: 20px;
-          display: flex;
-          flex-flow: row;
+          min-width: 40px;
+          position: relative;
+          .key {
+            z-index: 5000;
+            position: relative;
+          cursor: pointer;
+          }
           .options {
-            font-size: 1.8rem;
-            margin: 0px 5px;
-            padding-top: 4.2px;
-            color: $purple-1;
+            position: absolute;
+            bottom: 1.2px;
+            left: 10px;
+            display: flex;
+            flex-flow: row;
+            align-items: flex-end;
+            z-index: 100;
+            animation: showBox forwards ease-in 0.2s;
+            .arrow {
+              width: 15px;
+              height: 15px;
+              background: black;
+              -webkit-transform: rotate(45deg);
+              transform: rotate(45deg);
+              border-radius: 3px;
+              position: relative;
+              right: -10px;
+              bottom: 3px;
+            }
+
+            .box {
+              background-color: $white;
+              width: 170px;
+              border-top-right-radius: 10px;
+              border-bottom-right-radius: 10px;
+              border-top-left-radius: 10px;
+              height: 160px;
+              z-index:1;
+              display: flex;
+              flex-flow: column;
+              justify-content: space-around;
+              padding-left: 20px;
+              padding-top: 5px;
+              padding-bottom: 5px;
+              box-shadow: 0px 0px 10px 0px $white-1;
+              .function {
+                font-size: 1.2rem;
+                color: $purple;
+          cursor: pointer;
+
+                .name {
+                  margin-left: 5px;
+                }
+              }
+            }
           }
         }
 
@@ -49,6 +96,7 @@
           margin-bottom: 30px;
         }
       }
+
       .seats--container {
         display: flex;
         flex-flow: column;
@@ -63,11 +111,13 @@
           color: $blue;
 
           .columnNumber {
+            cursor: pointer;
             height: 20px;
             font-size: 2rem;
             min-width: 40px;
             display: flex;
             flex-flow: column;
+
             .options {
               font-size: 1.8rem;
               color: $purple-1;
@@ -102,5 +152,15 @@
 
 
     }
+  }
+}
+
+
+@keyframes showBox {
+  0% {
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
   }
 }

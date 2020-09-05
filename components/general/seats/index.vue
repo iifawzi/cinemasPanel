@@ -5,13 +5,57 @@
       <div class="data">
         <div class="rowsNumbers">
           <div class="rowNumber"></div>
-          <div v-for="{key} of seatsArray" :key="key" class="rowNumber">
-            <span class="options">
-              <i class="fas fa-sort-up"></i>
-            </span>
-            <span
-              :class="['key', , key === undefined ? 'fas fa-walking corridor-icon' : '']"
-            >{{key === undefined ? '' : key}}</span>
+          <div
+            v-for="({key},index) of seatsArray"
+            :key="index"
+            class="rowNumber"
+            @click="clicked = 'r'+index"
+          >
+            <div class="options" v-if="clicked === 'r'+index">
+              <div class="arrow"></div>
+              <div class="box">
+                <div class="function">
+                  <span class="icon">
+                    <i class="fas fa-minus-circle red"></i>
+                  </span>
+                  <span class="name">Delete</span>
+                </div>
+                <div class="function">
+                  <span class="icon">
+                    <i class="fas fa-exchange-alt blue"></i>
+                  </span>
+                  <span v-if=" key === 'row'" class="name">Convert To Row</span>
+                  <span v-else class="name">Convert To Corridor</span>
+                </div>
+                <div class="function">
+                  <span class="icon">
+                    <i class="fas fa-arrow-up green"></i>
+                  </span>
+                  <span class="name">Add Row Above</span>
+                </div>
+                <div class="function">
+                  <span class="icon">
+                    <i class="fas fa-arrow-down pink"></i>
+                  </span>
+                  <span class="name">Add Row Below</span>
+                </div>
+                <div class="function" v-if=" key != 'row' && checkNotRowCorridor(index+1-1)">
+                  <span class="icon">
+                    <i class="fas fa-walking orange"></i>
+                  </span>
+                  <span class="name">Add Corridor Above</span>
+                </div>
+                <div class="function" v-if=" key != 'row' && checkNotRowCorridor(index+1+1)">
+                  <span class="icon">
+                    <i class="fas fa-walking green-2"></i>
+                  </span>
+                  <span class="name">Add Corridor Below</span>
+                </div>
+              </div>
+            </div>
+            <div
+              :class="['key', , key === 'row' ? 'fas fa-walking corridor-icon' : '']"
+            >{{key === 'row' ? '' : key}}</div>
           </div>
         </div>
         <div class="seats--container">
@@ -20,14 +64,16 @@
               v-for="(seat,index) of seatsArray[0]['seats']"
               :key="index"
               class="columnNumber"
+              @click="clicked = 'c'+index"
             >
-              <span class="options">
-              <i class="fas fa-sort-up"></i>
-            </span>
-           <span :class="['number', checkNotCorridor(index+1) === false ? 'fas fa-walking corridor-icon' : '']"> {{checkNotCorridor(index+1) ? columnNumber() : ""}}</span>
+              <div class="options" v-if="clicked === 'c'+index"></div>
+
+              <span
+                :class="['number', checkNotCorridor(index+1) === false ? 'fas fa-walking corridor-icon' : '']"
+              >{{checkNotCorridor(index+1) ? columnNumber() : ""}}</span>
             </div>
           </div>
-          <div v-for="{key,seats} of seatsArray" :key="key" class="row">
+          <div v-for="({seats},index) of seatsArray" :key="index" class="row">
             <div
               v-for="(val,index) of seats"
               :key="val != 0 ? val : val+Math.random()*1000"
@@ -51,7 +97,11 @@ export default {
   mounted() {
     startNumber = 1;
   },
-
+  data() {
+    return {
+      clicked: "",
+    };
+  },
   props: {
     hallInfo: {
       type: Object,
@@ -79,8 +129,19 @@ export default {
     },
   },
   methods: {
+    // not column corridor
     checkNotCorridor(corridorNumber) {
+      // we are using (index+1) because index starts from zero.
       if (this.hallInfo.columnCorridors.includes(corridorNumber)) {
+        return false;
+      } else {
+        return true;
+      }
+    },
+    // not row corridor
+    checkNotRowCorridor(corridorNumber) {
+      // we are using (index+1) because index starts from zero.
+      if (this.hallInfo.rowCorridors.includes(corridorNumber)) {
         return false;
       } else {
         return true;

@@ -1,5 +1,5 @@
 <template>
-  <button :class="['submitButton', color,disabledClass]" :disabled="isDisabled" @click.prevent="$emit('click')">{{title}}</button>
+  <button :class="['submitButton', color+'Btn',disabledClass]" :disabled="isDisabled" @click.prevent="$emit('click')">{{title}}</button>
 </template>
 
 

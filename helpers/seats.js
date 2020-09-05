@@ -5,7 +5,10 @@ module.exports = (letters,rowsNumber,columnNumber,rowCorridors,columnCorridors,l
     for(let i=1;i<=rowsNumber;i++){
         let startNumber = 1;
         if (rowCorridors.includes(i)){
-            seats.push(''); // this indicates that it's a row
+            seats.push({
+                key: "row",
+                seats: []
+            }); // this indicates that it's a row
             continue;
         }else {
             seats.push({key: letters[0], seats: []}); // push an object with a row key which is a letter and empty array which will be used below to fill the seats
