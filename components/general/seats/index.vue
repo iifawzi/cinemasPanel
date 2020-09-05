@@ -14,18 +14,31 @@
             <div class="options" v-if="clicked === 'r'+index">
               <div class="arrow"></div>
               <div class="box">
+                <div class="function" @click.stop="clicked = ''">
+                  <span class="icon">
+                    <i class="fas fa-window-close close"></i>
+                  </span>
+                </div>
                 <div class="function">
                   <span class="icon">
                     <i class="fas fa-minus-circle red"></i>
                   </span>
                   <span class="name">Delete</span>
                 </div>
-                <div class="function">
+                <div
+                  class="function"
+                  v-if=" key != 'corridor' && checkNotRowCorridor(index+1-1) && checkNotRowCorridor(index+1+1)"
+                >
                   <span class="icon">
                     <i class="fas fa-exchange-alt blue"></i>
                   </span>
-                  <span v-if=" key === 'row'" class="name">Convert To Row</span>
-                  <span v-else class="name">Convert To Corridor</span>
+                  <span class="name">Convert To Corridor</span>
+                </div>
+                <div class="function" v-if=" key === 'corridor'">
+                  <span class="icon">
+                    <i class="fas fa-exchange-alt blue"></i>
+                  </span>
+                  <span class="name">Convert To Row</span>
                 </div>
                 <div class="function">
                   <span class="icon">
@@ -39,13 +52,13 @@
                   </span>
                   <span class="name">Add Row Below</span>
                 </div>
-                <div class="function" v-if=" key != 'row' && checkNotRowCorridor(index+1-1)">
+                <div class="function" v-if=" key != 'corridor' && checkNotRowCorridor(index+1-1)">
                   <span class="icon">
                     <i class="fas fa-walking orange"></i>
                   </span>
                   <span class="name">Add Corridor Above</span>
                 </div>
-                <div class="function" v-if=" key != 'row' && checkNotRowCorridor(index+1+1)">
+                <div class="function" v-if=" key != 'corridor' && checkNotRowCorridor(index+1+1)">
                   <span class="icon">
                     <i class="fas fa-walking green-2"></i>
                   </span>
@@ -54,8 +67,8 @@
               </div>
             </div>
             <div
-              :class="['key', , key === 'row' ? 'fas fa-walking corridor-icon' : '']"
-            >{{key === 'row' ? '' : key}}</div>
+              :class="['key', , key === 'corridor' ? 'fas fa-walking corridor-icon' : '']"
+            >{{key === 'corridor' ? '' : key}}</div>
           </div>
         </div>
         <div class="seats--container">

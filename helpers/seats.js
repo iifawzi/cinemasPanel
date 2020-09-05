@@ -6,7 +6,7 @@ module.exports = (letters,rowsNumber,columnNumber,rowCorridors,columnCorridors,l
         let startNumber = 1;
         if (rowCorridors.includes(i)){
             seats.push({
-                key: "row",
+                key: "corridor",
                 seats: []
             }); // this indicates that it's a row
             continue;
