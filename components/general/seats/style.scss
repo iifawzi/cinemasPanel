@@ -2,12 +2,14 @@
   width: 95%;
   margin: 0px auto;
   padding: 20px 0px;
+
   .content {
     display: flex;
     flex-flow: column;
     width: 100%;
     overflow-x: scroll;
     overflow-y: hidden;
+
     .data {
       display: flex;
       flex-flow: row;
@@ -37,6 +39,7 @@
         display: flex;
         flex-flow: column;
         overflow-x: scroll;
+
         .columnsNumbers {
           display: flex;
           flex-flow: row;
@@ -72,6 +75,7 @@
 
 
       }
+
       .corridor-icon {
         color: $red;
       }
