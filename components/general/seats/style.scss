@@ -1,7 +1,8 @@
 .seats {
   width: 95%;
   margin: 0px auto;
-  padding: 20px 0px;
+  padding-top: 10px;
+  padding-bottom: 30px;
 
   .content {
     display: flex;
@@ -10,11 +11,17 @@
     overflow-x: scroll;
     overflow-y: hidden;
 
+    .screen {
+      width: 100%;
+      height: 50px;
+      text-align: center;
+      font-size: 4rem;
+    }
     .data {
       display: flex;
       flex-flow: row;
       justify-content: center;
-      margin-top: 10px;
+      margin-top: 40px;
       width: 100%;
 
       .rowsNumbers {
