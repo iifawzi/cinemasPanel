@@ -45,17 +45,17 @@
                   </span>
                   <span class="name">Convert To Row</span>
                 </div>
-                <div class="function">
+                <div class="function" v-if="key === 'corridor'"  @click.stop="addRowAbove(index+1)">
                   <span class="icon">
                     <i class="fas fa-arrow-up green"></i>
                   </span>
                   <span class="name">Add Row Above</span>
                 </div>
-                <div class="function">
+                <div class="function"  @click.stop="addRowBelow(index+1)">
                   <span class="icon">
-                    <i class="fas fa-arrow-down pink"></i>
+                    <i :class="[key === 'corridor' ? 'fas fa-arrow-down' : 'fas fa-arrows-alt-v' ,'pink']"></i>
                   </span>
-                  <span class="name">Add Row Below</span>
+                  <span class="name">{{key === 'corridor' ? 'Add Row Below'  : 'Add Row'}}</span>
                 </div>
                 <div class="function" v-if=" key != 'corridor' && checkNotRowCorridor(index+1-1) && index+1 != 1">
                   <span class="icon">
@@ -175,8 +175,12 @@ export default {
       }
       return startNumber++;
     },
+
+     //
+     // using `index+1` when calling the below functions because index starts from 0
+     //
+
     deleteRow(rowNumber) {
-      // using `index+1` because index starts from 0
       this.hallInfo.rowsNumber--;
       this.hallInfo.rowCorridors = [
         ...this.hallInfo.rowCorridors.map((corridorNumber) => {
@@ -192,19 +196,46 @@ export default {
           }
         }),
       ];
-      console.log(this.hallInfo.rowCorridors);
     },
     convertToCorridor(rowNumber){
       this.hallInfo.rowCorridors.push(rowNumber);
     },
     convertToRow(rowNumber){
-      console.log("hala");
-      console.log(rowNumber);
       const corridorIndex = this.hallInfo.rowCorridors.indexOf(rowNumber);
       if (corridorIndex > -1){
       this.hallInfo.rowCorridors.splice(corridorIndex,1);
       }
-    }
+    },
+    addRowAbove(rowNumber){
+      this.hallInfo.rowsNumber++;
+      this.hallInfo.rowCorridors = [
+        ...this.hallInfo.rowCorridors.map((corridorNumber) => {
+          if (corridorNumber > rowNumber || corridorNumber === rowNumber) {
+            // if we are adding a row where there will be an corridors below it. 
+            // OR who call this function is corridor, so we will shift this corridor one step
+            corridorNumber++; // shift each corridor one step down.
+            return corridorNumber;
+          }else {
+            return corridorNumber;
+          }
+        }),
+      ];
+    },
+    addRowBelow(rowNumber){
+      this.hallInfo.rowsNumber++;
+      this.hallInfo.rowCorridors = [
+        ...this.hallInfo.rowCorridors.map((corridorNumber) => {
+          if (corridorNumber > rowNumber) {
+            // if we are adding a row where there will be an corridors below it. 
+            corridorNumber++; // shift each corridor one step down.
+            return corridorNumber;
+          }else {
+            return corridorNumber;
+          }
+        }),
+      ];
+    },
+    
   },
 };
 </script>
