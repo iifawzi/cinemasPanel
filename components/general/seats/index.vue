@@ -61,7 +61,9 @@
                       :class="[key === 'corridor' ? 'fas fa-arrow-down' : 'fas fa-arrows-alt-v' ,'pink']"
                     ></i>
                   </span>
-                  <span class="name">{{key === 'corridor' ? $t("functions.addRowBelow") : $t("functions.addRow")}}</span>
+                  <span
+                    class="name"
+                  >{{key === 'corridor' ? $t("functions.addRowBelow") : $t("functions.addRow")}}</span>
                 </div>
                 <div
                   class="function"
@@ -251,9 +253,9 @@ export default {
     },
     addCorridor(newCorridorIndex) {
       // When adding corridor above we use the index of caller, (index+1), if below we use the (index+1+1)
-      // explanition: 
+      // explanition:
       // if we are at row number 6 and wanna add a corridor below so the number of new corridor will be 7 for and the old one will be the same. for that reason the we use (index+1+1) for new one.
-      // if we are at row number 6 and wanna add a corridor above, the number of new corridor will be 6, and the old one will be 7 so we use (index+1) for the new one, and. 
+      // if we are at row number 6 and wanna add a corridor above, the number of new corridor will be 6, and the old one will be 7 so we use (index+1) for the new one, and.
       this.hallInfo.rowsNumber++;
       this.hallInfo.rowCorridors = [
         ...this.hallInfo.rowCorridors.map((corridorNumber) => {
