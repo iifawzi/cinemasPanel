@@ -7,7 +7,17 @@
         "essential": "المعلومات الاساسية",
         "seats": "الكراسي",
         "review": "المراجعه والتأكيد",
-        "screen": "الشاشه"
+        "screen": "الشاشه",
+        "delete": "حذف"
+    },
+    "functions": {
+        "addRowBelow": "إضافة صف بالأسفل",
+        "addRowAbove": "إضافة صف بالأعلى",
+        "addCorridorBelow": "إضافة ممر بالأسفل",
+        "addCorridorAbove": "إضافة ممر بالأعلى",
+        "convertToCorridor": "تحويل إلى ممر",
+        "convertToRow": "تحويل إلى صف",
+        "addRow": "إضافة صف"
     },
     "buttons": {
         "login": "تسجيل دخول",

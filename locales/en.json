@@ -7,7 +7,17 @@
         "essential": "Essential Information",
         "seats": "Seats",
         "review": "Review and submit",
-        "screen": "Screen"
+        "screen": "Screen",
+        "delete": "Delete"
+    },
+    "functions": {
+        "addRowBelow": "Add Row Below",
+        "addRowAbove": "Add Row After",
+        "addCorridorBelow": "Add Corridor Below",
+        "addCorridorAbove": "Add Corridor after",
+        "convertToCorridor": "Convert To Corridor",
+        "convertToRow": "Convert To Seats",
+        "addRow": "Add Row"
     },
     "buttons": {
         "login": "Login",

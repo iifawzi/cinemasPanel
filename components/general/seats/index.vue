@@ -13,9 +13,9 @@
           >
             <div class="options" v-if="clicked === 'r'+index">
               <div class="arrow"></div>
-              <div class="box">
+              <div :class="['box', 'box-'+language]" :dir="language === 'ar' ? 'rtl' : 'ltr'">
                 <div class="function" @click.stop="clicked = ''">
-                  <span class="closeIcon">
+                  <span :class="['closeIcon', 'closeIcon-'+language]">
                     <i class="far fa-window-close close"></i>
                   </span>
                 </div>
@@ -27,7 +27,7 @@
                   <span class="icon">
                     <i class="fas fa-minus-circle red"></i>
                   </span>
-                  <span class="name">Delete</span>
+                  <span class="name">{{$t("general.delete")}}</span>
                 </div>
                 <div
                   class="function"
@@ -37,37 +37,51 @@
                   <span class="icon">
                     <i class="fas fa-exchange-alt blue"></i>
                   </span>
-                  <span class="name">Convert To Corridor</span>
+                  <span class="name">{{$t("functions.convertToCorridor")}}</span>
                 </div>
-                <div class="function" v-if=" key === 'corridor'"  @click.stop="convertToRow(index+1)">
+                <div
+                  class="function"
+                  v-if=" key === 'corridor'"
+                  @click.stop="convertToRow(index+1)"
+                >
                   <span class="icon">
                     <i class="fas fa-exchange-alt blue"></i>
                   </span>
-                  <span class="name">Convert To Row</span>
+                  <span class="name">{{$t("functions.convertToRow")}}</span>
                 </div>
-                <div class="function" v-if="key === 'corridor'"  @click.stop="addRowAbove(index+1)">
+                <div class="function" v-if="key === 'corridor'" @click.stop="addRowAbove(index+1)">
                   <span class="icon">
                     <i class="fas fa-arrow-up green"></i>
                   </span>
-                  <span class="name">Add Row Above</span>
+                  <span class="name">{{$t("functions.addRowAbove")}}</span>
                 </div>
-                <div class="function"  @click.stop="addRowBelow(index+1)">
+                <div class="function" @click.stop="addRowBelow(index+1)">
                   <span class="icon">
-                    <i :class="[key === 'corridor' ? 'fas fa-arrow-down' : 'fas fa-arrows-alt-v' ,'pink']"></i>
+                    <i
+                      :class="[key === 'corridor' ? 'fas fa-arrow-down' : 'fas fa-arrows-alt-v' ,'pink']"
+                    ></i>
                   </span>
-                  <span class="name">{{key === 'corridor' ? 'Add Row Below'  : 'Add Row'}}</span>
+                  <span class="name">{{key === 'corridor' ? $t("functions.addRowBelow") : $t("functions.addRow")}}</span>
                 </div>
-                <div class="function" v-if=" key != 'corridor' && checkNotRowCorridor(index+1-1) && index+1 != 1">
+                <div
+                  class="function"
+                  v-if=" key != 'corridor' && checkNotRowCorridor(index+1-1) && index+1 != 1"
+                  @click="addCorridor(index+1)"
+                >
                   <span class="icon">
                     <i class="fas fa-walking orange"></i>
                   </span>
-                  <span class="name">Add Corridor Above</span>
+                  <span class="name">{{$t("functions.addCorridorAbove")}}</span>
                 </div>
-                <div class="function" v-if=" key != 'corridor' && checkNotRowCorridor(index+1+1)  && index+1 != hallInfo.rowsNumber">
+                <div
+                  class="function"
+                  v-if=" key != 'corridor' && checkNotRowCorridor(index+1+1)  && index+1 != hallInfo.rowsNumber"
+                  @click="addCorridor(index+1+1)"
+                >
                   <span class="icon">
                     <i class="fas fa-walking green-2"></i>
                   </span>
-                  <span class="name">Add Corridor Below</span>
+                  <span class="name">{{$t("functions.addCorridorBelow")}}</span>
                 </div>
               </div>
             </div>
@@ -176,9 +190,9 @@ export default {
       return startNumber++;
     },
 
-     //
-     // using `index+1` when calling the below functions because index starts from 0
-     //
+    //
+    // using `index+1` when calling the below functions because index starts from 0
+    //
 
     deleteRow(rowNumber) {
       this.hallInfo.rowsNumber--;
@@ -197,45 +211,63 @@ export default {
         }),
       ];
     },
-    convertToCorridor(rowNumber){
+    convertToCorridor(rowNumber) {
       this.hallInfo.rowCorridors.push(rowNumber);
     },
-    convertToRow(rowNumber){
+    convertToRow(rowNumber) {
       const corridorIndex = this.hallInfo.rowCorridors.indexOf(rowNumber);
-      if (corridorIndex > -1){
-      this.hallInfo.rowCorridors.splice(corridorIndex,1);
+      if (corridorIndex > -1) {
+        this.hallInfo.rowCorridors.splice(corridorIndex, 1);
       }
     },
-    addRowAbove(rowNumber){
+    addRowAbove(rowNumber) {
       this.hallInfo.rowsNumber++;
       this.hallInfo.rowCorridors = [
         ...this.hallInfo.rowCorridors.map((corridorNumber) => {
           if (corridorNumber > rowNumber || corridorNumber === rowNumber) {
-            // if we are adding a row where there will be an corridors below it. 
+            // if we are adding a row where there will be an corridors below it.
             // OR who call this function is corridor, so we will shift this corridor one step
             corridorNumber++; // shift each corridor one step down.
             return corridorNumber;
-          }else {
+          } else {
             return corridorNumber;
           }
         }),
       ];
     },
-    addRowBelow(rowNumber){
+    addRowBelow(rowNumber) {
       this.hallInfo.rowsNumber++;
       this.hallInfo.rowCorridors = [
         ...this.hallInfo.rowCorridors.map((corridorNumber) => {
           if (corridorNumber > rowNumber) {
-            // if we are adding a row where there will be an corridors below it. 
+            // if we are adding a row where there will be an corridors below it.
             corridorNumber++; // shift each corridor one step down.
             return corridorNumber;
-          }else {
+          } else {
             return corridorNumber;
           }
         }),
       ];
     },
-    
+    addCorridor(newCorridorIndex) {
+      // When adding corridor above we use the index of caller, (index+1), if below we use the (index+1+1)
+      // explanition: 
+      // if we are at row number 6 and wanna add a corridor below so the number of new corridor will be 7 for and the old one will be the same. for that reason the we use (index+1+1) for new one.
+      // if we are at row number 6 and wanna add a corridor above, the number of new corridor will be 6, and the old one will be 7 so we use (index+1) for the new one, and. 
+      this.hallInfo.rowsNumber++;
+      this.hallInfo.rowCorridors = [
+        ...this.hallInfo.rowCorridors.map((corridorNumber) => {
+          if (corridorNumber > newCorridorIndex) {
+            // if we are adding a corridor where there will be an corridors below it.
+            corridorNumber++; // shift each corridor one step down.
+            return corridorNumber;
+          } else {
+            return corridorNumber;
+          }
+        }),
+      ];
+      this.hallInfo.rowCorridors.push(newCorridorIndex);
+    },
   },
 };
 </script>
