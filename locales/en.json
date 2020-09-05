@@ -14,7 +14,7 @@
         "addRowBelow": "Add Row Below",
         "addRowAbove": "Add Row After",
         "addCorridorBelow": "Add Corridor Below",
-        "addCorridorAbove": "Add Corridor after",
+        "addCorridorAbove": "Add Corridor Above",
         "convertToCorridor": "Convert To Corridor",
         "convertToRow": "Convert To Seats",
         "addRow": "Add Row"
