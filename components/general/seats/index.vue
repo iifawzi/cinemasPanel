@@ -1,7 +1,7 @@
 <template>
   <div class="seats" dir="ltr">
     <div class="content">
-      <div class="screen">Screen</div>
+      <div class="screen">{{$t("general.screen")}}</div>
       <div class="data">
         <div class="rowsNumbers">
           <div class="rowNumber">-</div>

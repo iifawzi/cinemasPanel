@@ -6,7 +6,8 @@
         "hall_description":"Hall description",
         "essential": "Essential Information",
         "seats": "Seats",
-        "review": "Review and submit"
+        "review": "Review and submit",
+        "screen": "Screen"
     },
     "buttons": {
         "login": "Login",
