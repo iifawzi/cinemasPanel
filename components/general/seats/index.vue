@@ -15,8 +15,8 @@
               <div class="arrow"></div>
               <div class="box">
                 <div class="function" @click.stop="clicked = ''">
-                  <span class="icon">
-                    <i class="fas fa-window-close close"></i>
+                  <span class="closeIcon">
+                    <i class="far fa-window-close close"></i>
                   </span>
                 </div>
                 <div
