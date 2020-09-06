@@ -145,10 +145,79 @@
             min-width: 40px;
             display: flex;
             flex-flow: column;
-
+            position: relative;
             .options {
-              font-size: 1.8rem;
-              color: $purple-1;
+              position: absolute;
+              top: 15px;
+              left: -4px;
+              display: flex;
+              flex-flow: column;
+              align-items: flex-start;
+              z-index: 100;
+              animation: showBox forwards ease-in 0.2s;
+  
+              .arrow {
+                width: 15px;
+                height: 15px;
+                background: black;
+                -webkit-transform: rotate(45deg);
+                transform: rotate(45deg);
+                border-radius: 3px;
+                position: relative;
+                top: 10px;
+                left: 2px;
+              }
+  
+              .box {
+                background-color: $white;
+                width: 170px;
+                border-top-right-radius: 10px;
+                border-bottom-right-radius: 10px;
+                border-bottom-left-radius: 10px;
+                z-index: 1;
+                display: flex;
+                flex-flow: column;
+                justify-content: space-around;
+                padding-top: 5px;
+                padding-bottom: 5px;
+                box-shadow: 0px 0px 10px 0px $white-1;
+  
+                .function {
+                  font-size: 1.2rem;
+                  color: $purple;
+                  height: 25px;
+                  cursor: pointer;
+                  display: flex;
+  
+                  .closeIcon {
+                    width: 100%;
+                  }
+  
+                  .closeIcon-ar {
+                    text-align: left;
+                    padding-left: 10px;
+                  }
+  
+                  .closeIcon-en {
+                    text-align: right;
+                    padding-right: 10px;
+                  }
+  
+                  .icon {
+                    width: 20px;
+                    display: block;
+                  }
+  
+                }
+              }
+  
+              .box-en {
+                padding-left: 20px;
+              }
+  
+              .box-ar {
+                padding-right: 20px;
+              }
             }
           }
         }

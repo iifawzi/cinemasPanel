@@ -13,11 +13,17 @@
     "functions": {
         "addRowBelow": "Add Row Below",
         "addRowAbove": "Add Row After",
+        "addColumnAfter": "Add Column After",
+        "addColumnBefore": "Add Column Before",
         "addCorridorBelow": "Add Corridor Below",
         "addCorridorAbove": "Add Corridor Above",
+        "addCorridorAfter": "Add Corridor After",
+        "addCorridorBefore": "Add Corridor Before",
         "convertToCorridor": "Convert To Corridor",
-        "convertToRow": "Convert To Seats",
-        "addRow": "Add Row"
+        "convertToRow": "Convert To Row",
+        "convertToColumn": "Convert To Column",
+        "addRow": "Add Row",
+        "addColumn": "Add Column"
     },
     "buttons": {
         "login": "Login",

@@ -13,11 +13,17 @@
     "functions": {
         "addRowBelow": "إضافة صف بالأسفل",
         "addRowAbove": "إضافة صف بالأعلى",
+        "addColumnAfter": "إضافة عامود بعده",
+        "addColumnBefore": "إضافة عامود قبله",
         "addCorridorBelow": "إضافة ممر بالأسفل",
         "addCorridorAbove": "إضافة ممر بالأعلى",
+        "addCorridorAfter": "إضافة ممر بعده",
+        "addCorridorBefore": "إضافة ممر قبله",
         "convertToCorridor": "تحويل إلى ممر",
         "convertToRow": "تحويل إلى صف",
-        "addRow": "إضافة صف"
+        "convertToColumn": "تحويل إلى عامود",
+        "addRow": "إضافة صف",
+        "addColumn": "إضافة عامود"
     },
     "buttons": {
         "login": "تسجيل دخول",
