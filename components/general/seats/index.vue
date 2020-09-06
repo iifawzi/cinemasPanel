@@ -53,7 +53,7 @@
                   <span class="name">{{$t("functions.convertToRow")}}</span>
                 </div>
                 <!-- Add Row Above -->
-                <div class="function" v-if="key === 'corridor'" @click.stop="addRowAbove(index+1)">
+                <div class="function" @click.stop="addRowAbove(index+1)">
                   <span class="icon">
                     <i class="fas fa-arrow-up green"></i>
                   </span>
@@ -63,12 +63,12 @@
                 <div class="function" @click.stop="addRowBelow(index+1)">
                   <span class="icon">
                     <i
-                      :class="[key === 'corridor' ? 'fas fa-arrow-down' : 'fas fa-arrows-alt-v' ,'pink']"
+                      class="fas fa-arrow-down pink"
                     ></i>
                   </span>
                   <span
                     class="name"
-                  >{{key === 'corridor' ? $t("functions.addRowBelow") : $t("functions.addRow")}}</span>
+                  >{{$t("functions.addRowBelow")}}</span>
                 </div>
                 <!-- Add Corridor After -->
                 <div
@@ -153,7 +153,7 @@
                   <span class="name">{{$t("functions.convertToCorridor")}}</span>
                 </div>
                   <!-- Add Column before -->
-                <div class="function" v-if="!checkNotCorridor(index+1)" @click.stop="addColumnBefore(index+1)">
+                <div class="function"  @click.stop="addColumnBefore(index+1)">
                   <span class="icon">
                     <i class="fas fa-arrow-left green"></i>
                   </span>
@@ -163,12 +163,12 @@
                      <div class="function" @click.stop="addColumnAfter(index+1)">
                   <span class="icon">
                     <i
-                      :class="[!checkNotCorridor(index+1) ? 'fas fa-arrow-right' : 'fas fa-arrows-alt-h' ,'pink']"
+                      class=" fas fa-arrow-right pink"
                     ></i>
                   </span>
                   <span
                     class="name"
-                  >{{!checkNotCorridor(index+1) ? $t("functions.addColumnAfter") : $t("functions.addColumn")}}</span>
+                  >{{$t("functions.addColumnAfter")}}</span>
                 </div>
                 <!-- Add Corridor before -->
                 <div
@@ -196,13 +196,36 @@
               </div>
             </div>
           </div>
-          <div v-for="({seats},index) of seatsArray" :key="index" class="row">
+          <div v-for="({key,seats},index) of seatsArray" :key="index" class="row">
             <div
               v-for="(val,index) of seats"
-              :key="val != 0 ? val : val+Math.random()*1000"
+              :key="val+key+index"
               :class="['seat--container', 'seat-margin-'+language, checkNotCorridor(index+1) ? '' : 'row-corridor']"
+              @click="clicked = val != 0 ? key+index : ''"
             >
-              <seat v-if="checkNotCorridor(index+1)" :color="val === 0 ? 'closed' : ''" />
+              <div class="options" v-if="clicked === key+index">
+              <div class="arrow"></div>
+              <div :class="['box', 'box-'+language]" :dir="language === 'ar' ? 'rtl' : 'ltr'">
+                <div class="function" @click.stop="clicked = ''">
+                  <span :class="['closeIcon', 'closeIcon-'+language]">
+                    <i class="far fa-window-close close"></i>
+                  </span>
+                </div>
+                <!-- Close Seat Component -->
+                <div
+                  class="function"
+                  @click.stop="toggleTheSeat(key+index)"
+                >
+                  <span class="icon">
+                    <i :class="[val != 2 ? 'fas fa-ban red' : 'fas fa-check-circle green']"></i>
+                  </span>
+                  <span v-if="val != 2" class="name">{{$t("general.closeSeat")}}</span>
+                  <span v-else class="name">{{$t("general.openSeat")}}</span>
+                </div>
+
+              </div>
+            </div>
+              <seat v-if="checkNotCorridor(index+1)" :color="val === 2 ? 'closed' : ''" />
             </div>
           </div>
         </div>
@@ -442,6 +465,15 @@ export default {
       ];
       this.hallInfo.columnCorridors.push(newCorridorIndex);
     },
+    toggleTheSeat(seat){
+      this.clicked = '';
+    const index = this.hallInfo.lockedSeats.indexOf(seat);
+    if (index > -1){
+      this.hallInfo.lockedSeats.splice(index,1);
+    }else {
+    this.hallInfo.lockedSeats.push(seat);
+    }
+    }
   },
 };
 </script>

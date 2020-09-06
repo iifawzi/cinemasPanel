@@ -1104,7 +1104,7 @@ import seats from "~/components/general/seats/";
 export default {
     data(){
         return {
-            activeTab: 2,
+            activeTab: 1 ,
             tab2Key: 1, // will be used to re-mount the component when updating defaultHall.
             tabs: {
                 tab1: false,

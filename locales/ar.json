@@ -8,7 +8,10 @@
         "seats": "الكراسي",
         "review": "المراجعه والتأكيد",
         "screen": "الشاشه",
-        "delete": "حذف"
+        "delete": "حذف",
+        "closeSeat": "اغلاق الكرسي",
+        "openSeat": "فتح الكرسي"
+
     },
     "functions": {
         "addRowBelow": "إضافة صف بالأسفل",

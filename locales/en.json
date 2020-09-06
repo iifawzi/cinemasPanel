@@ -8,7 +8,9 @@
         "seats": "Seats",
         "review": "Review and submit",
         "screen": "Screen",
-        "delete": "Delete"
+        "delete": "Delete",
+        "closeSeat": "Close The Seat",
+        "openSeat": "Open The Seat"
     },
     "functions": {
         "addRowBelow": "Add Row Below",

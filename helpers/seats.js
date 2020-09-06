@@ -17,7 +17,7 @@ module.exports = (letters,rowsNumber,columnsNumber,rowCorridors,columnCorridors,
            if (columnCorridors.includes(j)){ // if seat's column is corridor fill its position in the array with zero
             seats[i-1]["seats"].push(0);
            }else if (lockedSeats.includes(letters[0]+startNumber)){ // if the seat is closed fill its position with one
-            seats[i-1]["seats"].push(1);
+            seats[i-1]["seats"].push(2);
             startNumber++
            }else if (bookedSeats.includes(letters[0]+startNumber)){ // if the seat is booked fill its position with one
             seats[i-1]["seats"].push(1);
