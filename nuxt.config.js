@@ -30,7 +30,7 @@ export default {
   ** Will be shared in all components
   */
  styleResources: {
-  scss: ['./assets/scss/variables.scss']
+  scss: ['./assets/scss/variables.scss','./assets/scss/zindexes.scss']
 },
   /*
   ** Plugins to load before mounting the App

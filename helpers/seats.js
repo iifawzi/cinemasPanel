@@ -2,29 +2,56 @@
 
 module.exports = (letters,rowsNumber,columnsNumber,rowCorridors,columnCorridors,lockedSeats,bookedSeats = [])=>{
     const seats = [];
+    let rowNumber = 0; // this will be used, to increment manually, to be able to follow the real numbers of rows (without corridors)
     for(let i=1;i<=rowsNumber;i++){
-        let startNumber = 1;
+        let columnNumber = 1; // this will be used, to increment manually, to be able to follow the real numbers of columns (without corridors)
         if (rowCorridors.includes(i)){
             seats.push({
-                key: "corridor",
-                seats: []
+                uuid: i,
+                name: "RowCorridor",
+                seats: [],
             }); // this indicates that it's a row
             continue;
         }else {
-            seats.push({key: letters[0], seats: []}); // push an object with a row key which is a letter and empty array which will be used below to fill the seats
+            seats.push({uuid: i,name: letters[0], seats: []}); // push an object with a row key which is a letter and empty array which will be used below to fill the seats
+            rowNumber++;
         }
        for (let j=1;j<=columnsNumber;j++){
-           if (columnCorridors.includes(j)){ // if seat's column is corridor fill its position in the array with zero
-            seats[i-1]["seats"].push(0);
-           }else if (lockedSeats.includes(letters[0]+startNumber)){ // if the seat is closed fill its position with one
-            seats[i-1]["seats"].push(2);
-            startNumber++
-           }else if (bookedSeats.includes(letters[0]+startNumber)){ // if the seat is booked fill its position with one
-            seats[i-1]["seats"].push(1);
-            startNumber++
-           }else {
-            seats[i-1]["seats"].push(letters[0]+startNumber); // if not closed or booked or in the corridor - fill its position in array with the seat name which consists of (LETTER `refers to the row` AND COLUMN NUMBER )
-            startNumber++
+           if (columnCorridors.includes(j)){ // if seat's column is corridor
+            seats[i-1]["seats"].push({
+                uuid: (i+"-"+j),
+                status: "columnCorridor",
+                name: 'columnCorridor', 
+                seatRow: -1, 
+                seatColumn: -1,
+            });
+           }else if (lockedSeats.findIndex(locked=> locked.row === rowNumber && locked.column === columnNumber) !== -1){ // if the seat is locked 
+            seats[i-1]["seats"].push({
+                uuid: (i+"-"+j),
+                status: "closed",
+                name: letters[0]+columnNumber, 
+                seatRow: rowNumber, 
+                seatColumn: columnNumber,
+            });
+            columnNumber++
+           }else if (bookedSeats.findIndex(booked=> booked.row === rowNumber && booked.column === columnNumber) !== -1){ // if the seat is booked 
+            seats[i-1]["seats"].push({
+                uuid: (i+"-"+j),
+                status: "booked",
+                name: letters[0]+columnNumber, 
+                seatRow: rowNumber, 
+                seatColumn: columnNumber,
+            });
+            columnNumber++
+           }else { // so, it's available
+            seats[i-1]["seats"].push({
+                uuid: (i+"-"+j),
+                status: "available",
+                name: letters[0]+columnNumber, 
+                seatRow: rowNumber, 
+                seatColumn: columnNumber,
+            }); 
+            columnNumber++
         }
        }
        letters.shift();

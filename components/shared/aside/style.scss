@@ -2,7 +2,7 @@
   background-color: $grey-2;
   height: 100vh;
   box-shadow: 0px 0px 20px 0px #d6d7e0;
-  z-index: 400;
+  z-index: $z-aside;
   width: 220px;
   position: fixed;
   top: 0;

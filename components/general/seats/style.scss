@@ -30,17 +30,16 @@
         display: flex;
         flex-flow: column;
         color: $blue;
-        margin-right: 50px;
         margin-top: 30px;
 
         .rowNumber {
-          height: 20px;
+          min-height: 60px;
           font-size: 2rem;
           min-width: 40px;
           position: relative;
 
           .key {
-            z-index: 5000;
+            z-index: $z-rowNumber;
             position: relative;
             cursor: pointer;
           }
@@ -119,10 +118,12 @@
             }
           }
         }
-
-        .rowNumber:not(:last-child) {
-          margin-bottom: 30px;
-        }
+      }
+      .rowsNumbers-ar {
+        margin-left: 50px;
+      }
+      .rowsNumbers-en {
+        margin-right: 50px;
       }
 
       .seats--container {
@@ -140,7 +141,6 @@
 
           .columnNumber {
             cursor: pointer;
-            height: 20px;
             font-size: 2rem;
             min-width: 40px;
             display: flex;
@@ -227,7 +227,7 @@
           flex-flow: row;
           justify-content: space-between;
           padding-top: -1px;
-          height: 20px;
+          min-height: 60px;
 
           .seat--container {
             min-width: 40px;
@@ -251,16 +251,18 @@
                 border-radius: 3px;
                 position: relative;
                 top: 10px;
+              }
+              .arrow-en {
                 left: 2px;
+              }
+              .arrow-ar {
+                right: 2px;
               }
   
               .box {
                 background-color: $white;
                 width: 170px;
-                border-top-right-radius: 10px;
-                border-bottom-right-radius: 10px;
-                border-bottom-left-radius: 10px;
-                z-index: 1;
+                z-index: $z-optionsBox;
                 display: flex;
                 flex-flow: column;
                 justify-content: space-around;
@@ -297,21 +299,21 @@
   
               .box-en {
                 padding-left: 20px;
+                border-top-right-radius: 10px;
+                border-bottom-right-radius: 10px;
+                border-bottom-left-radius: 10px;
               }
   
               .box-ar {
                 padding-right: 20px;
+                border-top-left-radius: 10px;
+                border-bottom-left-radius: 10px;
+                border-bottom-right-radius: 10px;
               }
             }
           }
 
         }
-
-        .row:not(:last-child) {
-          margin-bottom: 30px;
-        }
-
-
       }
 
       .corridor-icon {

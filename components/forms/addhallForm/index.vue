@@ -1078,7 +1078,7 @@
 
         <div class="content">
             <info v-show="activeTab === 1" @iscorrect="checkTab1" />
-              <seats v-show="activeTab === 2" :hallInfo="defaultHall" class="seats" :key="tab2Key" />
+              <seats v-show="activeTab === 2" :hallInfo="defaultHall" class="seats"/>
         </div>
         
 
@@ -1104,8 +1104,7 @@ import seats from "~/components/general/seats/";
 export default {
     data(){
         return {
-            activeTab: 1 ,
-            tab2Key: 1, // will be used to re-mount the component when updating defaultHall.
+            activeTab: 2,
             tabs: {
                 tab1: false,
                 tab2: false,
@@ -1119,7 +1118,10 @@ export default {
                 columnsNumber: 25,
                 rowCorridors:[4,8],
                 columnCorridors: [7,17],
-                lockedSeats:[],
+                lockedSeats:[{
+                    row: 1,
+                    column: 2,
+                }],
             }
         }
     },

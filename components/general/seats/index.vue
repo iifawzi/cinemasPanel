@@ -1,233 +1,75 @@
 <template>
-  <div class="seats" dir="ltr">
+  <div class="seats">
     <div class="content">
       <div class="screen">{{$t("general.screen")}}</div>
       <div class="data">
-        <div class="rowsNumbers">
+        <!-- Rows Numbers -->
+        <div :class="['rowsNumbers', 'rowsNumbers-'+language]"> 
           <div class="rowNumber"></div>
           <div
-            v-for="({key},index) of seatsArray"
-            :key="index"
+            v-for="({uuid,name}) of seatsArray"
+            :key="uuid"
             class="rowNumber"
-            @click="clicked = 'r'+index"
+            @click="clicked = uuid"
           >
-            <div class="options" v-if="clicked === 'r'+index">
-              <div class="arrow"></div>
-              <div :class="['box', 'box-'+language]" :dir="language === 'ar' ? 'rtl' : 'ltr'">
-                <div class="function" @click.stop="clicked = ''">
-                  <span :class="['closeIcon', 'closeIcon-'+language]">
-                    <i class="far fa-window-close close"></i>
-                  </span>
-                </div>
-                <!-- Delete Row Component -->
-                <div
-                  class="function"
-                  v-if="hallInfo.rowsNumber != 1"
-                  @click.stop="deleteRow(index+1)"
-                >
-                  <span class="icon">
-                    <i class="fas fa-minus-circle red"></i>
-                  </span>
-                  <span class="name">{{$t("general.delete")}}</span>
-                </div>
-                <!-- Convert Row To Corridor -->
-                <div
-                  class="function"
-                  v-if=" key != 'corridor' && index+1 != 1  && index+1 != hallInfo.rowsNumber && checkNotRowCorridor(index+1-1) && checkNotRowCorridor(index+1+1)"
-                  @click.stop="convertToCorridor(index+1)"
-                >
-                  <span class="icon">
-                    <i class="fas fa-exchange-alt blue"></i>
-                  </span>
-                  <span class="name">{{$t("functions.convertToCorridor")}}</span>
-                </div>
-                 <!-- Convert Corridor To Row -->
-                <div
-                  class="function"
-                  v-if=" key === 'corridor'"
-                  @click.stop="convertToRow(index+1)"
-                >
-                  <span class="icon">
-                    <i class="fas fa-exchange-alt blue"></i>
-                  </span>
-                  <span class="name">{{$t("functions.convertToRow")}}</span>
-                </div>
-                <!-- Add Row Above -->
-                <div class="function" @click.stop="addRowAbove(index+1)">
-                  <span class="icon">
-                    <i class="fas fa-arrow-up green"></i>
-                  </span>
-                  <span class="name">{{$t("functions.addRowAbove")}}</span>
-                </div>
-                <!-- Add Row below -->
-                <div class="function" @click.stop="addRowBelow(index+1)">
-                  <span class="icon">
-                    <i
-                      class="fas fa-arrow-down pink"
-                    ></i>
-                  </span>
-                  <span
-                    class="name"
-                  >{{$t("functions.addRowBelow")}}</span>
-                </div>
-                <!-- Add Corridor After -->
-                <div
-                  class="function"
-                  v-if=" key != 'corridor' && checkNotRowCorridor(index+1-1) && index+1 != 1"
-                  @click.stop="addCorridor(index+1)"
-                >
-                  <span class="icon">
-                    <i class="fas fa-walking orange"></i>
-                  </span>
-                  <span class="name">{{$t("functions.addCorridorAbove")}}</span>
-                </div>
-                <!-- Add Corridor Below -->
-                <div
-                  class="function"
-                  v-if=" key != 'corridor' && checkNotRowCorridor(index+1+1)  && index+1 != hallInfo.rowsNumber"
-                  @click.stop="addCorridor(index+1+1)"
-                >
-                  <span class="icon">
-                    <i class="fas fa-walking green-2"></i>
-                  </span>
-                  <span class="name">{{$t("functions.addCorridorBelow")}}</span>
-                </div>
-              </div>
-            </div>
             <div
-              :class="['key', , key === 'corridor' ? 'fas fa-walking corridor-icon' : '']"
-            >{{key === 'corridor' ? '' : key}}</div>
+              :class="['key', , name === 'RowCorridor' ? 'fas fa-walking corridor-icon' : '']"
+            >{{name === 'RowCorridor' ? '' : name}}</div>
           </div>
         </div>
+        <!--  -->
         <div class="seats--container">
+          <!-- Columns Numbers -->
           <div :class="['columnsNumbers']">
             <div
-              v-for="(seat,index) of seatsArray[0]['seats']"
-              :key="index"
+              v-for="({uuid,status,seatColumn}) of seatsArray[0]['seats']"
+              :key="uuid"
               class="columnNumber"
-              @click.stop="clicked = 'c'+index"
+              @click.stop="clicked = uuid"
             >
               <span
-                :class="['number', checkNotCorridor(index+1) === false ? 'fas fa-walking corridor-icon' : '']"
-              >{{checkNotCorridor(index+1) ? seat.substr(1) : ""}}</span>
-
-              <div class="options" v-if="clicked === 'c'+index">
-                              <div class="arrow"></div>
-              <div :class="['box', 'box-'+language]" :dir="language === 'ar' ? 'rtl' : 'ltr'">
-                <div class="function" @click.stop="clicked = ''">
-                  <span :class="['closeIcon', 'closeIcon-'+language]">
-                    <i class="far fa-window-close close"></i>
-                  </span>
-                </div> 
-<!-- Delete Column Button -->
-                <div
-                  class="function"
-                  v-if="hallInfo.columnsNumber != 1"
-                  @click.stop="deleteColumn(index+1)"
-                >
-                  <span class="icon">
-                    <i class="fas fa-minus-circle red"></i>
-                  </span>
-                  <span class="name">{{$t("general.delete")}}</span>
-                </div>
-  <!-- Convert Corridor To Column -->
-                <div
-                  class="function"
-                  v-if="!checkNotCorridor(index+1)"
-                  @click.stop="convertToColumn(index+1)"
-                >
-                  <span class="icon">
-                    <i class="fas fa-exchange-alt blue"></i>
-                  </span>
-                  <span class="name">{{$t("functions.convertToColumn")}}</span>
-                </div>
-                 <!-- Convert Column To Corridor -->
-                <div
-                  class="function"
-                  v-if="checkNotCorridor(index+1) && index+1 != 1  && index+1 != hallInfo.columnsNumber && checkNotCorridor(index+1-1) && checkNotCorridor(index+1+1)"
-                  @click.stop="convertColumnToCorridor(index+1)"
-                >
-                  <span class="icon">
-                    <i class="fas fa-exchange-alt blue"></i>
-                  </span>
-                  <span class="name">{{$t("functions.convertToCorridor")}}</span>
-                </div>
-                  <!-- Add Column before -->
-                <div class="function"  @click.stop="addColumnBefore(index+1)">
-                  <span class="icon">
-                    <i class="fas fa-arrow-left green"></i>
-                  </span>
-                  <span class="name">{{$t("functions.addColumnBefore")}}</span>
-                </div>
-                 <!-- Add Column after -->
-                     <div class="function" @click.stop="addColumnAfter(index+1)">
-                  <span class="icon">
-                    <i
-                      class=" fas fa-arrow-right pink"
-                    ></i>
-                  </span>
-                  <span
-                    class="name"
-                  >{{$t("functions.addColumnAfter")}}</span>
-                </div>
-                <!-- Add Corridor before -->
-                <div
-                  class="function"
-                  v-if="checkNotCorridor(index+1) && checkNotCorridor(index+1-1) && index+1 != 1"
-                  @click.stop="addColumnCorridor(index+1)"
-                >
-                  <span class="icon">
-                    <i class="fas fa-walking orange"></i>
-                  </span>
-                  <span class="name">{{$t("functions.addCorridorBefore")}}</span>
-                </div>
-                <!-- Add Corridor after -->
-                <div
-                  class="function"
-                  v-if="checkNotCorridor(index+1) && checkNotCorridor(index+1+1)  && index+1 != hallInfo.columnsNumber"
-                  @click.stop="addColumnCorridor(index+1+1)"
-                >
-                  <span class="icon">
-                    <i class="fas fa-walking green-2"></i>
-                  </span>
-                  <span class="name">{{$t("functions.addCorridorAfter")}}</span>
-                </div>
-              </div>
-              </div>
+                :class="['number', status === 'columnCorridor' ? 'fas fa-walking corridor-icon' : '']"
+              >{{status === 'columnCorridor' ? '' : seatColumn}}</span>
             </div>
           </div>
-          <div v-for="({key,seats},index) of seatsArray" :key="index" class="row">
+          <!--  -->
+          <!-- Seats -->
+          <div v-for="({uuid,seats}) of seatsArray" :key="uuid" class="row">
             <div
-              v-for="(val,index) of seats"
-              :key="val+key+index"
-              :class="['seat--container', 'seat-margin-'+language, checkNotCorridor(index+1) ? '' : 'row-corridor']"
-              @click="clicked = val != 0 ? key+index : ''"
+              v-for="({uuid,status,seatRow,seatColumn}) of seats"
+              :key="uuid"
+              :class="['seat--container', 'seat-margin-'+language]"
             >
-              <div class="options" v-if="clicked === key+index">
-              <div class="arrow"></div>
-              <div :class="['box', 'box-'+language]" :dir="language === 'ar' ? 'rtl' : 'ltr'">
+             <seat v-if="status != 'columnCorridor'" @click="clicked = uuid" :color="status === 'closed' ? 'closed' : ''" />
+             <!-- Seat Options -->
+              <div class="options" v-if="clicked === uuid">
+              <div :class="['arrow', 'arrow-'+language]"></div>
+              <div :class="['box', 'box-'+language]">
+                <!-- Dismiss icon -->
                 <div class="function" @click.stop="clicked = ''">
                   <span :class="['closeIcon', 'closeIcon-'+language]">
                     <i class="far fa-window-close close"></i>
                   </span>
                 </div>
-                <!-- Close Seat Component -->
+                <!--  -->
+                <!-- Toggle The Seat function  -->
                 <div
                   class="function"
-                  @click.stop="toggleTheSeat(key+index)"
+                  @click.stop="toggleSeatStatus(seatRow,seatColumn)"
                 >
                   <span class="icon">
-                    <i :class="[val != 2 ? 'fas fa-ban red' : 'fas fa-check-circle green']"></i>
+                    <i :class="[status != 'closed' ? 'fas fa-ban red' : 'fas fa-check-circle green']"></i>
                   </span>
-                  <span v-if="val != 2" class="name">{{$t("general.closeSeat")}}</span>
+                  <span v-if="status != 'closed'" class="name">{{$t("general.closeSeat")}}</span>
                   <span v-else class="name">{{$t("general.openSeat")}}</span>
                 </div>
-
+                <!--  -->
               </div>
             </div>
-              <seat v-if="checkNotCorridor(index+1)" :color="val === 2 ? 'closed' : ''" />
+            <!--  -->
             </div>
           </div>
+          <!--  -->
         </div>
       </div>
     </div>
@@ -294,10 +136,9 @@ export default {
     // using `index+1` when calling the below functions because index starts from 0
     //
 
-
     // Rows Functions
     deleteRow(rowNumber) {
-      this.clicked = '';
+      this.clicked = "";
       this.hallInfo.rowsNumber--;
       this.hallInfo.rowCorridors = [
         ...this.hallInfo.rowCorridors.map((corridorNumber) => {
@@ -315,18 +156,18 @@ export default {
       ];
     },
     convertToCorridor(rowNumber) {
-      this.clicked = '';
+      this.clicked = "";
       this.hallInfo.rowCorridors.push(rowNumber);
     },
     convertToRow(rowNumber) {
-      this.clicked = '';
+      this.clicked = "";
       const corridorIndex = this.hallInfo.rowCorridors.indexOf(rowNumber);
       if (corridorIndex > -1) {
         this.hallInfo.rowCorridors.splice(corridorIndex, 1);
       }
     },
     addRowAbove(rowNumber) {
-      this.clicked = '';
+      this.clicked = "";
       this.hallInfo.rowsNumber++;
       this.hallInfo.rowCorridors = [
         ...this.hallInfo.rowCorridors.map((corridorNumber) => {
@@ -342,7 +183,7 @@ export default {
       ];
     },
     addRowBelow(rowNumber) {
-      this.clicked = '';
+      this.clicked = "";
       this.hallInfo.rowsNumber++;
       this.hallInfo.rowCorridors = [
         ...this.hallInfo.rowCorridors.map((corridorNumber) => {
@@ -361,7 +202,7 @@ export default {
       // explanition:
       // if we are at row number 6 and wanna add a corridor below so the number of new corridor will be 7 for and the old one will be the same. for that reason the we use (index+1+1) for new one.
       // if we are at row number 6 and wanna add a corridor above, the number of new corridor will be 6, and the old one will be 7 so we use (index+1) for the new one, and.
-      this.clicked = '';
+      this.clicked = "";
       this.hallInfo.rowsNumber++;
       this.hallInfo.rowCorridors = [
         ...this.hallInfo.rowCorridors.map((corridorNumber) => {
@@ -377,11 +218,9 @@ export default {
       this.hallInfo.rowCorridors.push(newCorridorIndex);
     },
 
-
-
     // Columns Functions
     deleteColumn(columnNumber) {
-      this.clicked = '';
+      this.clicked = "";
       this.hallInfo.columnsNumber--;
       this.hallInfo.columnCorridors = [
         ...this.hallInfo.columnCorridors.map((corridorNumber) => {
@@ -398,24 +237,24 @@ export default {
         }),
       ];
     },
-    
+
     convertToCorridor(rowNumber) {
-      this.clicked = '';
+      this.clicked = "";
       this.hallInfo.rowCorridors.push(rowNumber);
     },
     convertToColumn(columnNumber) {
-      this.clicked = '';
+      this.clicked = "";
       const corridorIndex = this.hallInfo.columnCorridors.indexOf(columnNumber);
       if (corridorIndex > -1) {
         this.hallInfo.columnCorridors.splice(corridorIndex, 1);
       }
     },
-        convertColumnToCorridor(columnNumber) {
-          this.clicked = '';
+    convertColumnToCorridor(columnNumber) {
+      this.clicked = "";
       this.hallInfo.columnCorridors.push(columnNumber);
     },
     addColumnBefore(columnNumber) {
-      this.clicked = '';
+      this.clicked = "";
       this.hallInfo.columnsNumber++;
       this.hallInfo.columnCorridors = [
         ...this.hallInfo.columnCorridors.map((corridorNumber) => {
@@ -431,7 +270,7 @@ export default {
       ];
     },
     addColumnAfter(columnNumber) {
-      this.clicked = '';
+      this.clicked = "";
       this.hallInfo.columnsNumber++;
       this.hallInfo.columnCorridors = [
         ...this.hallInfo.columnCorridors.map((corridorNumber) => {
@@ -450,7 +289,7 @@ export default {
       // explanition:
       // if we are at column number 6 and wanna add a corridor after so the number of new corridor will be 7 for and the old one will be the same. for that reason the we use (index+1+1) for new one.
       // if we are at row number 6 and wanna add a corridor before, the number of new corridor will be 6, and the old seat will be 7 so we use (index+1) for the new one, and.
-      this.clicked = '';
+      this.clicked = "";
       this.hallInfo.columnsNumber++;
       this.hallInfo.columnCorridors = [
         ...this.hallInfo.columnCorridors.map((corridorNumber) => {
@@ -465,15 +304,18 @@ export default {
       ];
       this.hallInfo.columnCorridors.push(newCorridorIndex);
     },
-    toggleTheSeat(seat){
-      this.clicked = '';
-    const index = this.hallInfo.lockedSeats.indexOf(seat);
-    if (index > -1){
-      this.hallInfo.lockedSeats.splice(index,1);
-    }else {
-    this.hallInfo.lockedSeats.push(seat);
-    }
-    }
+
+
+    // Seat Options
+    toggleSeatStatus(rowNumber,columnNumber) { 
+      this.clicked = "";
+      const index = this.hallInfo.lockedSeats.findIndex(locked=> locked.row === rowNumber && locked.column === columnNumber);
+      if (index > -1) {
+        this.hallInfo.lockedSeats.splice(index, 1);
+      } else {
+        this.hallInfo.lockedSeats.push({row:rowNumber,column:columnNumber});
+      }
+    },
   },
 };
 </script>
