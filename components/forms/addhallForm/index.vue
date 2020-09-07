@@ -1114,10 +1114,10 @@ export default {
                 hall_description: "",
             },
             defaultHall:{
-                rowsNumber: 10,
+                rowsNumber: 5,
                 columnsNumber: 25,
-                rowCorridors:[4,7],
-                columnCorridors: [7,17],
+                rowCorridors:[],
+                columnCorridors: [24,2],
                 lockedSeats:[{
                     row: 1,
                     column: 2,

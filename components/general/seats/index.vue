@@ -129,11 +129,11 @@
                       <i class="far fa-window-close close"></i>
                     </span>
                   </div>
-                  <!-- Delete Column Button -->
+                  <!-- Delete Column -->
                   <div
                     class="function"
                     v-if="hallInfo.columnsNumber != 1"
-                    @click.stop="deleteColumn(index+1)"
+                    @click.stop="deleteColumn(uuid)"
                   >
                     <span class="icon">
                       <i class="fas fa-minus-circle red"></i>
@@ -234,21 +234,47 @@ export default {
       return this.hallInfo.rowCorridors.includes(rowNumber);
     },
 
-    deleteLockedSeats(realRowNumber) {
-      // delete lockedSeats for specific row
-
+    moveClosedAndCorridorsBelow(rowNumber, realRowNumber, place) {
+      let tempCorridors = [...this.hallInfo.rowCorridors];
       let tempLockedSeats = JSON.parse(
         JSON.stringify(this.hallInfo.lockedSeats)
       ); // DEEP COPY THE REAL ONE.
-      let newLockedSeats = tempLockedSeats.filter(
-        (locked) => locked.row != realRowNumber
-      );
-      this.hallInfo.lockedSeats = newLockedSeats;
+
+      tempCorridors = tempCorridors.map((corridorNumber) => {
+        // move each corridor below
+        const CorridorOperation =
+          place === "above"
+            ? corridorNumber >= rowNumber
+            : corridorNumber > rowNumber;
+        if (CorridorOperation) {
+          corridorNumber++;
+        }
+        return corridorNumber;
+      });
+
+      tempLockedSeats = tempLockedSeats.map((locked) => {
+        // move each lockedSeat Below
+        const LockedSeatOperation =
+          place === "above"
+            ? locked.row >= realRowNumber
+            : locked.row > realRowNumber;
+        if (LockedSeatOperation) {
+          locked.row++;
+        }
+        return locked;
+      });
+
+      this.hallInfo.lockedSeats = tempLockedSeats;
+      this.hallInfo.rowCorridors = tempCorridors;
     },
 
     deleteRow(rowNumber, realRowNumber) {
       let tempCorridors = [...this.hallInfo.rowCorridors];
       let tempRowsNumber = this.hallInfo.rowsNumber;
+      let tempLockedSeats = JSON.parse(
+        JSON.stringify(this.hallInfo.lockedSeats)
+      ); // DEEP COPY THE REAL ONE.
+      let wrapNumber = 1; // this will be increased if we deleted more than one.
       // if after and before the row which will be deleted there are 'corridors', we have to delete one of them also. (no sense to have tow corridors beside each other)
       const afterMeIndex = tempCorridors.indexOf(rowNumber + 1);
       const BeforeMeIndex = tempCorridors.indexOf(rowNumber - 1);
@@ -256,33 +282,48 @@ export default {
         tempCorridors.splice(afterMeIndex, 1);
         tempRowsNumber--;
       }
-
       // if after delete, is there a corridor will be number 1 or last one. -not acceptable- (delete that corridor)
-      if (rowNumber + 1 === 2 || rowNumber + 1 === this.hallInfo.rowsNumber) {
-        const corridorNumber = tempCorridors.indexOf(rowNumber + 1);
+      if (rowNumber + 1 === 2 || rowNumber === this.hallInfo.rowsNumber) {
+        const corridorNumber =
+          rowNumber + 1 === 2
+            ? tempCorridors.indexOf(rowNumber + 1)
+            : tempCorridors.indexOf(rowNumber - 1);
         if (corridorNumber != -1) {
           tempCorridors.splice(corridorNumber, 1);
+          wrapNumber++;
           tempRowsNumber--;
         }
       }
-
       // to delete all lockedSeats in the deleted Row:
-      this.deleteLockedSeats(realRowNumber);
+      let newLockedSeats = tempLockedSeats.filter(
+        (locked) => locked.row != realRowNumber
+      );
+      tempLockedSeats = newLockedSeats;
 
-      // wrap the corridors:
+      // move the corridors:
       tempCorridors = tempCorridors.map((corridorNumber) => {
         if (corridorNumber > rowNumber) {
-          corridorNumber--; // move any corridor which exist after the one i want to delete, one step above (if i want to delete row number 5 and there's an corridor on number 7, so it will be 6 now :D)
+          corridorNumber -= wrapNumber; // move any corridor which exist after the one i want to delete, one step above (if i want to delete row number 5 and there's an corridor on number 7, so it will be 6 now :D)
         } else if (corridorNumber === rowNumber) {
           // if i'm deleting a corridor
           return null;
         }
         return corridorNumber;
       });
+
+      // move the lockedSeats
+      tempLockedSeats = tempLockedSeats.map((locked) => {
+        if (locked.row > realRowNumber && realRowNumber != -1) {
+          locked.row--;
+        }
+        return locked;
+      });
+
       tempRowsNumber--;
 
       this.hallInfo.rowsNumber = tempRowsNumber;
       this.hallInfo.rowCorridors = tempCorridors;
+      this.hallInfo.lockedSeats = tempLockedSeats;
       this.clicked = "";
     },
 
@@ -334,40 +375,6 @@ export default {
 
       this.hallInfo.rowsNumber = tempRowsNumber;
       this.clicked = "";
-    },
-
-    moveClosedAndCorridorsBelow(rowNumber, realRowNumber, place) {
-      let tempCorridors = [...this.hallInfo.rowCorridors];
-      let tempLockedSeats = JSON.parse(
-        JSON.stringify(this.hallInfo.lockedSeats)
-      ); // DEEP COPY THE REAL ONE.
-
-      tempCorridors = tempCorridors.map((corridorNumber) => {
-        // move each corridor below
-        const CorridorOperation =
-          place === "above"
-            ? corridorNumber >= rowNumber
-            : corridorNumber > rowNumber;
-        if (CorridorOperation) {
-          corridorNumber++;
-        }
-        return corridorNumber;
-      });
-
-      tempLockedSeats = tempLockedSeats.map((locked) => {
-        // move each lockedSeat Below
-        const LockedSeatOperation =
-          place === "above"
-            ? locked.row >= realRowNumber
-            : locked.row > realRowNumber;
-        if (LockedSeatOperation) {
-          locked.row++;
-        }
-        return locked;
-      });
-
-      this.hallInfo.lockedSeats = tempLockedSeats;
-      this.hallInfo.rowCorridors = tempCorridors;
     },
 
     // Seat Functions
