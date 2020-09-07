@@ -12,9 +12,9 @@
             class="rowNumber"
             @click="clicked = rowNumber"
           >
-            <div
+            <span
               :class="['key', , name === 'RowCorridor' ? 'fas fa-walking corridor-icon' : '']"
-            >{{name === 'RowCorridor' ? '' : name}}</div>
+            >{{name === 'RowCorridor' ? '' : name}}</span>
             <!-- Row Options -->
             <div :class="['options', 'options-'+language]" v-if="clicked === rowNumber">
               <div :class="['arrow', 'arrow-'+language]"></div>
@@ -115,11 +115,33 @@
               v-for="({uuid,status,seatColumn}) of seatsArray[0]['seats']"
               :key="uuid"
               class="columnNumber"
-              @click.stop="clicked = seatColumn"
+              @click.stop="clicked = uuid+'-colNumber'"
             >
               <span
                 :class="['number', status === 'columnCorridor' ? 'fas fa-walking corridor-icon' : '']"
               >{{status === 'columnCorridor' ? '' : seatColumn}}</span>
+
+              <div :class="['options', 'options-'+language]" v-if="clicked === uuid+'-colNumber'">
+                <div :class="['arrow', 'arrow-'+language]"></div>
+                <div :class="['box', 'box-'+language]" :dir="language === 'ar' ? 'rtl' : 'ltr'">
+                  <div class="function" @click.stop="clicked = ''">
+                    <span :class="['closeIcon', 'closeIcon-'+language]">
+                      <i class="far fa-window-close close"></i>
+                    </span>
+                  </div>
+                  <!-- Delete Column Button -->
+                  <div
+                    class="function"
+                    v-if="hallInfo.columnsNumber != 1"
+                    @click.stop="deleteColumn(index+1)"
+                  >
+                    <span class="icon">
+                      <i class="fas fa-minus-circle red"></i>
+                    </span>
+                    <span class="name">{{$t("general.delete")}}</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <!--  -->
