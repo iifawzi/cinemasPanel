@@ -23,7 +23,7 @@
         "addCorridorAfter": "إضافة ممر بعده",
         "addCorridorBefore": "إضافة ممر قبله",
         "convertToCorridor": "تحويل إلى ممر",
-        "convertToRow": "تحويل إلى صف",
+        "convertCorridorToRow": "تحويل إلى صف",
         "convertToColumn": "تحويل إلى عامود",
         "addRow": "إضافة صف",
         "addColumn": "إضافة عامود"

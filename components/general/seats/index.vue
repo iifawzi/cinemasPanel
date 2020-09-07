@@ -7,25 +7,111 @@
         <div :class="['rowsNumbers', 'rowsNumbers-'+language]"> 
           <div class="rowNumber"></div>
           <div
-            v-for="({uuid,name}) of seatsArray"
-            :key="uuid"
+            v-for="({rowNumber,name,realRowNumber}) of seatsArray"
+            :key="rowNumber"
             class="rowNumber"
-            @click="clicked = uuid"
+            @click="clicked = rowNumber"
           >
             <div
               :class="['key', , name === 'RowCorridor' ? 'fas fa-walking corridor-icon' : '']"
             >{{name === 'RowCorridor' ? '' : name}}</div>
+<!-- Row Options -->
+            <div :class="['options', 'options-'+language]" v-if="clicked === rowNumber">
+              <div :class="['arrow', 'arrow-'+language]"></div>
+              <div :class="['box', 'box-'+language]">
+                <div class="function" @click.stop="clicked = ''">
+                  <span :class="['closeIcon', 'closeIcon-'+language]">
+                    <i class="far fa-window-close close"></i>
+                  </span>
+                </div>
+                <!-- Delete Row Component -->
+                <div
+                  class="function"
+                  v-if="hallInfo.rowsNumber != 1"
+                  @click.stop="deleteRow(rowNumber,realRowNumber)"
+                >
+                  <span class="icon">
+                    <i class="fas fa-minus-circle red"></i>
+                  </span>
+                  <span class="name">{{$t("general.delete")}}</span>
+                </div>
+              <!-- Convert Row To Corridor -->
+                <div
+                  class="function"
+                  v-if="name != 'RowCorridor' && rowNumber != 1  && rowNumber != hallInfo.rowsNumber && !isThisRowCorridor(rowNumber-1) &&  !isThisRowCorridor(rowNumber+1)"
+                  @click.stop="convertRowToCorridor(rowNumber,realRowNumber)"
+                >
+                  <span class="icon">
+                    <i class="fas fa-exchange-alt blue"></i>
+                  </span>
+                  <span class="name">{{$t("functions.convertToCorridor")}}</span>
+                </div>
+        <!--  -->
+         <!-- Convert Corridor To Row -->
+                <div
+                  class="function"
+                  v-if="name === 'RowCorridor'"
+                  @click.stop="convertCorridorToRow(rowNumber)"
+                >
+                  <span class="icon">
+                    <i class="fas fa-exchange-alt blue"></i>
+                  </span>
+                  <span class="name">{{$t("functions.convertCorridorToRow")}}</span>
+                </div>
+        <!--  -->
+          <!-- Add Row Above -->
+                <div v-if="name != 'RowCorridor'" class="function" @click.stop="addRow(rowNumber,realRowNumber,'above')">
+                  <span class="icon">
+                    <i class="fas fa-arrow-up green"></i>
+                  </span>
+                  <span class="name">{{$t("functions.addRowAbove")}}</span>
+                </div>
+                <!-- Add Row below -->
+                <div v-if="name != 'RowCorridor'" class="function" @click.stop="addRow(rowNumber,realRowNumber,'below')">
+                  <span class="icon">
+                    <i
+                      class="fas fa-arrow-down pink"
+                    ></i>
+                  </span>
+                  <span
+                    class="name"
+                  >{{$t("functions.addRowBelow")}}</span>
+                </div>
+                 <!-- Add Corridor Above -->
+                <div
+                  class="function"
+                  v-if="name != 'RowCorridor' && !isThisRowCorridor(rowNumber-1) && rowNumber != 1"
+                  @click.stop="addCorridor(rowNumber,realRowNumber,'above')"
+                >
+                  <span class="icon">
+                    <i class="fas fa-walking orange"></i>
+                  </span>
+                  <span class="name">{{$t("functions.addCorridorAbove")}}</span>
+                </div>
+                <!-- Add Corridor Below -->
+                <div
+                  class="function"
+                 v-if="name != 'RowCorridor' && !isThisRowCorridor(rowNumber+1) && rowNumber+1 != hallInfo.rowsNumber"
+                  @click.stop="addCorridor(rowNumber,realRowNumber,'below')"
+                >
+                  <span class="icon">
+                    <i class="fas fa-walking green-2"></i>
+                  </span>
+                  <span class="name">{{$t("functions.addCorridorBelow")}}</span>
+                </div>
+            </div>
+            </div>
           </div>
         </div>
         <!--  -->
         <div class="seats--container">
           <!-- Columns Numbers -->
-          <div :class="['columnsNumbers']">
+          <div :class="['columnsNumbers','columnsNumbers-'+language ]">
             <div
               v-for="({uuid,status,seatColumn}) of seatsArray[0]['seats']"
               :key="uuid"
               class="columnNumber"
-              @click.stop="clicked = uuid"
+              @click.stop="clicked = seatColumn"
             >
               <span
                 :class="['number', status === 'columnCorridor' ? 'fas fa-walking corridor-icon' : '']"
@@ -113,200 +199,168 @@ export default {
     },
   },
   methods: {
-    // not column corridor
-    checkNotCorridor(corridorNumber) {
-      // we are using (index+1) because index starts from zero.
-      if (this.hallInfo.columnCorridors.includes(corridorNumber)) {
-        return false;
-      } else {
-        return true;
-      }
-    },
-    // not row corridor
-    checkNotRowCorridor(corridorNumber) {
-      // we are using (index+1) because index starts from zero.
-      if (this.hallInfo.rowCorridors.includes(corridorNumber)) {
-        return false;
-      } else {
-        return true;
-      }
-    },
-
-    //
-    // using `index+1` when calling the below functions because index starts from 0
-    //
-
     // Rows Functions
-    deleteRow(rowNumber) {
-      this.clicked = "";
-      this.hallInfo.rowsNumber--;
-      this.hallInfo.rowCorridors = [
-        ...this.hallInfo.rowCorridors.map((corridorNumber) => {
-          if (corridorNumber > rowNumber) {
-            // if we are deleting a row (not corridor) which is above the corridors
-            corridorNumber--; // shift each corridor after the deleted row one step above.
-            return corridorNumber;
-          } else if (corridorNumber === rowNumber) {
-            // if we are deleting a corridor:
-            return null;
-          } else {
-            return corridorNumber;
-          }
-        }),
-      ];
+
+    isThisRowCorridor(rowNumber) {
+      return this.hallInfo.rowCorridors.includes(rowNumber);
     },
-    convertToCorridor(rowNumber) {
-      this.clicked = "";
-      this.hallInfo.rowCorridors.push(rowNumber);
+
+    deleteLockedSeats(realRowNumber){ // delete lockedSeats for specific row
+
+        let tempLockedSeats = JSON.parse(JSON.stringify(this.hallInfo.lockedSeats)); // DEEP COPY THE REAL ONE.
+        let newLockedSeats = tempLockedSeats.filter(locked=> locked.row != realRowNumber);
+        this.hallInfo.lockedSeats = newLockedSeats;
+
     },
-    convertToRow(rowNumber) {
-      this.clicked = "";
-      const corridorIndex = this.hallInfo.rowCorridors.indexOf(rowNumber);
-      if (corridorIndex > -1) {
-        this.hallInfo.rowCorridors.splice(corridorIndex, 1);
+
+    deleteRow(rowNumber,realRowNumber) {
+
+
+      let tempCorridors = [...this.hallInfo.rowCorridors];
+      let tempRowsNumber = this.hallInfo.rowsNumber;
+       // if after and before the row which will be deleted there are 'corridors', we have to delete one of them also. (no sense to have tow corridors beside each other)
+      const afterMeIndex = tempCorridors.indexOf(rowNumber+1);
+      const BeforeMeIndex = tempCorridors.indexOf(rowNumber-1);
+      if (afterMeIndex != -1 && BeforeMeIndex != -1){       
+        tempCorridors.splice(afterMeIndex,1)
+        tempRowsNumber--;
       }
-    },
-    addRowAbove(rowNumber) {
-      this.clicked = "";
-      this.hallInfo.rowsNumber++;
-      this.hallInfo.rowCorridors = [
-        ...this.hallInfo.rowCorridors.map((corridorNumber) => {
-          if (corridorNumber > rowNumber || corridorNumber === rowNumber) {
-            // if we are adding a row where there will be an corridors below it.
-            // OR who call this function is corridor, so we will shift this corridor one step
-            corridorNumber++; // shift each corridor one step down.
-            return corridorNumber;
-          } else {
-            return corridorNumber;
-          }
-        }),
-      ];
-    },
-    addRowBelow(rowNumber) {
-      this.clicked = "";
-      this.hallInfo.rowsNumber++;
-      this.hallInfo.rowCorridors = [
-        ...this.hallInfo.rowCorridors.map((corridorNumber) => {
-          if (corridorNumber > rowNumber) {
-            // if we are adding a row where there will be an corridors below it.
-            corridorNumber++; // shift each corridor one step down.
-            return corridorNumber;
-          } else {
-            return corridorNumber;
-          }
-        }),
-      ];
-    },
-    addCorridor(newCorridorIndex) {
-      // When adding corridor above we use the index of caller, (index+1), if below we use the (index+1+1)
-      // explanition:
-      // if we are at row number 6 and wanna add a corridor below so the number of new corridor will be 7 for and the old one will be the same. for that reason the we use (index+1+1) for new one.
-      // if we are at row number 6 and wanna add a corridor above, the number of new corridor will be 6, and the old one will be 7 so we use (index+1) for the new one, and.
-      this.clicked = "";
-      this.hallInfo.rowsNumber++;
-      this.hallInfo.rowCorridors = [
-        ...this.hallInfo.rowCorridors.map((corridorNumber) => {
-          if (corridorNumber > newCorridorIndex) {
-            // if we are adding a corridor where there will be an corridors below it.
-            corridorNumber++; // shift each corridor one step down.
-            return corridorNumber;
-          } else {
-            return corridorNumber;
-          }
-        }),
-      ];
-      this.hallInfo.rowCorridors.push(newCorridorIndex);
-    },
 
-    // Columns Functions
-    deleteColumn(columnNumber) {
-      this.clicked = "";
-      this.hallInfo.columnsNumber--;
-      this.hallInfo.columnCorridors = [
-        ...this.hallInfo.columnCorridors.map((corridorNumber) => {
-          if (corridorNumber > columnNumber) {
-            // if we are deleting a column (not corridor) which is before corridors
-            corridorNumber--; // shift each corridor after the deleted column one step before.
-            return corridorNumber;
-          } else if (corridorNumber === columnNumber) {
-            // if we are deleting a corridor:
-            return null;
-          } else {
-            return corridorNumber;
-          }
-        }),
-      ];
-    },
-
-    convertToCorridor(rowNumber) {
-      this.clicked = "";
-      this.hallInfo.rowCorridors.push(rowNumber);
-    },
-    convertToColumn(columnNumber) {
-      this.clicked = "";
-      const corridorIndex = this.hallInfo.columnCorridors.indexOf(columnNumber);
-      if (corridorIndex > -1) {
-        this.hallInfo.columnCorridors.splice(corridorIndex, 1);
+      // if after delete, is there a corridor will be number 1 or last one. -not acceptable- (delete that corridor)
+      if (rowNumber+1 === 2 || rowNumber+1 === this.hallInfo.rowsNumber){
+        const corridorNumber = tempCorridors.indexOf(rowNumber+1);
+        if (corridorNumber != -1){
+        tempCorridors.splice(corridorNumber,1)
+        tempRowsNumber--;
+        }
       }
-    },
-    convertColumnToCorridor(columnNumber) {
+
+      // to delete all lockedSeats in the deleted Row: 
+      this.deleteLockedSeats(realRowNumber);
+
+      // wrap the corridors: 
+      tempCorridors = tempCorridors.map(corridorNumber=>{
+       if (corridorNumber > rowNumber){
+         corridorNumber--; // move any corridor which exist after the one i want to delete, one step above (if i want to delete row number 5 and there's an corridor on number 7, so it will be 6 now :D) 
+       }else if (corridorNumber === rowNumber){ // if i'm deleting a corridor
+           return null;
+       }
+       return corridorNumber;
+      });
+      tempRowsNumber--;
+
+      this.hallInfo.rowsNumber = tempRowsNumber;
+      this.hallInfo.rowCorridors = tempCorridors;
       this.clicked = "";
-      this.hallInfo.columnCorridors.push(columnNumber);
+
+
     },
-    addColumnBefore(columnNumber) {
+    
+
+
+    convertRowToCorridor(rowNumber, realRowNumber){
+
+      let tempCorridors = [...this.hallInfo.rowCorridors];
+      tempCorridors.push(rowNumber);
+      this.deleteLockedSeats(realRowNumber);
+
+
+      this.hallInfo.rowCorridors = tempCorridors;
       this.clicked = "";
-      this.hallInfo.columnsNumber++;
-      this.hallInfo.columnCorridors = [
-        ...this.hallInfo.columnCorridors.map((corridorNumber) => {
-          if (corridorNumber >= columnNumber) {
-            // if we are adding a column where there will be an corridors after it.
-            // OR who call this function is corridor, so we will shift this corridor one step
-            corridorNumber++; // shift each corridor one step right.
-            return corridorNumber;
-          } else {
-            return corridorNumber;
-          }
-        }),
-      ];
-    },
-    addColumnAfter(columnNumber) {
-      this.clicked = "";
-      this.hallInfo.columnsNumber++;
-      this.hallInfo.columnCorridors = [
-        ...this.hallInfo.columnCorridors.map((corridorNumber) => {
-          if (corridorNumber > columnNumber) {
-            // if we are adding a column where there will be an corridors before it.
-            corridorNumber++; // shift each corridor one step left.
-            return corridorNumber;
-          } else {
-            return corridorNumber;
-          }
-        }),
-      ];
-    },
-    addColumnCorridor(newCorridorIndex) {
-      // When adding corridor before we use the index of caller, (index+1), if after we use the (index+1+1)
-      // explanition:
-      // if we are at column number 6 and wanna add a corridor after so the number of new corridor will be 7 for and the old one will be the same. for that reason the we use (index+1+1) for new one.
-      // if we are at row number 6 and wanna add a corridor before, the number of new corridor will be 6, and the old seat will be 7 so we use (index+1) for the new one, and.
-      this.clicked = "";
-      this.hallInfo.columnsNumber++;
-      this.hallInfo.columnCorridors = [
-        ...this.hallInfo.columnCorridors.map((corridorNumber) => {
-          if (corridorNumber > newCorridorIndex) {
-            // if we are adding a corridor where there will be an corridors after it.
-            corridorNumber++; // shift each corridor one step right.
-            return corridorNumber;
-          } else {
-            return corridorNumber;
-          }
-        }),
-      ];
-      this.hallInfo.columnCorridors.push(newCorridorIndex);
+
     },
 
 
-    // Seat Options
+
+    convertCorridorToRow(rowNumber){
+
+       let tempCorridors = [...this.hallInfo.rowCorridors];
+       const corridorIndex = tempCorridors.indexOf(rowNumber);
+       if (corridorIndex > -1){
+        tempCorridors.splice(corridorIndex,1);
+      }
+
+      
+      this.hallInfo.rowCorridors = tempCorridors;
+      this.clicked = "";
+
+    },
+
+
+    addRow(rowNumber,realRowNumber,place) {
+
+      let tempCorridors = [...this.hallInfo.rowCorridors];
+      let tempLockedSeats = JSON.parse(JSON.stringify(this.hallInfo.lockedSeats)); // DEEP COPY THE REAL ONE.
+      let tempRowsNumber = this.hallInfo.rowsNumber;
+
+      this.moveClosedAndCorridorsBelow(rowNumber,realRowNumber,place);
+      tempRowsNumber++;
+
+
+      this.hallInfo.rowsNumber = tempRowsNumber;
+      this.clicked = "";
+     
+    },
+
+
+
+    addCorridor(rowNumber,realRowNumber,place) {
+      let tempCorridors = [...this.hallInfo.rowCorridors];
+      let tempRowsNumber = this.hallInfo.rowsNumber;
+
+
+      this.moveClosedAndCorridorsBelow(rowNumber,realRowNumber,place);
+      tempRowsNumber++;
+      if (place === 'above'){
+      this.hallInfo.rowCorridors.push(rowNumber);
+      }else if (place === 'below'){
+      this.hallInfo.rowCorridors.push(rowNumber+1);
+      }
+      
+
+      this.hallInfo.rowsNumber = tempRowsNumber;
+      this.clicked = "";
+      
+    },
+
+
+
+
+
+    moveClosedAndCorridorsBelow(rowNumber,realRowNumber,place){
+
+
+      let tempCorridors = [...this.hallInfo.rowCorridors];
+      let tempLockedSeats = JSON.parse(JSON.stringify(this.hallInfo.lockedSeats)); // DEEP COPY THE REAL ONE.
+
+
+      tempCorridors = tempCorridors.map(corridorNumber=>{ // move each corridor below
+      const CorridorOperation = place === 'above' ? corridorNumber >= rowNumber : corridorNumber > rowNumber;
+      if (CorridorOperation){
+         corridorNumber++; 
+      }
+      return corridorNumber;
+      });
+
+
+      tempLockedSeats = tempLockedSeats.map(locked=>{  // move each lockedSeat Below
+      const LockedSeatOperation = place === 'above' ? locked.row >= realRowNumber : locked.row > realRowNumber;
+      if (LockedSeatOperation){
+         locked.row++; 
+      }
+      return locked;
+      });
+
+
+
+     this.hallInfo.lockedSeats = tempLockedSeats;
+     this.hallInfo.rowCorridors = tempCorridors;
+
+    },
+
+
+
+    // Seat Functions
     toggleSeatStatus(rowNumber,columnNumber) { 
       this.clicked = "";
       const index = this.hallInfo.lockedSeats.findIndex(locked=> locked.row === rowNumber && locked.column === columnNumber);

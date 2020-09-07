@@ -2,18 +2,19 @@
 
 module.exports = (letters,rowsNumber,columnsNumber,rowCorridors,columnCorridors,lockedSeats,bookedSeats = [])=>{
     const seats = [];
-    let rowNumber = 0; // this will be used, to increment manually, to be able to follow the real numbers of rows (without corridors)
+    let rowNumber = 0; // this will be used, to increment manually, to be able to follow the real numbers of rows (without corridors) - zero because it will increase in the rows Lopp, for first time it should be 1, so going to columns loop with 1, if started with 1, it will be go to the columns loop with 2.. so in the rows Loop when row, we added 1 manually
     for(let i=1;i<=rowsNumber;i++){
         let columnNumber = 1; // this will be used, to increment manually, to be able to follow the real numbers of columns (without corridors)
         if (rowCorridors.includes(i)){
             seats.push({
-                uuid: i,
+                rowNumber: i, // we didn't use the variable declared above, because we want to be unique (will be used in control panel only)
                 name: "RowCorridor",
                 seats: [],
+                realRowNumber: -1, // corridor.
             }); // this indicates that it's a row
             continue;
         }else {
-            seats.push({uuid: i,name: letters[0], seats: []}); // push an object with a row key which is a letter and empty array which will be used below to fill the seats
+            seats.push({rowNumber: i,name: letters[0], seats: [],realRowNumber: rowNumber+1}); // push an object with a row key which is a letter and empty array which will be used below to fill the seats
             rowNumber++;
         }
        for (let j=1;j<=columnsNumber;j++){

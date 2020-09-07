@@ -46,12 +46,11 @@
 
           .options {
             position: absolute;
-            bottom: 1.2px;
-            left: 10px;
+            top: 0;
             display: flex;
             flex-flow: row;
-            align-items: flex-end;
-            z-index: 100;
+            align-items: flex-start;
+            z-index: $z-columnNumber;
             animation: showBox forwards ease-in 0.2s;
 
             .arrow {
@@ -62,16 +61,18 @@
               transform: rotate(45deg);
               border-radius: 3px;
               position: relative;
+              top: 1.5px;
+            }
+            .arrow-en {
               right: -10px;
-              bottom: 3px;
+            }
+            .arrow-ar {
+              left: -10px;
             }
 
             .box {
               background-color: $white;
               width: 170px;
-              border-top-right-radius: 10px;
-              border-bottom-right-radius: 10px;
-              border-top-left-radius: 10px;
               z-index: 1;
               display: flex;
               flex-flow: column;
@@ -111,12 +112,25 @@
 
             .box-en {
               padding-left: 20px;
+              border-top-left-radius: 0px;
+              border-bottom-right-radius: 10px;
+              border-bottom-left-radius: 10px;
             }
 
             .box-ar {
               padding-right: 20px;
+              border-top-right-radius: 0px;
+              border-bottom-left-radius: 10px;
+              border-bottom-right-radius: 10px;
             }
           }
+          .options-en {
+            left: 10px;
+          }
+          .options-ar {
+            right: 10px;
+          }
+
         }
       }
       .rowsNumbers-ar {
@@ -136,7 +150,6 @@
           flex-flow: row;
           justify-content: space-between;
           margin-bottom: 60px;
-          padding-left: 5px;
           color: $blue;
 
           .columnNumber {
@@ -221,12 +234,17 @@
             }
           }
         }
-
+        .columnsNumbers-en {
+          padding-left: 5px;
+        }
+        .columnsNumbers-ar {
+          padding-right: 5px;
+        }
         .row {
           display: flex;
           flex-flow: row;
           justify-content: space-between;
-          padding-top: -1px;
+          padding-top: 6px;
           min-height: 60px;
 
           .seat--container {

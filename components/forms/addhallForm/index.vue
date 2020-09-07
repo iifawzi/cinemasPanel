@@ -1116,7 +1116,7 @@ export default {
             defaultHall:{
                 rowsNumber: 10,
                 columnsNumber: 25,
-                rowCorridors:[4,8],
+                rowCorridors:[4,7],
                 columnCorridors: [7,17],
                 lockedSeats:[{
                     row: 1,

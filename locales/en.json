@@ -14,7 +14,7 @@
     },
     "functions": {
         "addRowBelow": "Add Row Below",
-        "addRowAbove": "Add Row After",
+        "addRowAbove": "Add Row Above",
         "addColumnAfter": "Add Column After",
         "addColumnBefore": "Add Column Before",
         "addCorridorBelow": "Add Corridor Below",
@@ -22,7 +22,7 @@
         "addCorridorAfter": "Add Corridor After",
         "addCorridorBefore": "Add Corridor Before",
         "convertToCorridor": "Convert To Corridor",
-        "convertToRow": "Convert To Row",
+        "convertCorridorToRow": "Convert To Row",
         "convertToColumn": "Convert To Column",
         "addRow": "Add Row",
         "addColumn": "Add Column"
