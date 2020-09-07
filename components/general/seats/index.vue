@@ -95,7 +95,7 @@
                 <!-- Add Corridor Below -->
                 <div
                   class="function"
-                  v-if="name != 'RowCorridor' && !isThisRowCorridor(rowNumber+1) && rowNumber+1 != hallInfo.rowsNumber"
+                  v-if="name != 'RowCorridor' && !isThisRowCorridor(rowNumber+1) && rowNumber+1 <= hallInfo.rowsNumber"
                   @click.stop="addCorridor(rowNumber,realRowNumber,'below')"
                 >
                   <span class="icon">
@@ -329,20 +329,49 @@ export default {
 
     convertRowToCorridor(rowNumber, realRowNumber) {
       let tempCorridors = [...this.hallInfo.rowCorridors];
+      let tempLockedSeats = JSON.parse(
+        JSON.stringify(this.hallInfo.lockedSeats)
+      ); // DEEP COPY THE REAL ONE.
       tempCorridors.push(rowNumber);
-      this.deleteLockedSeats(realRowNumber);
+        
+      // to delete all lockedSeats in that row:
+      let newLockedSeats = tempLockedSeats.filter(
+        (locked) => locked.row != realRowNumber
+      );
+      tempLockedSeats = newLockedSeats;
+
+        // move the lockedSeats
+        tempLockedSeats = tempLockedSeats.map((locked) => {
+        if (locked.row > realRowNumber) {
+          locked.row--;
+        }
+        return locked;
+      });
 
       this.hallInfo.rowCorridors = tempCorridors;
+      this.hallInfo.lockedSeats = tempLockedSeats;
       this.clicked = "";
     },
 
     convertCorridorToRow(rowNumber) {
       let tempCorridors = [...this.hallInfo.rowCorridors];
+      let tempLockedSeats = JSON.parse(
+        JSON.stringify(this.hallInfo.lockedSeats)
+      ); // DEEP COPY THE REAL ONE.
       const corridorIndex = tempCorridors.indexOf(rowNumber);
       if (corridorIndex > -1) {
         tempCorridors.splice(corridorIndex, 1);
       }
 
+     // move the lockedSeats
+        tempLockedSeats = tempLockedSeats.map((locked) => {
+        if (locked.row >= rowNumber) {
+          locked.row++;
+        }
+        return locked;
+      });
+
+      this.hallInfo.lockedSeats = tempLockedSeats;
       this.hallInfo.rowCorridors = tempCorridors;
       this.clicked = "";
     },
