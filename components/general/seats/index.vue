@@ -4,7 +4,7 @@
       <div class="screen">{{$t("general.screen")}}</div>
       <div class="data">
         <!-- Rows Numbers -->
-        <div :class="['rowsNumbers', 'rowsNumbers-'+language]"> 
+        <div :class="['rowsNumbers', 'rowsNumbers-'+language]">
           <div class="rowNumber"></div>
           <div
             v-for="({rowNumber,name,realRowNumber}) of seatsArray"
@@ -15,7 +15,7 @@
             <div
               :class="['key', , name === 'RowCorridor' ? 'fas fa-walking corridor-icon' : '']"
             >{{name === 'RowCorridor' ? '' : name}}</div>
-<!-- Row Options -->
+            <!-- Row Options -->
             <div :class="['options', 'options-'+language]" v-if="clicked === rowNumber">
               <div :class="['arrow', 'arrow-'+language]"></div>
               <div :class="['box', 'box-'+language]">
@@ -35,7 +35,7 @@
                   </span>
                   <span class="name">{{$t("general.delete")}}</span>
                 </div>
-              <!-- Convert Row To Corridor -->
+                <!-- Convert Row To Corridor -->
                 <div
                   class="function"
                   v-if="name != 'RowCorridor' && rowNumber != 1  && rowNumber != hallInfo.rowsNumber && !isThisRowCorridor(rowNumber-1) &&  !isThisRowCorridor(rowNumber+1)"
@@ -46,8 +46,8 @@
                   </span>
                   <span class="name">{{$t("functions.convertToCorridor")}}</span>
                 </div>
-        <!--  -->
-         <!-- Convert Corridor To Row -->
+                <!--  -->
+                <!-- Convert Corridor To Row -->
                 <div
                   class="function"
                   v-if="name === 'RowCorridor'"
@@ -58,26 +58,30 @@
                   </span>
                   <span class="name">{{$t("functions.convertCorridorToRow")}}</span>
                 </div>
-        <!--  -->
-          <!-- Add Row Above -->
-                <div v-if="name != 'RowCorridor'" class="function" @click.stop="addRow(rowNumber,realRowNumber,'above')">
+                <!--  -->
+                <!-- Add Row Above -->
+                <div
+                  v-if="name != 'RowCorridor'"
+                  class="function"
+                  @click.stop="addRow(rowNumber,realRowNumber,'above')"
+                >
                   <span class="icon">
                     <i class="fas fa-arrow-up green"></i>
                   </span>
                   <span class="name">{{$t("functions.addRowAbove")}}</span>
                 </div>
                 <!-- Add Row below -->
-                <div v-if="name != 'RowCorridor'" class="function" @click.stop="addRow(rowNumber,realRowNumber,'below')">
+                <div
+                  v-if="name != 'RowCorridor'"
+                  class="function"
+                  @click.stop="addRow(rowNumber,realRowNumber,'below')"
+                >
                   <span class="icon">
-                    <i
-                      class="fas fa-arrow-down pink"
-                    ></i>
+                    <i class="fas fa-arrow-down pink"></i>
                   </span>
-                  <span
-                    class="name"
-                  >{{$t("functions.addRowBelow")}}</span>
+                  <span class="name">{{$t("functions.addRowBelow")}}</span>
                 </div>
-                 <!-- Add Corridor Above -->
+                <!-- Add Corridor Above -->
                 <div
                   class="function"
                   v-if="name != 'RowCorridor' && !isThisRowCorridor(rowNumber-1) && rowNumber != 1"
@@ -91,7 +95,7 @@
                 <!-- Add Corridor Below -->
                 <div
                   class="function"
-                 v-if="name != 'RowCorridor' && !isThisRowCorridor(rowNumber+1) && rowNumber+1 != hallInfo.rowsNumber"
+                  v-if="name != 'RowCorridor' && !isThisRowCorridor(rowNumber+1) && rowNumber+1 != hallInfo.rowsNumber"
                   @click.stop="addCorridor(rowNumber,realRowNumber,'below')"
                 >
                   <span class="icon">
@@ -99,7 +103,7 @@
                   </span>
                   <span class="name">{{$t("functions.addCorridorBelow")}}</span>
                 </div>
-            </div>
+              </div>
             </div>
           </div>
         </div>
@@ -126,33 +130,36 @@
               :key="uuid"
               :class="['seat--container', 'seat-margin-'+language]"
             >
-             <seat v-if="status != 'columnCorridor'" @click="clicked = uuid" :color="status === 'closed' ? 'closed' : ''" />
-             <!-- Seat Options -->
+              <seat
+                v-if="status != 'columnCorridor'"
+                @click="clicked = uuid"
+                :color="status === 'closed' ? 'closed' : ''"
+              />
+              <!-- Seat Options -->
               <div class="options" v-if="clicked === uuid">
-              <div :class="['arrow', 'arrow-'+language]"></div>
-              <div :class="['box', 'box-'+language]">
-                <!-- Dismiss icon -->
-                <div class="function" @click.stop="clicked = ''">
-                  <span :class="['closeIcon', 'closeIcon-'+language]">
-                    <i class="far fa-window-close close"></i>
-                  </span>
+                <div :class="['arrow', 'arrow-'+language]"></div>
+                <div :class="['box', 'box-'+language]">
+                  <!-- Dismiss icon -->
+                  <div class="function" @click.stop="clicked = ''">
+                    <span :class="['closeIcon', 'closeIcon-'+language]">
+                      <i class="far fa-window-close close"></i>
+                    </span>
+                  </div>
+                  <!--  -->
+                  <!-- Toggle The Seat function  -->
+                  <div class="function" @click.stop="toggleSeatStatus(seatRow,seatColumn)">
+                    <span class="icon">
+                      <i
+                        :class="[status != 'closed' ? 'fas fa-ban red' : 'fas fa-check-circle green']"
+                      ></i>
+                    </span>
+                    <span v-if="status != 'closed'" class="name">{{$t("general.closeSeat")}}</span>
+                    <span v-else class="name">{{$t("general.openSeat")}}</span>
+                  </div>
+                  <!--  -->
                 </div>
-                <!--  -->
-                <!-- Toggle The Seat function  -->
-                <div
-                  class="function"
-                  @click.stop="toggleSeatStatus(seatRow,seatColumn)"
-                >
-                  <span class="icon">
-                    <i :class="[status != 'closed' ? 'fas fa-ban red' : 'fas fa-check-circle green']"></i>
-                  </span>
-                  <span v-if="status != 'closed'" class="name">{{$t("general.closeSeat")}}</span>
-                  <span v-else class="name">{{$t("general.openSeat")}}</span>
-                </div>
-                <!--  -->
               </div>
-            </div>
-            <!--  -->
+              <!--  -->
             </div>
           </div>
           <!--  -->
@@ -205,169 +212,155 @@ export default {
       return this.hallInfo.rowCorridors.includes(rowNumber);
     },
 
-    deleteLockedSeats(realRowNumber){ // delete lockedSeats for specific row
+    deleteLockedSeats(realRowNumber) {
+      // delete lockedSeats for specific row
 
-        let tempLockedSeats = JSON.parse(JSON.stringify(this.hallInfo.lockedSeats)); // DEEP COPY THE REAL ONE.
-        let newLockedSeats = tempLockedSeats.filter(locked=> locked.row != realRowNumber);
-        this.hallInfo.lockedSeats = newLockedSeats;
-
+      let tempLockedSeats = JSON.parse(
+        JSON.stringify(this.hallInfo.lockedSeats)
+      ); // DEEP COPY THE REAL ONE.
+      let newLockedSeats = tempLockedSeats.filter(
+        (locked) => locked.row != realRowNumber
+      );
+      this.hallInfo.lockedSeats = newLockedSeats;
     },
 
-    deleteRow(rowNumber,realRowNumber) {
-
-
+    deleteRow(rowNumber, realRowNumber) {
       let tempCorridors = [...this.hallInfo.rowCorridors];
       let tempRowsNumber = this.hallInfo.rowsNumber;
-       // if after and before the row which will be deleted there are 'corridors', we have to delete one of them also. (no sense to have tow corridors beside each other)
-      const afterMeIndex = tempCorridors.indexOf(rowNumber+1);
-      const BeforeMeIndex = tempCorridors.indexOf(rowNumber-1);
-      if (afterMeIndex != -1 && BeforeMeIndex != -1){       
-        tempCorridors.splice(afterMeIndex,1)
+      // if after and before the row which will be deleted there are 'corridors', we have to delete one of them also. (no sense to have tow corridors beside each other)
+      const afterMeIndex = tempCorridors.indexOf(rowNumber + 1);
+      const BeforeMeIndex = tempCorridors.indexOf(rowNumber - 1);
+      if (afterMeIndex != -1 && BeforeMeIndex != -1) {
+        tempCorridors.splice(afterMeIndex, 1);
         tempRowsNumber--;
       }
 
       // if after delete, is there a corridor will be number 1 or last one. -not acceptable- (delete that corridor)
-      if (rowNumber+1 === 2 || rowNumber+1 === this.hallInfo.rowsNumber){
-        const corridorNumber = tempCorridors.indexOf(rowNumber+1);
-        if (corridorNumber != -1){
-        tempCorridors.splice(corridorNumber,1)
-        tempRowsNumber--;
+      if (rowNumber + 1 === 2 || rowNumber + 1 === this.hallInfo.rowsNumber) {
+        const corridorNumber = tempCorridors.indexOf(rowNumber + 1);
+        if (corridorNumber != -1) {
+          tempCorridors.splice(corridorNumber, 1);
+          tempRowsNumber--;
         }
       }
 
-      // to delete all lockedSeats in the deleted Row: 
+      // to delete all lockedSeats in the deleted Row:
       this.deleteLockedSeats(realRowNumber);
 
-      // wrap the corridors: 
-      tempCorridors = tempCorridors.map(corridorNumber=>{
-       if (corridorNumber > rowNumber){
-         corridorNumber--; // move any corridor which exist after the one i want to delete, one step above (if i want to delete row number 5 and there's an corridor on number 7, so it will be 6 now :D) 
-       }else if (corridorNumber === rowNumber){ // if i'm deleting a corridor
-           return null;
-       }
-       return corridorNumber;
+      // wrap the corridors:
+      tempCorridors = tempCorridors.map((corridorNumber) => {
+        if (corridorNumber > rowNumber) {
+          corridorNumber--; // move any corridor which exist after the one i want to delete, one step above (if i want to delete row number 5 and there's an corridor on number 7, so it will be 6 now :D)
+        } else if (corridorNumber === rowNumber) {
+          // if i'm deleting a corridor
+          return null;
+        }
+        return corridorNumber;
       });
       tempRowsNumber--;
 
       this.hallInfo.rowsNumber = tempRowsNumber;
       this.hallInfo.rowCorridors = tempCorridors;
       this.clicked = "";
-
-
     },
-    
 
-
-    convertRowToCorridor(rowNumber, realRowNumber){
-
+    convertRowToCorridor(rowNumber, realRowNumber) {
       let tempCorridors = [...this.hallInfo.rowCorridors];
       tempCorridors.push(rowNumber);
       this.deleteLockedSeats(realRowNumber);
 
+      this.hallInfo.rowCorridors = tempCorridors;
+      this.clicked = "";
+    },
+
+    convertCorridorToRow(rowNumber) {
+      let tempCorridors = [...this.hallInfo.rowCorridors];
+      const corridorIndex = tempCorridors.indexOf(rowNumber);
+      if (corridorIndex > -1) {
+        tempCorridors.splice(corridorIndex, 1);
+      }
 
       this.hallInfo.rowCorridors = tempCorridors;
       this.clicked = "";
-
     },
 
+    addRow(rowNumber, realRowNumber, place) {
+      let tempCorridors = [...this.hallInfo.rowCorridors];
+      let tempLockedSeats = JSON.parse(
+        JSON.stringify(this.hallInfo.lockedSeats)
+      ); // DEEP COPY THE REAL ONE.
+      let tempRowsNumber = this.hallInfo.rowsNumber;
 
+      this.moveClosedAndCorridorsBelow(rowNumber, realRowNumber, place);
+      tempRowsNumber++;
 
-    convertCorridorToRow(rowNumber){
+      this.hallInfo.rowsNumber = tempRowsNumber;
+      this.clicked = "";
+    },
 
-       let tempCorridors = [...this.hallInfo.rowCorridors];
-       const corridorIndex = tempCorridors.indexOf(rowNumber);
-       if (corridorIndex > -1){
-        tempCorridors.splice(corridorIndex,1);
+    addCorridor(rowNumber, realRowNumber, place) {
+      let tempCorridors = [...this.hallInfo.rowCorridors];
+      let tempRowsNumber = this.hallInfo.rowsNumber;
+
+      this.moveClosedAndCorridorsBelow(rowNumber, realRowNumber, place);
+      tempRowsNumber++;
+      if (place === "above") {
+        this.hallInfo.rowCorridors.push(rowNumber);
+      } else if (place === "below") {
+        this.hallInfo.rowCorridors.push(rowNumber + 1);
       }
 
-      
+      this.hallInfo.rowsNumber = tempRowsNumber;
+      this.clicked = "";
+    },
+
+    moveClosedAndCorridorsBelow(rowNumber, realRowNumber, place) {
+      let tempCorridors = [...this.hallInfo.rowCorridors];
+      let tempLockedSeats = JSON.parse(
+        JSON.stringify(this.hallInfo.lockedSeats)
+      ); // DEEP COPY THE REAL ONE.
+
+      tempCorridors = tempCorridors.map((corridorNumber) => {
+        // move each corridor below
+        const CorridorOperation =
+          place === "above"
+            ? corridorNumber >= rowNumber
+            : corridorNumber > rowNumber;
+        if (CorridorOperation) {
+          corridorNumber++;
+        }
+        return corridorNumber;
+      });
+
+      tempLockedSeats = tempLockedSeats.map((locked) => {
+        // move each lockedSeat Below
+        const LockedSeatOperation =
+          place === "above"
+            ? locked.row >= realRowNumber
+            : locked.row > realRowNumber;
+        if (LockedSeatOperation) {
+          locked.row++;
+        }
+        return locked;
+      });
+
+      this.hallInfo.lockedSeats = tempLockedSeats;
       this.hallInfo.rowCorridors = tempCorridors;
-      this.clicked = "";
-
     },
-
-
-    addRow(rowNumber,realRowNumber,place) {
-
-      let tempCorridors = [...this.hallInfo.rowCorridors];
-      let tempLockedSeats = JSON.parse(JSON.stringify(this.hallInfo.lockedSeats)); // DEEP COPY THE REAL ONE.
-      let tempRowsNumber = this.hallInfo.rowsNumber;
-
-      this.moveClosedAndCorridorsBelow(rowNumber,realRowNumber,place);
-      tempRowsNumber++;
-
-
-      this.hallInfo.rowsNumber = tempRowsNumber;
-      this.clicked = "";
-     
-    },
-
-
-
-    addCorridor(rowNumber,realRowNumber,place) {
-      let tempCorridors = [...this.hallInfo.rowCorridors];
-      let tempRowsNumber = this.hallInfo.rowsNumber;
-
-
-      this.moveClosedAndCorridorsBelow(rowNumber,realRowNumber,place);
-      tempRowsNumber++;
-      if (place === 'above'){
-      this.hallInfo.rowCorridors.push(rowNumber);
-      }else if (place === 'below'){
-      this.hallInfo.rowCorridors.push(rowNumber+1);
-      }
-      
-
-      this.hallInfo.rowsNumber = tempRowsNumber;
-      this.clicked = "";
-      
-    },
-
-
-
-
-
-    moveClosedAndCorridorsBelow(rowNumber,realRowNumber,place){
-
-
-      let tempCorridors = [...this.hallInfo.rowCorridors];
-      let tempLockedSeats = JSON.parse(JSON.stringify(this.hallInfo.lockedSeats)); // DEEP COPY THE REAL ONE.
-
-
-      tempCorridors = tempCorridors.map(corridorNumber=>{ // move each corridor below
-      const CorridorOperation = place === 'above' ? corridorNumber >= rowNumber : corridorNumber > rowNumber;
-      if (CorridorOperation){
-         corridorNumber++; 
-      }
-      return corridorNumber;
-      });
-
-
-      tempLockedSeats = tempLockedSeats.map(locked=>{  // move each lockedSeat Below
-      const LockedSeatOperation = place === 'above' ? locked.row >= realRowNumber : locked.row > realRowNumber;
-      if (LockedSeatOperation){
-         locked.row++; 
-      }
-      return locked;
-      });
-
-
-
-     this.hallInfo.lockedSeats = tempLockedSeats;
-     this.hallInfo.rowCorridors = tempCorridors;
-
-    },
-
-
 
     // Seat Functions
-    toggleSeatStatus(rowNumber,columnNumber) { 
+    toggleSeatStatus(rowNumber, columnNumber) {
       this.clicked = "";
-      const index = this.hallInfo.lockedSeats.findIndex(locked=> locked.row === rowNumber && locked.column === columnNumber);
+      const index = this.hallInfo.lockedSeats.findIndex(
+        (locked) => locked.row === rowNumber && locked.column === columnNumber
+      );
       if (index > -1) {
         this.hallInfo.lockedSeats.splice(index, 1);
       } else {
-        this.hallInfo.lockedSeats.push({row:rowNumber,column:columnNumber});
+        this.hallInfo.lockedSeats.push({
+          row: rowNumber,
+          column: columnNumber,
+        });
       }
     },
   },
