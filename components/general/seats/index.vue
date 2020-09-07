@@ -229,7 +229,6 @@ export default {
   },
   methods: {
     // Rows Functions
-
     isThisRowCorridor(rowNumber) {
       return this.hallInfo.rowCorridors.includes(rowNumber);
     },
@@ -333,15 +332,15 @@ export default {
         JSON.stringify(this.hallInfo.lockedSeats)
       ); // DEEP COPY THE REAL ONE.
       tempCorridors.push(rowNumber);
-        
+
       // to delete all lockedSeats in that row:
       let newLockedSeats = tempLockedSeats.filter(
         (locked) => locked.row != realRowNumber
       );
       tempLockedSeats = newLockedSeats;
 
-        // move the lockedSeats
-        tempLockedSeats = tempLockedSeats.map((locked) => {
+      // move the lockedSeats
+      tempLockedSeats = tempLockedSeats.map((locked) => {
         if (locked.row > realRowNumber) {
           locked.row--;
         }
@@ -363,8 +362,8 @@ export default {
         tempCorridors.splice(corridorIndex, 1);
       }
 
-     // move the lockedSeats
-        tempLockedSeats = tempLockedSeats.map((locked) => {
+      // move the lockedSeats
+      tempLockedSeats = tempLockedSeats.map((locked) => {
         if (locked.row >= rowNumber) {
           locked.row++;
         }
