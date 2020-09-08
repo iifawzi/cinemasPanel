@@ -19,14 +19,15 @@
             <div :class="['options', 'options-'+language]" v-if="clicked === rowNumber">
               <div :class="['arrow', 'arrow-'+language]"></div>
               <div :class="['box', 'box-'+language]">
-                <div class="function" @click.stop="clicked = ''">
-                  <span :class="['closeIcon', 'closeIcon-'+language]">
-                    <i class="far fa-window-close close"></i>
-                  </span>
+                <div :class="['closeIconContainer', 'closeIconContainer-'+language]">
+                  <i
+                    :class="['far fa-window-close closeIcon', 'closeIcon-'+language]"
+                    @click.stop="clicked = ''"
+                  ></i>
                 </div>
                 <!-- Delete Row Component -->
                 <div
-                  class="function"
+                  :class="['function', 'function-'+language]"
                   v-if="hallInfo.rowsNumber != 1"
                   @click.stop="deleteRow(rowNumber,realRowNumber)"
                 >
@@ -37,7 +38,7 @@
                 </div>
                 <!-- Convert Row To Corridor -->
                 <div
-                  class="function"
+                  :class="['function', 'function-'+language]"
                   v-if="name != 'RowCorridor' && rowNumber != 1  && rowNumber != hallInfo.rowsNumber && !isThisRowCorridor(rowNumber-1) &&  !isThisRowCorridor(rowNumber+1)"
                   @click.stop="convertRowToCorridor(rowNumber,realRowNumber)"
                 >
@@ -49,7 +50,7 @@
                 <!--  -->
                 <!-- Convert Corridor To Row -->
                 <div
-                  class="function"
+                  :class="['function', 'function-'+language]"
                   v-if="name === 'RowCorridor'"
                   @click.stop="convertCorridorToRow(rowNumber)"
                 >
@@ -62,7 +63,7 @@
                 <!-- Add Row Above -->
                 <div
                   v-if="name != 'RowCorridor'"
-                  class="function"
+                  :class="['function', 'function-'+language]"
                   @click.stop="addRow(rowNumber,realRowNumber,'above')"
                 >
                   <span class="icon">
@@ -73,7 +74,7 @@
                 <!-- Add Row below -->
                 <div
                   v-if="name != 'RowCorridor'"
-                  class="function"
+                  :class="['function', 'function-'+language]"
                   @click.stop="addRow(rowNumber,realRowNumber,'below')"
                 >
                   <span class="icon">
@@ -83,7 +84,7 @@
                 </div>
                 <!-- Add Corridor Above -->
                 <div
-                  class="function"
+                  :class="['function', 'function-'+language]"
                   v-if="name != 'RowCorridor' && !isThisRowCorridor(rowNumber-1) && rowNumber != 1"
                   @click.stop="addCorridor(rowNumber,realRowNumber,'above')"
                 >
@@ -94,7 +95,7 @@
                 </div>
                 <!-- Add Corridor Below -->
                 <div
-                  class="function"
+                  :class="['function', 'function-'+language]"
                   v-if="name != 'RowCorridor' && !isThisRowCorridor(rowNumber+1) && rowNumber+1 <= hallInfo.rowsNumber"
                   @click.stop="addCorridor(rowNumber,realRowNumber,'below')"
                 >
@@ -124,14 +125,15 @@
               <div :class="['options', 'options-'+language]" v-if="clicked === uuid+'-colNumber'">
                 <div :class="['arrow', 'arrow-'+language]"></div>
                 <div :class="['box', 'box-'+language]" :dir="language === 'ar' ? 'rtl' : 'ltr'">
-                  <div class="function" @click.stop="clicked = ''">
-                    <span :class="['closeIcon', 'closeIcon-'+language]">
-                      <i class="far fa-window-close close"></i>
-                    </span>
+                  <div :class="['closeIconContainer', 'closeIconContainer-'+language]">
+                    <i
+                      :class="['far fa-window-close closeIcon', 'closeIcon-'+language]"
+                      @click.stop="clicked = ''"
+                    ></i>
                   </div>
                   <!-- Delete Column -->
                   <div
-                    class="function"
+                    :class="['function', 'function-'+language]"
                     v-if="hallInfo.columnsNumber != 1"
                     @click.stop="deleteColumn(uuid)"
                   >
@@ -162,14 +164,18 @@
                 <div :class="['arrow', 'arrow-'+language]"></div>
                 <div :class="['box', 'box-'+language]">
                   <!-- Dismiss icon -->
-                  <div class="function" @click.stop="clicked = ''">
-                    <span :class="['closeIcon', 'closeIcon-'+language]">
-                      <i class="far fa-window-close close"></i>
-                    </span>
+                  <div :class="['closeIconContainer', 'closeIconContainer-'+language]">
+                    <i
+                      :class="['far fa-window-close closeIcon', 'closeIcon-'+language]"
+                      @click.stop="clicked = ''"
+                    ></i>
                   </div>
                   <!--  -->
                   <!-- Toggle The Seat function  -->
-                  <div class="function" @click.stop="toggleSeatStatus(seatRow,seatColumn)">
+                  <div
+                    :class="['function', 'function-'+language]"
+                    @click.stop="toggleSeatStatus(seatRow,seatColumn)"
+                  >
                     <span class="icon">
                       <i
                         :class="[status != 'closed' ? 'fas fa-ban red' : 'fas fa-check-circle green']"
@@ -195,7 +201,15 @@
 import seat from "~/components/shared/seat/";
 import letters from "~/helpers/letters.js";
 import seats from "~/helpers/seats.js";
-import {isThisRowCorridor,moveClosedAndCorridorsBelow,deleteRow,convertRowToCorridor,convertCorridorToRow,addRow,addCorridor} from "./rowFunctions";
+import {
+  isThisRowCorridor,
+  moveClosedAndCorridorsBelow,
+  deleteRow,
+  convertRowToCorridor,
+  convertCorridorToRow,
+  addRow,
+  addCorridor,
+} from "./rowFunctions";
 export default {
   data() {
     return {
@@ -229,9 +243,14 @@ export default {
     },
   },
   methods: {
-    isThisRowCorridor,moveClosedAndCorridorsBelow,deleteRow,convertRowToCorridor,convertCorridorToRow,addRow,addCorridor,
-   
-   
+    isThisRowCorridor,
+    moveClosedAndCorridorsBelow,
+    deleteRow,
+    convertRowToCorridor,
+    convertCorridorToRow,
+    addRow,
+    addCorridor,
+
     toggleSeatStatus(rowNumber, columnNumber) {
       this.clicked = "";
       const index = this.hallInfo.lockedSeats.findIndex(
