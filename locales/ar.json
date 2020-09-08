@@ -10,7 +10,10 @@
         "screen": "الشاشه",
         "delete": "حذف",
         "closeSeat": "اغلاق الكرسي",
-        "openSeat": "فتح الكرسي"
+        "openSeat": "فتح الكرسي",
+        "corridor": "ممر",
+        "lockedSeat": "كرسي مغلق",
+        "availableSeat": "كرسي متاح"
 
     },
     "functions": {

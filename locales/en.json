@@ -10,7 +10,10 @@
         "screen": "Screen",
         "delete": "Delete",
         "closeSeat": "Close The Seat",
-        "openSeat": "Open The Seat"
+        "openSeat": "Open The Seat",
+        "corridor": "Corridor",
+        "lockedSeat": "Locked Seat",
+        "availableSeat": "Available Seat"
     },
     "functions": {
         "addRowBelow": "Add Row Below",

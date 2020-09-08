@@ -1,6 +1,9 @@
 <template>
   <div class="seats">
     <div class="content">
+      <div class="info">
+        <explainIcons />
+      </div>
       <div class="screen">{{$t("general.screen")}}</div>
       <div class="data">
         <!-- Rows Numbers -->
@@ -154,7 +157,9 @@
                     @click.stop="addColumn(uniqueColumnNumber,seatColumn,'before')"
                   >
                     <span class="icon">
-                      <i :class="['green', language === 'en' ?  'fas fa-arrow-left' : 'fas fa-arrow-right']"></i>
+                      <i
+                        :class="['green', language === 'en' ?  'fas fa-arrow-left' : 'fas fa-arrow-right']"
+                      ></i>
                     </span>
                     <span class="name">{{$t("functions.addColumnBefore")}}</span>
                   </div>
@@ -165,13 +170,15 @@
                     @click.stop="addColumn(uniqueColumnNumber,seatColumn,'after')"
                   >
                     <span class="icon">
-                         <i :class="['pink', language === 'en' ?  'fas fa-arrow-right' : 'fas fa-arrow-left']"></i>
+                      <i
+                        :class="['pink', language === 'en' ?  'fas fa-arrow-right' : 'fas fa-arrow-left']"
+                      ></i>
                     </span>
                     <span class="name">{{$t("functions.addColumnAfter")}}</span>
                   </div>
                   <!-- Add Corridor before -->
                   <div
-                     :class="['function', 'function-'+language]"
+                    :class="['function', 'function-'+language]"
                     v-if="status != 'columnCorridor'  && !isThisColumnCorridor(uniqueColumnNumber-1) && uniqueColumnNumber+1 != 1"
                     @click.stop="addColumnCorridor(uniqueColumnNumber,'before')"
                   >
@@ -182,7 +189,7 @@
                   </div>
                   <!-- Add Corridor after -->
                   <div
-                     :class="['function', 'function-'+language]"
+                    :class="['function', 'function-'+language]"
                     v-if="status != 'columnCorridor'  && !isThisColumnCorridor(uniqueColumnNumber+1)  && uniqueColumnNumber+1 <= hallInfo.columnsNumber"
                     @click.stop="addColumnCorridor(uniqueColumnNumber,'after')"
                   >
@@ -252,6 +259,7 @@
 
 <script>
 import seat from "~/components/shared/seat/";
+import explainIcons from "~/components/shared/explainIcons/";
 import letters from "~/helpers/letters.js";
 import seats from "~/helpers/seats.js";
 import {
@@ -266,7 +274,7 @@ import {
   addColumn,
   isThisColumnCorridor,
   convertColumnToCorridor,
-  addColumnCorridor
+  addColumnCorridor,
 } from "./columnFunctions";
 export default {
   data() {
@@ -282,6 +290,7 @@ export default {
   },
   components: {
     seat,
+    explainIcons,
   },
   computed: {
     language() {
