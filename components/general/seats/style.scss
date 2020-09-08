@@ -70,58 +70,6 @@
               left: -10px;
             }
 
-            .box {
-              background-color: $white;
-              width: 170px;
-              z-index: 1;
-              display: flex;
-              flex-flow: column;
-              justify-content: space-around;
-              padding-top: 5px;
-              padding-bottom: 5px;
-              box-shadow: 0px 0px 10px 0px $white-1;
-              
-              .iconContainer {
-                .closeIcon {
-                  color: $grey-2;
-                  font-size: 1.2rem;
-                  width: 100%;
-                }
-                .closeIcon-ar {
-                  text-align: left;
-                  padding-left: 5px;
-                }
-
-                .closeIcon-en {
-                  text-align: right;
-                  padding-right: 5px;
-                }
-
-              }
-
-              .function {
-                font-size: 1.2rem;
-                color: $purple;
-                height: 25px;
-                cursor: pointer;
-                display: flex;
-                align-items: center;
-                &:hover {
-                background-color: $white-2;
-                }
-                .icon {
-                  width: 20px;
-                  display: block;
-                }
-              }
-              .function-en {
-                padding-left: 15px;
-              }
-              .function-ar {
-                padding-right: 15px;
-              }
-            }
-
             .box-en {
               border-top-left-radius: 0px;
               border-bottom-right-radius: 10px;
@@ -204,7 +152,7 @@
               .box-ar {
                 border-top-left-radius: 10px;
                 border-bottom-right-radius: 10px;
-                border-bottom-right-radius: 10px;
+                border-bottom-left-radius: 10px;
               }
             }
             .options-en {
@@ -294,7 +242,7 @@
           cursor: pointer;
           .closeIcon {
             color: $grey-2;
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             width: 100%;
           }
           .closeIcon-ar {
@@ -310,9 +258,9 @@
         }
 
         .function {
-          font-size: 1.2rem;
+          font-size: 1.4rem;
           color: $purple;
-          height: 25px;
+          height: 30px;
           cursor: pointer;
           display: flex;
           align-items: center;

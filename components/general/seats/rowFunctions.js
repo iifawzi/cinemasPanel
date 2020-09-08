@@ -8,43 +8,6 @@
 
 
 
-  
-  
-  export function moveClosedAndCorridorsBelow(rowNumber, realRowNumber, place) {
-    let tempCorridors = [...this.hallInfo.rowCorridors];
-    let tempLockedSeats = JSON.parse(
-      JSON.stringify(this.hallInfo.lockedSeats)
-    ); // DEEP COPY THE REAL ONE.
-
-    tempCorridors = tempCorridors.map((corridorNumber) => {
-      // move each corridor below
-      const CorridorOperation =
-        place === "above"
-          ? corridorNumber >= rowNumber
-          : corridorNumber > rowNumber;
-      if (CorridorOperation) {
-        corridorNumber++;
-      }
-      return corridorNumber;
-    });
-
-    tempLockedSeats = tempLockedSeats.map((locked) => {
-      // move each lockedSeat Below
-      const LockedSeatOperation =
-        place === "above"
-          ? locked.row >= realRowNumber
-          : locked.row > realRowNumber;
-      if (LockedSeatOperation) {
-        locked.row++;
-      }
-      return locked;
-    });
-
-    this.hallInfo.lockedSeats = tempLockedSeats;
-    this.hallInfo.rowCorridors = tempCorridors;
-  };
-
-
 
 
 
@@ -145,26 +108,50 @@
 
 
 
+
+
+
+
+
   
   
-  export function convertCorridorToRow(rowNumber) {
+  export function addRow(rowNumber, realRowNumber, place) {
+    let tempRowsNumber = this.hallInfo.rowsNumber;
     let tempCorridors = [...this.hallInfo.rowCorridors];
     let tempLockedSeats = JSON.parse(
       JSON.stringify(this.hallInfo.lockedSeats)
     ); // DEEP COPY THE REAL ONE.
-    const corridorIndex = tempCorridors.indexOf(rowNumber);
-    if (corridorIndex > -1) {
-      tempCorridors.splice(corridorIndex, 1);
-    }
 
-    // move the lockedSeats
+    
+    tempCorridors = tempCorridors.map((corridorNumber) => {
+      // move each corridor below
+      const CorridorOperation =
+        place === "above"
+          ? corridorNumber >= rowNumber
+          : corridorNumber > rowNumber;
+      if (CorridorOperation) {
+        corridorNumber++;
+      }
+      return corridorNumber;
+    });
+
     tempLockedSeats = tempLockedSeats.map((locked) => {
-      if (locked.row >= rowNumber) {
+      // move each lockedSeat Below
+      const LockedSeatOperation =
+        place === "above"
+          ? locked.row >= realRowNumber
+          : locked.row > realRowNumber;
+      if (LockedSeatOperation) {
         locked.row++;
       }
       return locked;
     });
 
+
+
+
+    tempRowsNumber++;
+    this.hallInfo.rowsNumber = tempRowsNumber;
     this.hallInfo.lockedSeats = tempLockedSeats;
     this.hallInfo.rowCorridors = tempCorridors;
     this.clicked = "";
@@ -175,29 +162,28 @@
 
 
   
-  
-  export function addRow(rowNumber, realRowNumber, place) {
+
+  export function addCorridor(rowNumber, place) {
     let tempRowsNumber = this.hallInfo.rowsNumber;
-
-    this.moveClosedAndCorridorsBelow(rowNumber, realRowNumber, place);
-    tempRowsNumber++;
-
-    this.hallInfo.rowsNumber = tempRowsNumber;
-    this.clicked = "";
-  };
-
-
-
-
-
-  
-
-  export function addCorridor(rowNumber, realRowNumber, place) {
     let tempCorridors = [...this.hallInfo.rowCorridors];
-    let tempRowsNumber = this.hallInfo.rowsNumber;
+    let tempLockedSeats = JSON.parse(
+      JSON.stringify(this.hallInfo.lockedSeats)
+    ); // DEEP COPY THE REAL ONE.
 
-    this.moveClosedAndCorridorsBelow(rowNumber, realRowNumber, place);
+      tempCorridors = tempCorridors.map((corridorNumber) => {
+        // move each corridor below
+        const CorridorOperation =
+          place === "above"
+            ? corridorNumber >= rowNumber
+            : corridorNumber > rowNumber;
+        if (CorridorOperation) {
+          corridorNumber++;
+        }
+        return corridorNumber;
+      });
+        
     tempRowsNumber++;
+
     if (place === "above") {
         tempCorridors.push(rowNumber);
     } else if (place === "below") {
@@ -205,6 +191,7 @@
     }
 
     this.hallInfo.rowsNumber = tempRowsNumber;
+    this.hallInfo.lockedSeats = tempLockedSeats;
     this.hallInfo.rowCorridors = tempCorridors;
     this.clicked = "";
   };
