@@ -280,13 +280,17 @@ export default {
   data() {
     return {
       clicked: "",
+      hallInfo:{
+                rowsNumber: 9,
+                columnsNumber: 26,
+                rowCorridors:[3,6],
+                columnCorridors: [5,9,15,20],
+                lockedSeats:[{
+                    row: 1,
+                    column: 2,
+                }],
+            }
     };
-  },
-  props: {
-    hallInfo: {
-      type: Object,
-      required: true,
-    },
   },
   components: {
     seat,
@@ -306,6 +310,7 @@ export default {
         this.hallInfo.columnCorridors,
         this.hallInfo.lockedSeats
       );
+      this.$emit("iscorrect", this.hallInfo);
       return updatedSeats;
     },
   },

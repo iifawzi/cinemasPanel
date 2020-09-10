@@ -1078,7 +1078,7 @@
 
         <div class="content">
             <info v-show="activeTab === 1" @iscorrect="checkTab1" />
-              <seats v-show="activeTab === 2" :hallInfo="defaultHall" class="seats"/>
+              <seats v-show="activeTab === 2" class="seats" @iscorrect="checkTab2"/>
         </div>
         
 
@@ -1113,16 +1113,8 @@ export default {
                 hall_name: "",
                 hall_description: "",
             },
-            defaultHall:{
-                rowsNumber: 9,
-                columnsNumber: 26,
-                rowCorridors:[3,6],
-                columnCorridors: [5,9,15,20],
-                lockedSeats:[{
-                    row: 1,
-                    column: 2,
-                }],
-            }
+            locked_seats: [],
+            corridors: [],
         }
     },
     components: {
@@ -1147,8 +1139,28 @@ export default {
             }else {
             this.hall_info.hall_name = data.hall_name;
             this.hall_info.hall_description = data.hall_description;
-            this.tabs.tab1 = true
+            this.tabs.tab1 = true;
             }
+        },
+        checkTab2(data){
+            this.hall_info.rows_number = data.rowsNumber;
+            this.hall_info.columns_number = data.columnsNumber;
+            this.locked_seats = data.lockedSeats;
+            // creating an array contain the columnCorridors and rowCorridors: 
+            let rowCorridors = data.rowCorridors.map(corridor_number=> {
+                return {
+                corridor_number: corridor_number,
+                direction: "row"
+                }
+            });
+            let columnCorridors = data.columnCorridors.map(corridor_number=> {
+                return {
+                corridor_number: corridor_number,
+                direction: "column"
+                }
+            });
+            this.corridors = [...columnCorridors,...rowCorridors];
+            this.tabs.tab2 = true;
         },
     },
      computed:{
