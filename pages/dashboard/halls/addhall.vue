@@ -10,7 +10,7 @@
 
 <script>
 import pageInfo from "~/components/shared/pageInfo"
-import addhallForm from "~/components/forms/addhallForm"
+import addhallForm from "~/components/forms/addHall/main/"
 export default {
     head() {
     return {
