@@ -13,7 +13,8 @@
         "openSeat": "Open The Seat",
         "corridor": "Corridor",
         "lockedSeat": "Locked Seat",
-        "availableSeat": "Available Seat"
+        "availableSeat": "Available Seat",
+        "addHall": "Add The Hall"
     },
     "functions": {
         "addRowBelow": "Add Row Below",

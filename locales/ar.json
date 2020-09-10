@@ -13,7 +13,9 @@
         "openSeat": "فتح الكرسي",
         "corridor": "ممر",
         "lockedSeat": "كرسي مغلق",
-        "availableSeat": "كرسي متاح"
+        "availableSeat": "كرسي متاح",
+        "addHall": "أضف القاعه"
+
 
     },
     "functions": {

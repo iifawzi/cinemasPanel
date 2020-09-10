@@ -584,6 +584,9 @@
             <div class="btn-container">
      <submitButton v-if="activeTab < 2" color="green" :disabledClass="isDisabled ? 'disabled' : ''"  :title="$t('buttons.next')" @click="nextTab" :isDisabled="isDisabled"/>
             </div>
+             <div class="btn-container add" v-if="tabs.tab1 && tabs.tab2 && activeTab === 2">
+     <submitButton  color="blue" :title="$t('general.addHall')"/>
+            </div>
         </div>
       </div>
     </div>
@@ -617,7 +620,7 @@ export default {
     }, 
     methods: {
         nextTab(){
-            if (this.activeTab != 3){
+            if (this.activeTab != 2){
                  this.activeTab ++;
             }
         },
@@ -669,9 +672,6 @@ export default {
                 break;
             case 2:
                 this.tabs.tab2 ? status = false : status = true
-                break;
-             case 3:
-                this.tabs.tab3 ? status = false : status = true
                 break;
             default:
                 break;
