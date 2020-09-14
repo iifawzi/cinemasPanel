@@ -48,7 +48,9 @@
         "username": "Username is required.", 
         "password": "Password is required.",
         "hall_name": "Hall name is required.",
-        "hall_description": "Hall description is required."
+        "hall_description": "Hall description is required.",
+        "addHall_409": "The Name of the hall is already registered"
+
     },
     "aside":{
         "dashboard":"Dashboard",

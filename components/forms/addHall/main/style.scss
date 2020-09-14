@@ -68,7 +68,17 @@
                 }
             }
         }
-
+        .loading {
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+            .circles {
+                height: 160px;
+            }
+            .status {
+                color: $grey-5;
+            }
+        }
     }
 }
 
