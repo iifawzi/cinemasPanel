@@ -71,7 +71,7 @@ export default {
       if (!this.$v.$invalid) {
         this.loading = true;
         this.error.status = false;
-        this.$axios
+        this.$api
           .post("cinemaAccounts/signinAccount", this.loginForm)
           .then((respond) => {
             const cinemaData = respond.data.data;

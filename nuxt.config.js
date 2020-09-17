@@ -37,7 +37,8 @@ export default {
   */
   plugins: [
     '~/plugins/i18n.js',
-    "~/plugins/vuelidate.js"
+    "~/plugins/vuelidate.js",
+    "~/plugins/axios.js"
   ],
   /*
   ** Routers configs
@@ -61,7 +62,7 @@ export default {
   ** Axios Settings: 
   */
  axios: {
-  baseURL: 'http://localhost:3000/api/'
+  baseURL: 'http://localhost:3000/api/',
 },
         /*
   ** Server Settings : 
