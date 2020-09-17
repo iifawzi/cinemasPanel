@@ -39,7 +39,13 @@
     },
     "short_texts": {
         "welcomeBack": "Welcome Back!",
-        "loginContinue": "Login to continue"
+        "loginContinue": "Login to continue",
+        "added": "Added Successfully"
+
+    },
+    "loading": {
+        "addHallInfo": "1/2 Adding Hall's Informations...",
+        "addCorridorsAndLocked": "2/2 Adding the Corridors and the Locked Seats..."
     },
     "errors": {
         "500": "Something wrong happened, please try again later.",

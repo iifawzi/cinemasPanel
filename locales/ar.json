@@ -40,7 +40,12 @@
     },
     "short_texts": {
         "welcomeBack": "اهلا بعودتك!",
-        "loginContinue": "تسجيل الدخول"
+        "loginContinue": "تسجيل الدخول",
+        "added": "تم الإضافة بنجاح"
+    },
+    "loading": {
+        "addHallInfo": "٢/١ اضافة معلومات القاعه",
+        "addCorridorsAndLocked": "٢/٢ اضافة الممرات والكراسي المغلقة"
     },
     "errors": {
         "500": "حدث خطأ ما، يرجى المحاولة لاحقًا",

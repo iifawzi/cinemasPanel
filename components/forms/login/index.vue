@@ -75,7 +75,7 @@ export default {
           .post("cinemaAccounts/signinAccount", this.loginForm)
           .then((respond) => {
             const cinemaData = respond.data.data;
-            Cookie.set("authorization", 'Bearer '+cinemaData.token);
+            Cookie.set("authorization", cinemaData.token);
             this.$store.dispatch("setAccountData", {username: cinemaData.username,account_id: cinemaData.cinemaAccount_id,cinema_id: cinemaData.cinema_id,name_ar: cinemaData.name_ar,name_en: cinemaData.name_en,role: cinemaData.role});
             this.$router.push("/dashboard");
           })

@@ -1,0 +1,9 @@
+.addedSuccessfully {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    .text {
+        margin-top: 15px;
+        font-size: 2rem;
+    }
+}

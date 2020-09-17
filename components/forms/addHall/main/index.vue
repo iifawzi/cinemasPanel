@@ -580,15 +580,25 @@
         </div>
       </div>
 
-      <div class="loading" v-show="loading.status">
+      <div class="loading" v-show="loading.status && loading.step != 3">
         <div class="circles">
           <loading type="circles" />
         </div>
         <div class="status">
-          <span class="item" v-if="loading.step === 1">1/2 Adding Hall's Informations...</span>
-          <span class="item" v-if="loading.step === 2">2/2 Adding the Corridors and the Locked Seats...</span>
+          <span class="item" v-if="loading.step === 1">{{$t("loading.addHallInfo")}}</span>
+          <span class="item" v-if="loading.step === 2">{{$t("loading.addCorridorsAndLocked")}}</span>
         </div>
       </div>
+
+
+      <div class="loading" style="padding-top: 25px" v-show="loading.step === 3">
+        <div class="status">
+          <addedSuccessfully>{{$t("short_texts.added")}}</addedSuccessfully>
+        </div>
+      </div>
+      
+
+      
 
       <div class="tabs__content" v-show="!loading.status">
         <div class="content">
@@ -618,7 +628,7 @@
           <div
             class="btn-container add"
             v-if="tabs.tab1 && tabs.tab2 && activeTab === 2"
-            @click="addHall"
+            @click="confirm"
           >
             <submitButton color="blue" :title="$t('general.addHall')" />
           </div>
@@ -636,6 +646,7 @@ import submitButton from "~/components/shared/submitButton";
 import loading from "~/components/shared/loading";
 import info from "~/components/forms/addHall/info/";
 import notification from "~/components/shared/notification";
+import addedSuccessfully from "~/components/shared/addedSuccessfully";
 import seats from "~/components/general/seats/";
 export default {
   data() {
@@ -669,18 +680,22 @@ export default {
     seats,
     loading,
     notification,
+    addedSuccessfully
   },
   methods: {
+    
     nextTab() {
       if (this.activeTab != 2) {
         this.activeTab++;
       }
     },
+    
     prevTab() {
       if (this.activeTab != 0) {
         this.activeTab--;
       }
     },
+    
     checkTab1(data) {
       if (data === false) {
         this.tabs.tab1 = false;
@@ -690,6 +705,7 @@ export default {
         this.tabs.tab1 = true;
       }
     },
+    
     checkTab2(data) {
       this.hall_info.rows_number = data.rowsNumber;
       this.hall_info.columns_number = data.columnsNumber;
@@ -698,6 +714,7 @@ export default {
       this.locked_seats = data.lockedSeats;
       this.tabs.tab2 = true;
     },
+
     mergeCorridors(hall_id){
        // creating an array contain the columnCorridors and rowCorridors:
       let rowCorridors = this.rowCorridors.map((corridor_number) => {
@@ -716,29 +733,29 @@ export default {
       });
       this.corridors = [...columnCorridors, ...rowCorridors];
     },
-    async addHall() {
-      this.loading.status = true;
-      this.loading.step = 1;
-      this.error.message = "";
-      const config = {
-        headers: {
-          Authorization: Cookie.get("authorization"),
+
+    alterLockedSeats(hall_id){
+      let updatedArray = this.locked_seats.map(lockedSeat=>{
+        return {
+        hall_id,
+        row: lockedSeat.row,
+        column: lockedSeat.column
         }
-      }
-      const [hall, hall_error] = await handle(
-        this.$axios.post("halls/addhall", this.hall_info,config)
+      });
+      this.locked_seats = updatedArray;
+    },
+
+    async addHallInfo(){
+        const [hall, hall_error] = await handle(
+        this.$api.post("halls/addhall", this.hall_info)
       );
-      if (hall) {
-      this.loading.step = 2;
-      this.mergeCorridors(hall.data.data.hall_id);
-      const addCorridors = this.$axios.post("corridors/addCorridors", this.corridors,config);
-      const [response,error] = await handle(Promise.all([addCorridors]));
+      if (hall){
+        return hall;
       }else {
         this.loading.status = false;
         if (!hall_error.response || !hall_error.response.status) {
           this.error.message = this.$i18n.t("errors.500");
         } else {
-          console.log(hall_error.response);
           switch (hall_error.response.status) {
             case 400:
               this.error.message = this.$i18n.t("errors.400");
@@ -752,6 +769,84 @@ export default {
             default:
               this.error.message = this.$i18n.t("errors.500");
           }
+        }
+        return false;
+      }
+    },
+
+    async addingCorridors(){
+        if (this.corridors.length === 0){
+          return true;
+        }
+      const [corridors, corridors_error] = await handle(
+      this.$api.post("corridors/addCorridors", {corridors: this.corridors})
+      );
+      if (corridors){
+        return true;
+      }else {
+        this.loading.status = false;
+        if (!corridors_error.response || !corridors_error.response.status) {
+          this.error.message = this.$i18n.t("errors.500");
+        } else {
+          switch (corridors_error.response.status) {
+            case 400:
+              this.error.message = this.$i18n.t("errors.400");
+              break;
+            case 401:
+              this.error.message = this.$i18n.t("errors.401");
+              break;
+            default:
+              this.error.message = this.$i18n.t("errors.500");
+          }
+        }
+        return false;
+      }
+    },
+
+      async addingLockedSeats(){
+        console.log(this.locked_seats);
+      if (this.locked_seats.length === 0){
+        return true;
+      }
+      const [lockedSeats, lockedSeats_error] = await handle(
+      this.$api.post("lockedSeats/lockSeats", {seats: this.locked_seats})
+      );
+      if (lockedSeats){
+        return true;
+      }else {
+        this.loading.status = false;
+        if (!lockedSeats_error.response || !lockedSeats_error.response.status) {
+          this.error.message = this.$i18n.t("errors.500");
+        } else {
+          switch (lockedSeats_error.response.status) {
+            case 400:
+              this.error.message = this.$i18n.t("errors.400");
+              break;
+            case 401:
+              this.error.message = this.$i18n.t("errors.401");
+              break;
+            default:
+              this.error.message = this.$i18n.t("errors.500");
+          }
+        }
+        return false;
+      }
+    },
+
+    async confirm() {
+      this.loading.status = true;
+      this.loading.step = 1;
+      this.error.message = "";
+      const addInfo = await this.addHallInfo();
+      if (addInfo){
+        this.loading.step = 2;
+        this.mergeCorridors(addInfo.data.data.hall_id);
+        this.alterLockedSeats(addInfo.data.data.hall_id);
+        console.log(this.locked_seats);
+        const addCorridors = await this.addingCorridors();
+        const addLockedSeats = await this.addingLockedSeats();
+        if (addCorridors && addLockedSeats){
+        this.loading.step = 3;
         }
       }
     },
