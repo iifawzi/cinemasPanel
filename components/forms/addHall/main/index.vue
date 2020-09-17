@@ -590,15 +590,11 @@
         </div>
       </div>
 
-
       <div class="loading" style="padding-top: 25px" v-show="loading.step === 3">
         <div class="status">
           <addedSuccessfully>{{$t("short_texts.added")}}</addedSuccessfully>
         </div>
       </div>
-      
-
-      
 
       <div class="tabs__content" v-show="!loading.status">
         <div class="content">
@@ -680,22 +676,21 @@ export default {
     seats,
     loading,
     notification,
-    addedSuccessfully
+    addedSuccessfully,
   },
   methods: {
-    
     nextTab() {
       if (this.activeTab != 2) {
         this.activeTab++;
       }
     },
-    
+
     prevTab() {
       if (this.activeTab != 0) {
         this.activeTab--;
       }
     },
-    
+
     checkTab1(data) {
       if (data === false) {
         this.tabs.tab1 = false;
@@ -705,7 +700,7 @@ export default {
         this.tabs.tab1 = true;
       }
     },
-    
+
     checkTab2(data) {
       this.hall_info.rows_number = data.rowsNumber;
       this.hall_info.columns_number = data.columnsNumber;
@@ -715,8 +710,8 @@ export default {
       this.tabs.tab2 = true;
     },
 
-    mergeCorridors(hall_id){
-       // creating an array contain the columnCorridors and rowCorridors:
+    mergeCorridors(hall_id) {
+      // creating an array contain the columnCorridors and rowCorridors:
       let rowCorridors = this.rowCorridors.map((corridor_number) => {
         return {
           hall_id: hall_id,
@@ -734,24 +729,24 @@ export default {
       this.corridors = [...columnCorridors, ...rowCorridors];
     },
 
-    alterLockedSeats(hall_id){
-      let updatedArray = this.locked_seats.map(lockedSeat=>{
+    alterLockedSeats(hall_id) {
+      let updatedArray = this.locked_seats.map((lockedSeat) => {
         return {
-        hall_id,
-        row: lockedSeat.row,
-        column: lockedSeat.column
-        }
+          hall_id,
+          row: lockedSeat.row,
+          column: lockedSeat.column,
+        };
       });
       this.locked_seats = updatedArray;
     },
 
-    async addHallInfo(){
-        const [hall, hall_error] = await handle(
+    async addHallInfo() {
+      const [hall, hall_error] = await handle(
         this.$api.post("halls/addhall", this.hall_info)
       );
-      if (hall){
+      if (hall) {
         return hall;
-      }else {
+      } else {
         this.loading.status = false;
         if (!hall_error.response || !hall_error.response.status) {
           this.error.message = this.$i18n.t("errors.500");
@@ -774,16 +769,24 @@ export default {
       }
     },
 
-    async addingCorridors(){
-        if (this.corridors.length === 0){
-          return true;
-        }
-      const [corridors, corridors_error] = await handle(
-      this.$api.post("corridors/addCorridors", {corridors: this.corridors})
-      );
-      if (corridors){
+    async addingCorridors(hall_id) {
+      if (this.corridors.length === 0) {
         return true;
-      }else {
+      }
+      const [corridors, corridors_error] = await handle(
+        this.$api.post("corridors/addCorridors", { corridors: this.corridors })
+      );
+      if (corridors) {
+        return true;
+      } else {
+        await handle(
+          this.$api({
+            method: "DELETE",
+            url: "halls/deleteHall",
+            data: { hall_id },
+          })
+        );
+
         this.loading.status = false;
         if (!corridors_error.response || !corridors_error.response.status) {
           this.error.message = this.$i18n.t("errors.500");
@@ -803,17 +806,23 @@ export default {
       }
     },
 
-      async addingLockedSeats(){
-        console.log(this.locked_seats);
-      if (this.locked_seats.length === 0){
+    async addingLockedSeats(hall_id) {
+      if (this.locked_seats.length === 0) {
         return true;
       }
       const [lockedSeats, lockedSeats_error] = await handle(
-      this.$api.post("lockedSeats/lockSeats", {seats: this.locked_seats})
+        this.$api.post("lockedSeats/lockSeats", { seats: this.locked_seats })
       );
-      if (lockedSeats){
+      if (lockedSeats) {
         return true;
-      }else {
+      } else {
+        await handle(
+          this.$api({
+            method: "DELETE",
+            url: "halls/deleteHall",
+            data: { hall_id },
+          })
+        );
         this.loading.status = false;
         if (!lockedSeats_error.response || !lockedSeats_error.response.status) {
           this.error.message = this.$i18n.t("errors.500");
@@ -838,15 +847,17 @@ export default {
       this.loading.step = 1;
       this.error.message = "";
       const addInfo = await this.addHallInfo();
-      if (addInfo){
+      if (addInfo) {
+        const hall_id = addInfo.data.data.hall_id;
         this.loading.step = 2;
-        this.mergeCorridors(addInfo.data.data.hall_id);
-        this.alterLockedSeats(addInfo.data.data.hall_id);
-        console.log(this.locked_seats);
-        const addCorridors = await this.addingCorridors();
-        const addLockedSeats = await this.addingLockedSeats();
-        if (addCorridors && addLockedSeats){
-        this.loading.step = 3;
+        this.mergeCorridors(hall_id);
+        this.alterLockedSeats(hall_id);
+        const addCorridors = await this.addingCorridors(hall_id);
+        if (addCorridors) {
+          const addLockedSeats = await this.addingLockedSeats(hall_id);
+          if (addLockedSeats) {
+            this.loading.step = 3;
+          }
         }
       }
     },

@@ -91,7 +91,6 @@ export function isThisColumnCorridor(uniqueColumnNumber) {
 
     // move the lockedSeats
     tempLockedSeats = tempLockedSeats.map((locked) => {
-        console.log(locked.column,realColumnNumber);
       if (locked.column > realColumnNumber) {
         locked.column--;
       }
@@ -186,7 +185,6 @@ export function isThisColumnCorridor(uniqueColumnNumber) {
     if (place === "before") {
         tempCorridors.push(uniqueColumnNumber);
     } else if (place === "after") {
-        console.log(uniqueColumnNumber);
         tempCorridors.push(uniqueColumnNumber + 1);
     }
 
