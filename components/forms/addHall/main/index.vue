@@ -704,8 +704,8 @@ export default {
     checkTab2(data) {
       this.hall_info.rows_number = data.rowsNumber;
       this.hall_info.columns_number = data.columnsNumber;
-      this.rowCorridors = data.rowCorridors;
-      this.columnCorridors = data.columnCorridors;
+      this.rowCorridors = data.rowCorridors.filter(corridor=> corridor !== null);
+      this.columnCorridors = data.columnCorridors.filter(corridor=> corridor !== null);
       this.locked_seats = data.lockedSeats;
       this.tabs.tab2 = true;
     },
