@@ -77,6 +77,10 @@
         "addhall": {
             "title": "Add Hall", 
             "desc": "Add a new hall to your cinema"
+        },
+        "halls": {
+            "title": "Halls", 
+            "desc": "All Opened and closed halls"
         }
     }
 }
