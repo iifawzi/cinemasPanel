@@ -2,9 +2,7 @@
   <table :class="['modernTable', language === 'en' ? 'left' : 'right']">
     <tr>
       <th class="number"># <i class="fas fa-arrow-up arrow"></i></th>
-      <th>Name</th>
-      <th>Status</th>
-      <th>Actions</th>
+       <slot name="table__head"></slot>
     </tr>
     <tr>
       <td>1</td>

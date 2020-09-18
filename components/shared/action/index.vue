@@ -3,7 +3,6 @@
     <div class="action__icon"><i :class="icon"></i></div>
   </div>
 </template>
-
 <script>
 export default {
   props: {

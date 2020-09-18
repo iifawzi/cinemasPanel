@@ -35,3 +35,9 @@
         color: $green-2;
       }
 }
+
+@media (max-width: $medium-devices){
+    .action {
+        margin-top: 10px;
+    }
+}

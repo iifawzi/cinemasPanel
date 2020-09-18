@@ -1,30 +1,36 @@
 <template>
-    <div class="addhall">
-        <pageInfo :title="$t('pages.halls.title')" :desc="$t('pages.halls.desc')"/>
-        <div class="content">
-          <div class="hallsTable">
-          <modernTable />
-          </div>
-        </div>
+  <div class="addhall">
+    <pageInfo :title="$t('pages.halls.title')" :desc="$t('pages.halls.desc')" />
+    <div class="content">
+      <div class="hallsTable">
+        <modernTable>
+          <template v-slot:table__head>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </template>
+        </modernTable>
+      </div>
     </div>
+  </div>
 </template>
 
 
 <script>
-import pageInfo from "~/components/shared/pageInfo"
-import modernTable from "~/components/shared/modernTable"
+import pageInfo from "~/components/shared/pageInfo";
+import modernTable from "~/components/shared/modernTable";
 export default {
-    head() {
+  head() {
     return {
       title: "Halls",
     };
   },
-    layout: 'dashboard',
-    components: {
-        pageInfo,
-        modernTable
-    }
-}
+  layout: "dashboard",
+  components: {
+    pageInfo,
+    modernTable,
+  },
+};
 </script>
 
 
