@@ -2,7 +2,10 @@
   <div class="addhall">
     <pageInfo :title="$t('pages.halls.title')" :desc="$t('pages.halls.desc')" />
     <div class="content">
-      <div class="hallsTable">
+      <div class="loading" v-if="loading === true">
+         <loading type="circles" />
+      </div>
+      <div class="hallsTable" v-if="loading === false">
         <modernTable apiURL="halls/" v-if="halls.length != 0">
           <template v-slot:table__head>
             <th class="number">
@@ -79,11 +82,14 @@ import modernTable from "~/components/shared/modernTable";
 import action from "~/components/shared/action";
 import status from "~/components/shared/status";
 import handle from "~/helpers/handle.js";
+import loading from "~/components/shared/loading";
+
 export default {
   async mounted() {
+    this.loading = true;
     const [halls, halls_error] = await handle(this.$api.get("halls/"));
     this.halls = halls.data.data;
-    console.log(this.halls);
+    this.loading = false;
   },
   head() {
     return {
@@ -96,10 +102,12 @@ export default {
     modernTable,
     action,
     status,
+    loading
   },
   data() {
     return {
       halls: [],
+      loading: false
     };
   },
 };
