@@ -1,0 +1,28 @@
+.modernTable {
+    width: 90%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    table-layout: fixed; 
+    th {
+        border-bottom: 1px solid $white-1;
+        color: $grey-6;
+    }
+    td {
+        padding: 15px 0px;
+        border-bottom: 1px solid $white-1;
+        word-wrap: break-word; 
+    }
+    .number {
+        color: $blue;
+        cursor: pointer;
+        .arrow {
+            font-size: 1.2rem;
+        }
+    }
+}
+.left {
+    text-align: left;
+}
+.right {
+    text-align: right;
+}

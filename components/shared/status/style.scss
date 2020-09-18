@@ -1,0 +1,20 @@
+.status {
+    font-size: 1.4rem;
+  height: 22px;
+  border-radius: 5px;
+  display:inline-block;
+  padding: 0px 10px;
+  &__value {
+      text-align: center;
+      padding-top: 5px;
+  }
+}
+
+.open {
+    background-color: $blue-1;
+    color:$blue;
+}
+.close {
+    background-color: $red-1;
+    color: $red;
+}
