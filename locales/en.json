@@ -45,8 +45,8 @@
     "short_texts": {
         "welcomeBack": "Welcome Back!",
         "loginContinue": "Login to continue",
-        "added": "Added Successfully"
-
+        "added": "Added Successfully",
+        "noHalls": "No Halls are found"
     },
     "loading": {
         "addHallInfo": "1/2 Adding Hall's Informations...",

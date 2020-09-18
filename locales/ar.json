@@ -46,7 +46,8 @@
     "short_texts": {
         "welcomeBack": "اهلا بعودتك!",
         "loginContinue": "تسجيل الدخول",
-        "added": "تم الإضافة بنجاح"
+        "added": "تم الإضافة بنجاح",
+        "noHalls": "لم يتم العثور على قاعات"
     },
     "loading": {
         "addHallInfo": "٢/١ اضافة معلومات القاعه",
