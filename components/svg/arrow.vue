@@ -1,9 +1,5 @@
 <template>
-  <svg
-    viewBox="0 0 490.816 490.816"
-    :height="svgHeight"
-    :width="svgWidth"
-  >
+  <svg viewBox="0 0 490.816 490.816" :height="svgHeight" :width="svgWidth">
     <path
       style="fill:#009688;"
       d="M480.149,234.741h-0.213c-5.891,0-10.667,4.776-10.667,10.667c0,5.891,4.776,10.667,10.667,10.667

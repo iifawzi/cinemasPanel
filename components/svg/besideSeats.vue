@@ -1,9 +1,5 @@
 <template>
-  <svg
-    :height="svgHeight"
-    viewBox="0 0 512 512"
-    :width="svgWidth"
-  >
+  <svg :height="svgHeight" viewBox="0 0 512 512" :width="svgWidth">
     <g>
       <path
         d="m104 112a7.9746 7.9746 0 0 0 5.6567-2.3433l32-32-11.3134-11.3134-26.3433 26.3432-10.3433-10.3432-11.3134 11.3134 16 16a7.9746 7.9746 0 0 0 5.6567 2.3433z"
