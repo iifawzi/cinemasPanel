@@ -10,19 +10,32 @@
       <td>1</td>
       <td>Al-Forsan</td>
       <td><status value="Open" status="open"/></td>
-      <td>bla bla</td>
+      <td>
+        <div class="actions">
+        <action action="show" icon="fas fa-info-circle"/>
+        <action action="edit" icon="far fa-edit"/>
+        <action action="delete" icon="far fa-trash-alt"/>
+        </div>
+        </td>
     </tr>
      <tr>
       <td>2</td>
       <td>Al-Forsan</td>
       <td><status value="Close" status="close"/></td>
-      <td>bla bla</td>
+      <td> 
+        <div class="actions">
+        <action action="show" icon="fas fa-info-circle"/>
+        <action action="edit" icon="far fa-edit"/>
+        <action action="delete" icon="far fa-trash-alt"/>
+        </div>
+      </td>
     </tr>
   </table>
 </template>
 
 <script>
 import status from "~/components/shared/status"
+import action from "~/components/shared/action"
 export default {
     computed: {
     language() {
@@ -31,6 +44,7 @@ export default {
     },
     components: {
       status,
+      action
     }
 }
 </script>
