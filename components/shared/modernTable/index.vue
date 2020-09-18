@@ -8,7 +8,6 @@
 </template>
 
 <script>
-import handle from "~/helpers/handle.js";
 export default {
   computed: {
     language() {

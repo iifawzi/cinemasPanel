@@ -14,7 +14,12 @@
         "corridor": "ممر",
         "lockedSeat": "كرسي مغلق",
         "availableSeat": "كرسي متاح",
-        "addHall": "أضف القاعه"
+        "addHall": "أضف القاعه",
+        "name": "الاسم",
+        "status": "الحالة",
+        "actions": "الخيارات",
+        "open": "مفتوح",
+        "close": "مغلق"
 
 
     },

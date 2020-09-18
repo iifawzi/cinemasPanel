@@ -14,7 +14,12 @@
         "corridor": "Corridor",
         "lockedSeat": "Locked Seat",
         "availableSeat": "Available Seat",
-        "addHall": "Add The Hall"
+        "addHall": "Add The Hall",
+        "name": "Name",
+        "status": "Status",
+        "actions": "Actions",
+        "open": "Open",
+        "close": "Close"
     },
     "functions": {
         "addRowBelow": "Add Row Below",

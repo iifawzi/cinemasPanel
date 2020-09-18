@@ -9,16 +9,16 @@
               #
               <i class="fas fa-arrow-up arrow"></i>
             </th>
-            <th>Name</th>
-            <th>Status</th>
-            <th>Actions</th>
+            <th>{{$t('general.name')}}</th>
+            <th>{{$t('general.status')}}</th>
+            <th>{{$t('general.actions')}}</th>
           </template>
           <template v-slot:table__data>
-            <tr>
-              <td>1</td>
-              <td>Al-Forsan</td>
+            <tr v-for="(hall, i) of halls" :key="hall.id">
+              <td>{{i+1}}</td>
+              <td>{{hall.hall_name}}</td>
               <td>
-                <status value="Open" status="open" />
+                <status :value="hall.hall_status === true ? $t('general.open') : $t('general.close')" :status="hall.hall_status === true ? 'open' : 'close'" />
               </td>
               <td>
                 <div class="actions">
@@ -40,8 +40,13 @@ import pageInfo from "~/components/shared/pageInfo";
 import modernTable from "~/components/shared/modernTable";
 import action from "~/components/shared/action";
 import status from "~/components/shared/status";
-
+import handle from "~/helpers/handle.js";
 export default {
+  async mounted(){
+    const [halls,halls_error] = await handle(this.$api.get("halls/"));
+    this.halls = halls.data.data;
+    console.log(this.halls);
+  },  
   head() {
     return {
       title: "Halls",
@@ -54,6 +59,11 @@ export default {
     action,
     status,
   },
+  data(){
+    return {
+      halls: [],
+    }
+  }
 };
 </script>
 
