@@ -26,8 +26,8 @@
 <script>
 export default {
   props: {
-    svgHeight: Number,
-    svgWidth: Number,
+    svgHeight: String,
+    svgWidth: String,
   },
 };
 </script>

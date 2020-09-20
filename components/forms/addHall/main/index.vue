@@ -165,18 +165,16 @@ export default {
       this.tabs.tab2 = true;
     },
 
-    mergeCorridors(hall_id) {
+    mergeCorridors() {
       // creating an array contain the columnCorridors and rowCorridors:
       let rowCorridors = this.rowCorridors.map((corridor_number) => {
         return {
-          hall_id: hall_id,
           corridor_number: corridor_number,
           direction: "row",
         };
       });
       let columnCorridors = this.columnCorridors.map((corridor_number) => {
         return {
-          hall_id: hall_id,
           corridor_number: corridor_number,
           direction: "column",
         };
@@ -184,20 +182,9 @@ export default {
       this.corridors = [...columnCorridors, ...rowCorridors];
     },
 
-    alterLockedSeats(hall_id) {
-      let updatedArray = this.locked_seats.map((lockedSeat) => {
-        return {
-          hall_id,
-          row: lockedSeat.row,
-          column: lockedSeat.column,
-        };
-      });
-      this.locked_seats = updatedArray;
-    },
-
-    async addHallInfo() {
+    async addHallInfo(hallInfo,corridorsInfo,lockedSeatsInfo) {
       const [hall, hall_error] = await handle(
-        this.$api.post("halls/addhall", this.hall_info)
+        this.$api.post("halls/addhall", {hallInfo,corridorsInfo,lockedSeatsInfo}),
       );
       if (hall) {
         return hall;
@@ -224,96 +211,16 @@ export default {
       }
     },
 
-    async addingCorridors(hall_id) {
-      if (this.corridors.length === 0) {
-        return true;
-      }
-      const [corridors, corridors_error] = await handle(
-        this.$api.post("corridors/addCorridors", { corridors: this.corridors })
-      );
-      if (corridors) {
-        return true;
-      } else {
-        await handle(
-          this.$api({
-            method: "DELETE",
-            url: "halls/deleteHall",
-            data: { hall_id },
-          })
-        );
-
-        this.loading.status = false;
-        if (!corridors_error.response || !corridors_error.response.status) {
-          this.error.message = this.$i18n.t("errors.500");
-        } else {
-          switch (corridors_error.response.status) {
-            case 400:
-              this.error.message = this.$i18n.t("errors.400");
-              break;
-            case 401:
-              this.error.message = this.$i18n.t("errors.401");
-              break;
-            default:
-              this.error.message = this.$i18n.t("errors.500");
-          }
-        }
-        return false;
-      }
-    },
-
-    async addingLockedSeats(hall_id) {
-      if (this.locked_seats.length === 0) {
-        return true;
-      }
-      const [lockedSeats, lockedSeats_error] = await handle(
-        this.$api.post("lockedSeats/lockSeats", { seats: this.locked_seats })
-      );
-      if (lockedSeats) {
-        return true;
-      } else {
-        await handle(
-          this.$api({
-            method: "DELETE",
-            url: "halls/deleteHall",
-            data: { hall_id },
-          })
-        );
-        this.loading.status = false;
-        if (!lockedSeats_error.response || !lockedSeats_error.response.status) {
-          this.error.message = this.$i18n.t("errors.500");
-        } else {
-          switch (lockedSeats_error.response.status) {
-            case 400:
-              this.error.message = this.$i18n.t("errors.400");
-              break;
-            case 401:
-              this.error.message = this.$i18n.t("errors.401");
-              break;
-            default:
-              this.error.message = this.$i18n.t("errors.500");
-          }
-        }
-        return false;
-      }
-    },
-
     async confirm() {
       this.loading.status = true;
       this.loading.step = 1;
       this.error.message = "";
-      const addInfo = await this.addHallInfo();
-      if (addInfo) {
-        const hall_id = addInfo.data.data.hall_id;
-        this.loading.step = 2;
-        this.mergeCorridors(hall_id);
-        this.alterLockedSeats(hall_id);
-        const addCorridors = await this.addingCorridors(hall_id);
-        if (addCorridors) {
-          const addLockedSeats = await this.addingLockedSeats(hall_id);
-          if (addLockedSeats) {
-            this.loading.step = 3;
-          }
-        }
+
+      this.mergeCorridors();
+
+      const addedHall = await this.addHallInfo(this.hall_info,this.corridors,this.locked_seats);
+      if (addedHall) {
+      this.loading.step = 3;
       }
     },
   },
