@@ -42,7 +42,8 @@
         "login": "تسجيل دخول",
         "next": "التالي",
         "previous": "السابق",
-        "confirm": "تأكيد"
+        "confirm": "تأكيد",
+        "add": "إضافة"
     },
     "short_texts": {
         "welcomeBack": "اهلا بعودتك!",

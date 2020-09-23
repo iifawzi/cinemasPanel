@@ -40,7 +40,8 @@
         "login": "Login",
         "next": "Next",
         "previous": "Previous",
-        "confirm": "Confirm"
+        "confirm": "Confirm",
+        "add": "Add"
 
     },
     "short_texts": {

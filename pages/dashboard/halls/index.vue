@@ -5,6 +5,9 @@
       <div class="loading" v-if="loading === true">
         <loading type="circles" />
       </div>
+      <div class="addHall-btn" @click="$router.push('/dashboard/halls/addhall')">
+        <submitButton color="blue" :title="$t('buttons.add')" />
+      </div>
       <div class="hallsTable" v-if="loading === false">
         <modernTable>
           <template v-slot:table__head>
@@ -39,12 +42,13 @@
             </tr>
           </template>
           <template v-slot:table__data v-else>
-               <tr>
-    <td colspan="4"><div class="no-data">
-              <span class="text">{{$t('short_texts.noHalls')}}</span>
-           </div></td>
-  </tr>
-           
+            <tr>
+              <td colspan="4">
+                <div class="no-data">
+                  <span class="text">{{$t('short_texts.noHalls')}}</span>
+                </div>
+              </td>
+            </tr>
           </template>
         </modernTable>
       </div>
@@ -160,15 +164,24 @@ export default {
   padding-bottom: 50px;
   border-radius: 10px;
   box-shadow: 0px 0px 20px 0px $grey-1;
-  .no-data {
-    display: flex;
-    flex-flow: column;
-    align-items: center;
-    .text {
-      font-size: 2rem;
-      color: $red;
+  .addHall-btn {
+    width: 100px;
+    height: 30px;
+    margin: 0px 30px;
+  }
+  .hallsTable {
+    margin-top: 30px;
+    .no-data {
+      display: flex;
+      flex-flow: column;
+      align-items: center;
+      .text {
+        font-size: 2rem;
+        color: $red;
+      }
     }
   }
+
   .dialog__content {
     font-size: 2rem;
     display: flex;
