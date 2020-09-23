@@ -6,7 +6,7 @@
         <loading type="circles" />
       </div>
       <div class="hallsTable" v-if="loading === false">
-        <modernTable apiURL="halls/" v-if="halls.length != 0">
+        <modernTable>
           <template v-slot:table__head>
             <th class="number">
               #
@@ -38,11 +38,15 @@
               </td>
             </tr>
           </template>
+          <template v-slot:table__data v-else>
+               <tr>
+    <td colspan="4"><div class="no-data">
+              <span class="text">{{$t('short_texts.noHalls')}}</span>
+           </div></td>
+  </tr>
+           
+          </template>
         </modernTable>
-        <div class="no-data" colspan="4" v-else>
-          <notFound svgHeight="120" svgWidth="120" />
-          <span class="text">{{$t('short_texts.noHalls')}}</span>
-        </div>
       </div>
     </div>
     <fixedDialog @askToClose="toggleDialog" v-if="showDialog">
@@ -161,7 +165,6 @@ export default {
     flex-flow: column;
     align-items: center;
     .text {
-      margin-top: 40px;
       font-size: 2rem;
       color: $red;
     }
