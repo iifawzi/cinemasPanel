@@ -1,5 +1,5 @@
 <template>
-  <div :class="['action', action]">
+  <div :class="['action', action]" @click="$emit('click')">
     <div class="action__icon"><i :class="icon"></i></div>
   </div>
 </template>

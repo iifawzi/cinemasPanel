@@ -3,7 +3,7 @@
     <pageInfo :title="$t('pages.halls.title')" :desc="$t('pages.halls.desc')" />
     <div class="content">
       <div class="loading" v-if="loading === true">
-         <loading type="circles" />
+        <loading type="circles" />
       </div>
       <div class="hallsTable" v-if="loading === false">
         <modernTable apiURL="halls/" v-if="halls.length != 0">
@@ -29,18 +29,26 @@
               <td>
                 <div class="actions">
                   <action action="show" icon="far fa-edit" />
-                  <action action="delete" icon="far fa-trash-alt" />
+                  <action action="delete" icon="far fa-trash-alt" @click="toggleDialog" />
                 </div>
               </td>
             </tr>
           </template>
         </modernTable>
         <div class="no-data" colspan="4" v-else>
-          <notFound svgHeight="120" svgWidth="120"/>
+          <notFound svgHeight="120" svgWidth="120" />
           <span class="text">{{$t('short_texts.noHalls')}}</span>
         </div>
       </div>
     </div>
+    <fixedDialog @askToClose="toggleDialog" v-if="showDialog">
+      <div class="dialog__content">
+Confirm that you want to delete this Slot
+<div class="btn">
+<submitButton color="red" title="Confirm"/>
+</div>
+      </div>
+    </fixedDialog>
   </div>
 </template>
 
@@ -52,7 +60,9 @@ import action from "~/components/shared/action";
 import status from "~/components/shared/status";
 import handle from "~/helpers/handle.js";
 import loading from "~/components/shared/loading";
-import notFound from "~/components/svg/notFound"
+import fixedDialog from "~/components/shared/fixedDialog";
+import notFound from "~/components/svg/notFound";
+import submitButton from "~/components/shared/submitButton";
 export default {
   async mounted() {
     this.loading = true;
@@ -65,6 +75,13 @@ export default {
       title: "Halls",
     };
   },
+  data() {
+    return {
+      halls: [],
+      loading: false,
+      showDialog: true,
+    };
+  },
   layout: "dashboard",
   components: {
     pageInfo,
@@ -72,13 +89,14 @@ export default {
     action,
     status,
     loading,
-    notFound
+    notFound,
+    fixedDialog,
+    submitButton
   },
-  data() {
-    return {
-      halls: [],
-      loading: false
-    };
+  methods: {
+    toggleDialog() {
+      this.showDialog = !this.showDialog;
+    },
   },
 };
 </script>
@@ -93,15 +111,27 @@ export default {
   padding-bottom: 50px;
   border-radius: 10px;
   box-shadow: 0px 0px 20px 0px $grey-1;
-}
-.no-data {
-  display: flex;
-  flex-flow: column;
-  align-items: center;
-  .text {
-    margin-top: 40px;
+  .no-data {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    .text {
+      margin-top: 40px;
+      font-size: 2rem;
+      color: $red;
+    }
+  }
+  .dialog__content{
     font-size: 2rem;
-    color: $red;
+    display: flex;
+    flex-flow: column;
+    justify-content:center;
+    align-items: center;
+    .btn {
+      width: 120px;
+      height: 30px;
+      margin-top: 15px;
+    }
   }
 }
 </style>
