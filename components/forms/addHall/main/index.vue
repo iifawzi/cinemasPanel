@@ -37,7 +37,7 @@
 
       <div class="loading" style="padding-top: 25px" v-show="loading.step === 3">
         <div class="status">
-          <addedSuccessfully>{{$t("short_texts.added")}}</addedSuccessfully>
+          <success>{{$t("short_texts.added")}}</success>
         </div>
       </div>
 
@@ -87,7 +87,7 @@ import submitButton from "~/components/shared/submitButton";
 import loading from "~/components/shared/loading";
 import info from "~/components/forms/addHall/info/";
 import notification from "~/components/shared/notification";
-import addedSuccessfully from "~/components/shared/addedSuccessfully";
+import success from "~/components/shared/success";
 import seats from "~/components/general/seats/";
 import writeDocument from "~/components/svg/writeDocument";
 import arrow from "~/components/svg/arrow";
@@ -124,7 +124,7 @@ export default {
     seats,
     loading,
     notification,
-    addedSuccessfully,
+    success,
     writeDocument,
     arrow,
     besideSeats

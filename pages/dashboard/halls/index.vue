@@ -17,7 +17,7 @@
             <th>{{$t('general.actions')}}</th>
           </template>
           <template v-slot:table__data v-if="halls.length != 0">
-            <tr v-for="(hall, i) of halls" :key="hall.id">
+            <tr v-for="(hall, i) of halls" :key="hall.hall_id">
               <td>{{i+1}}</td>
               <td>{{hall.hall_name}}</td>
               <td>
@@ -29,7 +29,11 @@
               <td>
                 <div class="actions">
                   <action action="show" icon="far fa-edit" />
-                  <action action="delete" icon="far fa-trash-alt" @click="toggleDialog" />
+                  <action
+                    action="delete"
+                    icon="far fa-trash-alt"
+                    @click="toggleDialog(hall.hall_id)"
+                  />
                 </div>
               </td>
             </tr>
@@ -42,13 +46,20 @@
       </div>
     </div>
     <fixedDialog @askToClose="toggleDialog" v-if="showDialog">
-      <div class="dialog__content">
-{{$t("confirm.deleteHall")}}
-<div class="btn" @click="deleteHall">
-<submitButton color="red" :title="$t('buttons.confirm')"/>
-</div>
+      <div class="dialog__content" v-if="!success && !loadingDeletion">
+        {{$t("confirm.deleteHall")}}
+        <div class="btn" @click="deleteHall">
+          <submitButton color="red" :title="$t('buttons.confirm')" />
+        </div>
+      </div>
+      <div class="dialog__content-success" v-if="!loadingDeletion && success">
+        <success>تم حذف القاعه بنجاح</success>
+      </div>
+      <div class="dialog__content-loading" v-if="loadingDeletion">
+        <loading type="circles" />
       </div>
     </fixedDialog>
+    <notification :label="error" v-if="error != ''" />
   </div>
 </template>
 
@@ -63,12 +74,11 @@ import loading from "~/components/shared/loading";
 import fixedDialog from "~/components/shared/fixedDialog";
 import notFound from "~/components/svg/notFound";
 import submitButton from "~/components/shared/submitButton";
+import success from "~/components/shared/success";
+import notification from "~/components/shared/notification";
 export default {
   async mounted() {
-    this.loading = true;
-    const [halls, halls_error] = await handle(this.$api.get("halls/"));
-    this.halls = halls.data.data;
-    this.loading = false;
+    await this.getHalls();
   },
   head() {
     return {
@@ -79,8 +89,11 @@ export default {
     return {
       halls: [],
       loading: false,
-      showDialog: true,
+      showDialog: false,
       IDtoDelete: -1,
+      success: false,
+      error: "",
+      loadingDeletion: false,
     };
   },
   layout: "dashboard",
@@ -92,15 +105,43 @@ export default {
     loading,
     notFound,
     fixedDialog,
-    submitButton
+    submitButton,
+    success,
+    notification,
   },
   methods: {
-    toggleDialog() {
-      this.showDialog = !this.showDialog;
+    async getHalls() {
+      this.loading = true;
+      const [halls, halls_error] = await handle(this.$api.get("halls/"));
+      this.halls = halls.data.data;
+      this.loading = false;
     },
-    deleteHall(){
-
-    }
+    toggleDialog(hall_id = -1) {
+      this.success = false;
+      this.showDialog = !this.showDialog;
+      this.IDtoDelete = hall_id;
+    },
+    async deleteHall() {
+      this.loadingDeletion = true;
+      const [deletedHall, deletedHall_error] = await handle(
+        this.$api({
+          method: "DELETE",
+          url: "halls/deleteHall",
+          data: { hall_id: this.IDtoDelete },
+        })
+      );
+      this.loadingDeletion = false;
+      if (deletedHall) {
+        this.success = true;
+        setTimeout(() => {
+          this.showDialog = false;
+        }, 1000);
+        await this.getHalls();
+      }
+      if (deletedHall_error) {
+        this.error = "حدث خطأ ما يرجى المحاولة لاحقًا";
+      }
+    },
   },
 };
 </script>
@@ -125,11 +166,11 @@ export default {
       color: $red;
     }
   }
-  .dialog__content{
+  .dialog__content {
     font-size: 2rem;
     display: flex;
     flex-flow: column;
-    justify-content:center;
+    justify-content: center;
     align-items: center;
     .btn {
       width: 120px;
