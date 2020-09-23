@@ -44,7 +44,7 @@
     <fixedDialog @askToClose="toggleDialog" v-if="showDialog">
       <div class="dialog__content">
 {{$t("confirm.deleteHall")}}
-<div class="btn">
+<div class="btn" @click="deleteHall">
 <submitButton color="red" :title="$t('buttons.confirm')"/>
 </div>
       </div>
@@ -80,6 +80,7 @@ export default {
       halls: [],
       loading: false,
       showDialog: true,
+      IDtoDelete: -1,
     };
   },
   layout: "dashboard",
@@ -97,6 +98,9 @@ export default {
     toggleDialog() {
       this.showDialog = !this.showDialog;
     },
+    deleteHall(){
+
+    }
   },
 };
 </script>
