@@ -2,7 +2,7 @@
     <div class="edithall">
         <pageInfo :title="$t('pages.edithall.title')" :desc="$t('pages.edithall.desc')"/>
         <div class="content">
-          
+          <edithallForm/>
         </div>
     </div>
 </template>
@@ -10,6 +10,8 @@
 
 <script>
 import pageInfo from "~/components/shared/pageInfo"
+import edithallForm from "~/components/forms/editHall/main/"
+
 export default {
     mounted(){
         console.log(this.$route.params);
@@ -22,6 +24,7 @@ export default {
     layout: 'dashboard',
     components: {
         pageInfo,
+        edithallForm
     }
 }
 </script>
