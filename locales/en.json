@@ -39,7 +39,8 @@
     "buttons": {
         "login": "Login",
         "next": "Next",
-        "previous": "Previous"
+        "previous": "Previous",
+        "confirm": "Confirm"
 
     },
     "short_texts": {
@@ -87,5 +88,8 @@
             "title": "Halls", 
             "desc": "All Opened and closed halls"
         }
+    }, 
+    "confirm": {
+        "deleteHall": "Confirm that you want to delete this Hall"
     }
 }

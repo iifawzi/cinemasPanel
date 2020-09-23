@@ -43,9 +43,9 @@
     </div>
     <fixedDialog @askToClose="toggleDialog" v-if="showDialog">
       <div class="dialog__content">
-Confirm that you want to delete this Slot
+{{$t("confirm.deleteHall")}}
 <div class="btn">
-<submitButton color="red" title="Confirm"/>
+<submitButton color="red" :title="$t('buttons.confirm')"/>
 </div>
       </div>
     </fixedDialog>
