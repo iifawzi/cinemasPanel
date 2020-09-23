@@ -88,6 +88,10 @@
         "halls": {
             "title": "Halls", 
             "desc": "All Opened and closed halls"
+        },
+        "edithall": {
+            "title": "Editing Hall", 
+            "desc": "Editing hall's information and seats"
         }
     }, 
     "confirm": {

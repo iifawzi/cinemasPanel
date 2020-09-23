@@ -31,7 +31,7 @@
               </td>
               <td>
                 <div class="actions">
-                  <action action="show" icon="far fa-edit" />
+                  <action action="show" icon="far fa-edit" @click="$router.push('/dashboard/halls/'+hall.hall_id)" />
                   <action
                     action="delete"
                     icon="far fa-trash-alt"
