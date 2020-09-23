@@ -6,7 +6,7 @@
         <loading type="circles" />
       </div>
       <div class="addHall-btn" @click="$router.push('/dashboard/halls/addhall')">
-        <submitButton color="blue" :title="$t('buttons.add')" />
+        <submitButton color="light-blue" :title="$t('buttons.add')" />
       </div>
       <div class="hallsTable" v-if="loading === false">
         <modernTable>

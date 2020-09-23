@@ -7,6 +7,7 @@
     border-radius: 6px;
     cursor: pointer;
     padding-top: 5px;
+    transition: 0.2s;
 }
 
 .redBtn {
@@ -14,9 +15,22 @@
     color: $red-1;
 }
 
+.purpleBtn {
+    background-color: $purple-2;
+    color: $purple-3;
+}
+
 .blueBtn {
     background-color: $blue;
-    color: $white;
+    color:$white;
+}
+.light-blueBtn {
+    background-color: $blue-1;
+    color:$blue;
+    &:hover {
+        background-color: $blue;
+        color:$white;
+    }
 }
 .greenBtn { 
     background-color: $green-2;
@@ -25,6 +39,10 @@
 .light-greenBtn { 
     background-color: $green-1;
     color: $green-2;
+    &:hover {
+        background-color: $green-2;
+        color: $white;
+    }
 }
 .disabled {
     background-color: $white-1;
