@@ -25,17 +25,16 @@
         </div>
       </div>
 
-      <div class="loading" v-show="loading.status && loading.step != 3">
+      <div class="loading" v-show="loading.status && loading.step != 2">
         <div class="circles">
           <loading type="circles" />
         </div>
         <div class="status">
           <span class="item" v-if="loading.step === 1">{{$t("loading.addHallInfo")}}</span>
-          <span class="item" v-if="loading.step === 2">{{$t("loading.addCorridorsAndLocked")}}</span>
         </div>
       </div>
 
-      <div class="loading" style="padding-top: 25px" v-show="loading.step === 3">
+      <div class="loading" style="padding-top: 25px" v-show="loading.step === 2">
         <div class="status">
           <success>{{$t("short_texts.added")}}</success>
         </div>
@@ -220,7 +219,7 @@ export default {
 
       const addedHall = await this.addHallInfo(this.hall_info,this.corridors,this.locked_seats);
       if (addedHall) {
-      this.loading.step = 3;
+      this.loading.step = 2;
       }
     },
   },

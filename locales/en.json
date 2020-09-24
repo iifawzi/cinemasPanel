@@ -52,8 +52,7 @@
         "noHalls": "No Halls are found"
     },
     "loading": {
-        "addHallInfo": "1/2 Adding Hall's Informations...",
-        "addCorridorsAndLocked": "2/2 Adding the Corridors and the Locked Seats..."
+        "addHallInfo": "Adding Hall's Informations..."
     },
     "errors": {
         "500": "Something wrong happened, please try again later.",
