@@ -3,6 +3,7 @@
       <span class="title">{{$t("general.essential")}} :</span>
       <div class="inputs">
     <div class="input--container">
+      <label for="name-input">{{$t('general.hall_name')}}</label>
       <inputField
         type="text"
         autofocus
@@ -12,6 +13,7 @@
         v-model="$v.hall_info.hall_name.$model"
         inputStyle="blueBorder"
         @input="checkCorrectance"
+        id="name-input"
       >
         <div
           class="error"
@@ -20,6 +22,7 @@
       </inputField>
     </div>
     <div class="input--container">
+      <label for="description-input">{{$t('general.hall_description')}}</label>
       <inputField
         type="text"
         autofocus
@@ -29,6 +32,7 @@
         v-model="$v.hall_info.hall_description.$model"
         inputStyle="blueBorder"
         @input="checkCorrectance"
+        id="description-input"
       >
         <div
           class="error"
