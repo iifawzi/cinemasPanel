@@ -9,10 +9,16 @@
   .inputs {
     display: flex;
     flex-flow: row;
+    align-items: center;
     width: 100%;
   }
   .input--container {
       width: 250px;
+  }
+  .toggle-input {
+    padding-bottom: 6px;
+    display: flex;
+    flex-flow: column;
   }
   .input--container:not(:first-child){
     margin: 0px 10px;
