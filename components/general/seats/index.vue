@@ -277,6 +277,16 @@ import {
   addColumnCorridor,
 } from "./columnFunctions";
 export default {
+  mounted(){
+ if (this.dbHallData){
+   const dbHallData = this.dbHallData
+   this.hallInfo.rowsNumber = dbHallData.rows_number;
+   this.hallInfo.columnsNumber = dbHallData.columns_number;
+   this.hallInfo.columnCorridors = dbHallData.column_corridors;
+   this.hallInfo.rowCorridors = dbHallData.row_corridors;
+   this.hallInfo.lockedSeats = dbHallData.lockedSeats;
+ }
+  },
   data() {
     return {
       clicked: "",
@@ -291,6 +301,11 @@ export default {
                 }],
             }
     };
+  },
+    props: {
+    dbHallData: {
+      type: Object,
+    }
   },
   components: {
     seat,

@@ -1,5 +1,10 @@
-.addhall__form {
+.edithall__form {
     width: 100%;
+    .not-found{
+        display: block;
+        text-align: center;
+        color: $red;
+        }
     .content {
         .tabs {
             height: 180px;
@@ -83,7 +88,7 @@
 }
 
 @media (max-width: $small-devices){
-    .addhall__form {
+    .edithall__form {
         .content {
             .tabs {
                 width: 100%;

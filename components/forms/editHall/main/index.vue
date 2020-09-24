@@ -1,6 +1,8 @@
 <template>
-  <div class="addhall__form">
-    <div class="content">
+  <div class="edithall__form">
+    <span v-if="hallError && !hallLoading" class="not-found">لم يتم العثور على القاعه عذرًا</span>
+    <loading type="circles" v-if="hallLoading" />
+    <div class="content" v-if="!hallLoading && !hallError">
       <div class="tabs">
         <div class="tab">
           <writeDocument
@@ -16,10 +18,10 @@
           :class="['next',activeTab >= 1 ? 'active' : '', language === 'ar' ? 'next-ar' : '']"
         />
         <div class="tab">
-            <besideSeats
+          <besideSeats
             svgHeight="50"
             svgWidth="50"
-           :class="['icon', activeTab >= 2 ? 'active' : '']"
+            :class="['icon', activeTab >= 2 ? 'active' : '']"
           />
           <span :class="['title', activeTab >= 2 ? 'active' : '']">{{$t("general.seats")}}</span>
         </div>
@@ -42,9 +44,9 @@
       </div>
 
       <div class="tabs__content" v-show="!loading.status">
-        <div class="content">
-          <info v-show="activeTab === 1" @iscorrect="checkTab1" />
-          <seats v-show="activeTab === 2" class="seats" @iscorrect="checkTab2" />
+        <div class="content" v-if="dbHallData != ''">
+          <info @iscorrect="checkTab1" :dbHallData="dbHallData.data.data"  />
+          <seats class="seats" @iscorrect="checkTab2" :dbHallData="dbHallData.data.data" />
         </div>
 
         <div class="switcher">
@@ -85,7 +87,7 @@ import handle from "~/helpers/handle";
 import Cookie from "js-cookie";
 import submitButton from "~/components/shared/submitButton";
 import loading from "~/components/shared/loading";
-import info from "~/components/forms/addHall/info/";
+import info from "~/components/forms/edithall/info/";
 import notification from "~/components/shared/notification";
 import success from "~/components/shared/success";
 import seats from "~/components/general/seats/";
@@ -93,8 +95,24 @@ import writeDocument from "~/components/svg/writeDocument";
 import arrow from "~/components/svg/arrow";
 import besideSeats from "~/components/svg/besideSeats";
 export default {
+  async mounted() {
+    this.hallLoading = true;
+    const hall_id = this.$route.params.hall_id;
+    const [hall, hall_error] = await handle(
+      this.$api.post("halls/getHall", { hall_id })
+    );
+    this.hallLoading = false;
+    if (hall) {
+      this.dbHallData = hall;
+    } else {
+      this.hallError = true;
+    }
+  },
   data() {
     return {
+      hallLoading: false,
+      hallError: false,
+      dbHallData: "",
       loading: {
         status: false,
         step: 1,
@@ -127,7 +145,7 @@ export default {
     success,
     writeDocument,
     arrow,
-    besideSeats
+    besideSeats,
   },
   methods: {
     nextTab() {
@@ -182,9 +200,13 @@ export default {
       this.corridors = [...columnCorridors, ...rowCorridors];
     },
 
-    async addHallInfo(hallInfo,corridorsInfo,lockedSeatsInfo) {
+    async addHallInfo(hallInfo, corridorsInfo, lockedSeatsInfo) {
       const [hall, hall_error] = await handle(
-        this.$api.post("halls/addhall", {hallInfo,corridorsInfo,lockedSeatsInfo}),
+        this.$api.post("halls/addhall", {
+          hallInfo,
+          corridorsInfo,
+          lockedSeatsInfo,
+        })
       );
       if (hall) {
         return hall;
@@ -218,9 +240,13 @@ export default {
 
       this.mergeCorridors();
 
-      const addedHall = await this.addHallInfo(this.hall_info,this.corridors,this.locked_seats);
+      const addedHall = await this.addHallInfo(
+        this.hall_info,
+        this.corridors,
+        this.locked_seats
+      );
       if (addedHall) {
-      this.loading.step = 3;
+        this.loading.step = 3;
       }
     },
   },

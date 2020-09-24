@@ -46,6 +46,10 @@
 import inputField from "~/components/shared/inputField";
 import { required } from "vuelidate/lib/validators";
 export default {
+  mounted(){
+   this.hall_info.hall_name = this.dbHallData.hall_name;
+   this.hall_info.hall_description = this.dbHallData.hall_description;
+  },
   components: {
     inputField,
   },
@@ -56,6 +60,12 @@ export default {
         hall_description: "",
       },
     };
+  },
+  props: {
+    dbHallData: {
+      type: Object,
+      required: true,
+    }
   },
   methods:{
     checkCorrectance(){
