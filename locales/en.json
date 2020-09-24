@@ -41,7 +41,8 @@
         "next": "Next",
         "previous": "Previous",
         "confirm": "Confirm",
-        "add": "Add"
+        "add": "Add",
+        "edit": "Edit"
 
     },
     "short_texts": {

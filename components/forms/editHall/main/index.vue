@@ -3,30 +3,6 @@
     <span v-if="hallError && !hallLoading" class="not-found">لم يتم العثور على القاعه عذرًا</span>
     <loading type="circles" v-if="hallLoading" />
     <div class="content" v-if="!hallLoading && !hallError">
-      <div class="tabs">
-        <div class="tab">
-          <writeDocument
-            svgHeight="50"
-            svgWidth="50"
-            :class="['icon', activeTab >= 1 ? 'active' : '']"
-          />
-          <span :class="['title', activeTab >= 1 ? 'active' : '']">{{$t("general.essential")}}</span>
-        </div>
-        <arrow
-          svgHeight="40"
-          svgWidth="40"
-          :class="['next',activeTab >= 1 ? 'active' : '', language === 'ar' ? 'next-ar' : '']"
-        />
-        <div class="tab">
-          <besideSeats
-            svgHeight="50"
-            svgWidth="50"
-            :class="['icon', activeTab >= 2 ? 'active' : '']"
-          />
-          <span :class="['title', activeTab >= 2 ? 'active' : '']">{{$t("general.seats")}}</span>
-        </div>
-      </div>
-
       <div class="loading" v-show="loading.status && loading.step != 3">
         <div class="circles">
           <loading type="circles" />
@@ -45,35 +21,19 @@
 
       <div class="tabs__content" v-show="!loading.status">
         <div class="content" v-if="dbHallData != ''">
-          <info @iscorrect="checkTab1" :dbHallData="dbHallData.data.data"  />
-          <seats class="seats" @iscorrect="checkTab2" :dbHallData="dbHallData.data.data" />
+          <info @iscorrect="checkInfo" :dbHallData="dbHallData.data.data" class="info"  />
+          <seats class="seats" @iscorrect="checkSeats" :dbHallData="dbHallData.data.data" />
         </div>
 
         <div class="switcher">
           <div class="btn-container">
             <submitButton
-              v-if="activeTab > 1"
               color="light-green"
-              :title="$t('buttons.previous')"
-              @click="prevTab"
-            />
-          </div>
-          <div class="btn-container">
-            <submitButton
-              v-if="activeTab < 2"
-              color="green"
               :disabledClass="isDisabled ? 'disabled' : ''"
-              :title="$t('buttons.next')"
-              @click="nextTab"
+              :title="$t('buttons.edit')"
+              @click="confirm"
               :isDisabled="isDisabled"
             />
-          </div>
-          <div
-            class="btn-container add"
-            v-if="tabs.tab1 && tabs.tab2 && activeTab === 2"
-            @click="confirm"
-          >
-            <submitButton color="blue" :title="$t('general.addHall')" />
           </div>
         </div>
       </div>
@@ -120,10 +80,9 @@ export default {
       error: {
         message: "",
       },
-      activeTab: 1,
       tabs: {
-        tab1: false,
-        tab2: false,
+        infoStatus: true,
+        seatsStatus: true,
       },
       hall_info: {
         hall_name: "",
@@ -148,29 +107,17 @@ export default {
     besideSeats,
   },
   methods: {
-    nextTab() {
-      if (this.activeTab != 2) {
-        this.activeTab++;
-      }
-    },
-
-    prevTab() {
-      if (this.activeTab != 0) {
-        this.activeTab--;
-      }
-    },
-
-    checkTab1(data) {
+    checkInfo(data) {
       if (data === false) {
-        this.tabs.tab1 = false;
+        this.tabs.infoStatus = false;
       } else {
         this.hall_info.hall_name = data.hall_name;
         this.hall_info.hall_description = data.hall_description;
-        this.tabs.tab1 = true;
+        this.tabs.infoStatus = true;
       }
     },
 
-    checkTab2(data) {
+    checkSeats(data) {
       this.hall_info.rows_number = data.rowsNumber;
       this.hall_info.columns_number = data.columnsNumber;
       this.rowCorridors = data.rowCorridors.filter(
@@ -180,7 +127,7 @@ export default {
         (corridor) => corridor !== null
       );
       this.locked_seats = data.lockedSeats;
-      this.tabs.tab2 = true;
+      this.tabs.seatsStatus = true;
     },
 
     mergeCorridors() {
@@ -255,18 +202,7 @@ export default {
       return this.$store.getters.getLocale;
     },
     isDisabled() {
-      const tab = this.activeTab;
-      let status = true;
-      switch (tab) {
-        case 1:
-          this.tabs.tab1 ? (status = false) : (status = true);
-          break;
-        case 2:
-          this.tabs.tab2 ? (status = false) : (status = true);
-          break;
-        default:
-          break;
-      }
+      let status =  this.tabs.infoStatus && this.tabs.seatsStatus ? false : true;
       return status;
     },
     getAccountData() {
