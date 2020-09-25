@@ -20,7 +20,7 @@
 
       <div class="tabs__content" v-show="!loading.status">
         <div class="content" v-if="dbHallData != ''">
-          <info @iscorrect="checkInfo" :dbHallData="dbHallData" class="info"  />
+          <info @iscorrect="checkInfo" :dbHallData="dbHallData" class="info" />
           <seats class="seats" @iscorrect="checkSeats" :dbHallData="dbHallData" />
         </div>
 
@@ -71,7 +71,7 @@ export default {
     return {
       hallLoading: false,
       hallError: false,
-      dbHallData: "",
+      dbHallData: "", // coming from database (in edit hall's page)
       loading: {
         status: false,
         step: 1,
@@ -83,13 +83,19 @@ export default {
         infoStatus: true,
         seatsStatus: true,
       },
-      hall_info: {
-       
-      },
+      // user's chosen data: 
+      hall_info: {},
       row_corridors: [],
       column_corridors: [],
-      locked_seats: [],
-      corridors: [],
+      lockedSeats: [],
+
+
+      // will be submitted (after filtered `used in edit hall's page ` )
+      newLockedSeats: [],
+      deletedLockedSeats: [],
+      newCorridors: [],
+      deletedCorridors: [],
+      // the user's chosen hall's info will be used also. (it's filtered on its place)
     };
   },
   components: {
@@ -124,70 +130,146 @@ export default {
       this.column_corridors = data.column_corridors.filter(
         (corridor) => corridor !== null
       );
-      this.locked_seats = data.lockedSeats;
+      this.lockedSeats = data.lockedSeats;
       this.tabs.seatsStatus = true;
     },
 
-    filterHallInfo(oldData){
-      // filter the hall's info: 
-      const updatedHallInfo = Object.entries(this.hall_info);
-      this.hall_info = updatedHallInfo.filter(element=>{ // to filter only the data that differs from the old one, to update them only.
-        if (element[1] !== oldData[element[0]]){
-          return true;
-        }else {
-          return false;
+    filterHallInfo(oldData) {
+      // filter the hall's info:
+      this.hall_info = Object.entries(this.hall_info)
+        .filter((element) => {
+          // to filter only the data that differs from the old one, to update them only.
+          if (element[1] !== oldData[element[0]]) {
+            return true;
+          } else {
+            return false;
+          }
+        })
+        .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
+    },
+
+    filterCorridors(oldData) {
+      const hall_id = this.$route.params.hall_id;
+      this.deletedCorridors = [];
+      this.newCorridors = [];
+      // filter the corridors:
+
+      //=>  Column Corridors   <= //
+      // if new corridors doesn't include the old one: so it's deleted
+      oldData.column_corridors.forEach((element) => {
+        if (!this.column_corridors.includes(element.corridor_number)) {
+          this.deletedCorridors.push(element.corridor_id);
         }
-      }).reduce((acc,[key,value])=>({...acc,[key]:value}),{});
+      });
+
+      // if old corridors doesn't include the new one: so it's new:
+      this.column_corridors.forEach((corridorNumber) => {
+        if (
+          oldData.column_corridors.findIndex(
+            (element) => element.corridor_number === corridorNumber
+          ) === -1
+        ) {
+          this.newCorridors.push({
+            corridor_number: corridorNumber,
+            direction: "column",
+            hall_id: hall_id,
+          });
+        }
+      });
+
+      //=>  Row Corridors   <= //
+      // if new corridors doesn't include the old one: so it's deleted
+      oldData.row_corridors.forEach((element) => {
+        if (!this.row_corridors.includes(element.corridor_number)) {
+          this.deletedCorridors.push(element.corridor_id);
+        }
+      });
+      // if old corridors doesn't include the new one: so it's new:
+      this.row_corridors.forEach((corridorNumber) => {
+        if (oldData.row_corridors.findIndex((element) => element.corridor_number === corridorNumber) === -1) {
+          this.newCorridors.push({
+            corridor_number: corridorNumber,
+            direction: "row",
+            hall_id: hall_id,
+          });
+        }
+      });
+    },
+
+
+    filterLockedSeats(oldData){
+      const hall_id = this.$route.params.hall_id;
+      this.newLockedSeats = [];
+      this.deletedLockedSeats = [];
+      // filter the lockedSeats:
+      // if new locked Seats doesn't include the old one: so it's deleted
+      oldData.lockedSeats.forEach((element) => {
+        if (this.lockedSeats.findIndex(locked=>locked.row === element.row && locked.column === element.column) === -1) {
+          this.deletedLockedSeats.push(element.lockedSeat_id);
+        }
+      });
+
+       // if old locked Seats doesn't include the new one: so it's new:
+      this.lockedSeats.forEach((locked) => {
+        if (oldData.lockedSeats.findIndex(element=>element.row === locked.row && element.column === locked.column) === -1) {
+          this.newLockedSeats.push({
+            row: locked.row,
+            column: locked.column,
+            hall_id: hall_id,
+          });
+        }
+      });
+    
     },
 
     async addHallInfo(hallInfo, corridorsInfo, lockedSeatsInfo) {
-      // const [hall, hall_error] = await handle(
-      //   this.$api.post("halls/addhall", {
-      //     hallInfo,
-      //     corridorsInfo,
-      //     lockedSeatsInfo,
-      //   })
-      // );
-      // if (hall) {
-      //   return hall;
-      // } else {
-      //   this.loading.status = false;
-      //   if (!hall_error.response || !hall_error.response.status) {
-      //     this.error.message = this.$i18n.t("errors.500");
-      //   } else {
-      //     switch (hall_error.response.status) {
-      //       case 400:
-      //         this.error.message = this.$i18n.t("errors.400");
-      //         break;
-      //       case 401:
-      //         this.error.message = this.$i18n.t("errors.401");
-      //         break;
-      //       case 409:
-      //         this.error.message = this.$i18n.t("errors.addHall_409");
-      //         break;
-      //       default:
-      //         this.error.message = this.$i18n.t("errors.500");
-      //     }
-      //   }
-      //   return false;
-      // }
+      const [hall, hall_error] = await handle(
+        this.$api.post("halls/addhall", {
+          hallInfo,
+          corridorsInfo,
+          lockedSeatsInfo,
+        })
+      );
+      if (hall) {
+        return hall;
+      } else {
+        this.loading.status = false;
+        if (!hall_error.response || !hall_error.response.status) {
+          this.error.message = this.$i18n.t("errors.500");
+        } else {
+          switch (hall_error.response.status) {
+            case 400:
+              this.error.message = this.$i18n.t("errors.400");
+              break;
+            case 401:
+              this.error.message = this.$i18n.t("errors.401");
+              break;
+            case 409:
+              this.error.message = this.$i18n.t("errors.addHall_409");
+              break;
+            default:
+              this.error.message = this.$i18n.t("errors.500");
+          }
+        }
+        return false;
+      }
     },
 
     async confirm() {
-      // this.loading.status = true;
-      // this.loading.step = 1;
-      // this.error.message = "";
+      this.loading.status = true;
+      this.loading.step = 1;
+      this.error.message = "";
       this.filterHallInfo(this.dbHallData);
-
-
-      // const addedHall = await this.addHallInfo(
-      //   this.hall_info,
-      //   this.corridors,
-      //   this.locked_seats
-      // );
-      // if (addedHall) {
-      //   this.loading.step = 2;
-      // }
+      this.filterCorridors(this.dbHallData);
+      this.filterLockedSeats(this.dbHallData);
+      const addedHall = await this.addHallInfo(
+        this.hall_info,
+        this.corridors,
+        this.lockedSeats
+      );
+      if (addedHall) {
+        this.loading.step = 2;
+      }
     },
   },
   computed: {
@@ -195,7 +277,7 @@ export default {
       return this.$store.getters.getLocale;
     },
     isDisabled() {
-      let status =  this.tabs.infoStatus && this.tabs.seatsStatus ? false : true;
+      let status = this.tabs.infoStatus && this.tabs.seatsStatus ? false : true;
       return status;
     },
     getAccountData() {

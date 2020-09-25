@@ -279,12 +279,14 @@ import {
 export default {
   created(){
  if (this.dbHallData){
-   const dbHallData = this.dbHallData
+   const dbHallData = JSON.parse(JSON.stringify(this.dbHallData))
    this.hallInfo.rows_number = dbHallData.rows_number;
    this.hallInfo.columns_number = dbHallData.columns_number;
-   this.hallInfo.column_corridors = dbHallData.column_corridors;
-   this.hallInfo.row_corridors = dbHallData.row_corridors;
+   this.hallInfo.column_corridors = dbHallData.column_corridors.map(columnCorridor=>columnCorridor.corridor_number);;
+   this.hallInfo.row_corridors = dbHallData.row_corridors.map(rowCorridor=>rowCorridor.corridor_number);;
    this.hallInfo.lockedSeats = dbHallData.lockedSeats;
+
+   this.emitUpdatedData();
  }
   },
   data() {
@@ -356,6 +358,7 @@ export default {
           column: realColumnNumber,
         });
       }
+      this.emitUpdatedData();
     },
     emitUpdatedData(){
       this.$emit("iscorrect", this.hallInfo);
