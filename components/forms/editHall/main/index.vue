@@ -84,11 +84,7 @@ export default {
         seatsStatus: true,
       },
       hall_info: {
-        hall_name: "",
-        hall_description: "",
-        rows_number: 0,
-        columns_number: 0,
-        hall_status: false,
+       
       },
       row_corridors: [],
       column_corridors: [],
@@ -122,6 +118,7 @@ export default {
     checkSeats(data) {
       this.hall_info.rows_number = data.rows_number;
       this.hall_info.columns_number = data.columns_number;
+      console.log(this.hall_info.rows_number ,data, data.rows_number);
       this.row_corridors = data.row_corridors.filter(
         (corridor) => corridor !== null
       );
