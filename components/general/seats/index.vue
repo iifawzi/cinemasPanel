@@ -34,7 +34,7 @@
                 <!-- Delete Row Component -->
                 <div
                   :class="['function', 'function-'+language]"
-                  v-if="hallInfo.rowsNumber != 1"
+                  v-if="hallInfo.rows_number != 1"
                   @click.stop="deleteRow(uniqueRowNumber,realRowNumber)"
                 >
                   <span class="icon">
@@ -45,7 +45,7 @@
                 <!-- Convert Row To Corridor -->
                 <div
                   :class="['function', 'function-'+language]"
-                  v-if="name != 'RowCorridor' && uniqueRowNumber != 1  && uniqueRowNumber != hallInfo.rowsNumber && !isThisRowCorridor(uniqueRowNumber-1) &&  !isThisRowCorridor(uniqueRowNumber+1)"
+                  v-if="name != 'RowCorridor' && uniqueRowNumber != 1  && uniqueRowNumber != hallInfo.rows_number && !isThisRowCorridor(uniqueRowNumber-1) &&  !isThisRowCorridor(uniqueRowNumber+1)"
                   @click.stop="convertRowToCorridor(uniqueRowNumber,realRowNumber)"
                 >
                   <span class="icon">
@@ -90,7 +90,7 @@
                 <!-- Add Corridor Below -->
                 <div
                   :class="['function', 'function-'+language]"
-                  v-if="name != 'RowCorridor' && !isThisRowCorridor(uniqueRowNumber+1) && uniqueRowNumber+1 <= hallInfo.rowsNumber"
+                  v-if="name != 'RowCorridor' && !isThisRowCorridor(uniqueRowNumber+1) && uniqueRowNumber+1 <= hallInfo.rows_number"
                   @click.stop="addCorridor(uniqueRowNumber,'below')"
                 >
                   <span class="icon">
@@ -131,7 +131,7 @@
                   <!-- Delete Column -->
                   <div
                     :class="['function', 'function-'+language]"
-                    v-if="hallInfo.columnsNumber != 1"
+                    v-if="hallInfo.columns_number != 1"
                     @click.stop="deleteColumn(uniqueColumnNumber,seatColumn)"
                   >
                     <span class="icon">
@@ -142,7 +142,7 @@
                   <!-- Convert Column To Corridor -->
                   <div
                     :class="['function', 'function-'+language]"
-                    v-if="status != 'columnCorridor'  && !isThisColumnCorridor(uniqueColumnNumber-1) && !isThisColumnCorridor(uniqueColumnNumber+1) && uniqueColumnNumber != 1  && uniqueColumnNumber != hallInfo.columnsNumber"
+                    v-if="status != 'columnCorridor'  && !isThisColumnCorridor(uniqueColumnNumber-1) && !isThisColumnCorridor(uniqueColumnNumber+1) && uniqueColumnNumber != 1  && uniqueColumnNumber != hallInfo.columns_number"
                     @click.stop="convertColumnToCorridor(uniqueColumnNumber,seatColumn)"
                   >
                     <span class="icon">
@@ -190,7 +190,7 @@
                   <!-- Add Corridor after -->
                   <div
                     :class="['function', 'function-'+language]"
-                    v-if="status != 'columnCorridor'  && !isThisColumnCorridor(uniqueColumnNumber+1)  && uniqueColumnNumber+1 <= hallInfo.columnsNumber"
+                    v-if="status != 'columnCorridor'  && !isThisColumnCorridor(uniqueColumnNumber+1)  && uniqueColumnNumber+1 <= hallInfo.columns_number"
                     @click.stop="addColumnCorridor(uniqueColumnNumber,'after')"
                   >
                     <span class="icon">
@@ -280,10 +280,10 @@ export default {
   mounted(){
  if (this.dbHallData){
    const dbHallData = this.dbHallData
-   this.hallInfo.rowsNumber = dbHallData.rows_number;
-   this.hallInfo.columnsNumber = dbHallData.columns_number;
-   this.hallInfo.columnCorridors = dbHallData.column_corridors;
-   this.hallInfo.rowCorridors = dbHallData.row_corridors;
+   this.hallInfo.rows_number = dbHallData.rows_number;
+   this.hallInfo.columns_number = dbHallData.columns_number;
+   this.hallInfo.column_corridors = dbHallData.column_corridors;
+   this.hallInfo.row_corridors = dbHallData.row_corridors;
    this.hallInfo.lockedSeats = dbHallData.lockedSeats;
  }
   },
@@ -291,10 +291,10 @@ export default {
     return {
       clicked: "",
       hallInfo:{
-                rowsNumber: 9,
-                columnsNumber: 26,
-                rowCorridors:[3,6],
-                columnCorridors: [5,9,15,20],
+                rows_number: 9,
+                columns_number: 26,
+                row_corridors:[3,6],
+                column_corridors: [5,9,15,20],
                 lockedSeats:[{
                     row: 1,
                     column: 2,
@@ -316,13 +316,13 @@ export default {
       return this.$store.getters.getLocale;
     },
     seatsArray() {
-      const lettersToUse = letters(this.hallInfo.rowsNumber);
+      const lettersToUse = letters(this.hallInfo.rows_number);
       const updatedSeats = seats(
         lettersToUse,
-        this.hallInfo.rowsNumber,
-        this.hallInfo.columnsNumber,
-        this.hallInfo.rowCorridors,
-        this.hallInfo.columnCorridors,
+        this.hallInfo.rows_number,
+        this.hallInfo.columns_number,
+        this.hallInfo.row_corridors,
+        this.hallInfo.column_corridors,
         this.hallInfo.lockedSeats
       );
       this.$emit("iscorrect", this.hallInfo);

@@ -1,7 +1,7 @@
 // Columns Functions
 
 export function isThisColumnCorridor(uniqueColumnNumber) {
-    return this.hallInfo.columnCorridors.includes(uniqueColumnNumber);
+    return this.hallInfo.column_corridors.includes(uniqueColumnNumber);
   };
 
 
@@ -12,8 +12,8 @@ export function isThisColumnCorridor(uniqueColumnNumber) {
 
   
   export function deleteColumn(uniqueColumnNumber, realColumnNumber) {
-    let tempCorridors = [...this.hallInfo.columnCorridors];
-    let tempColumnsNumber = this.hallInfo.columnsNumber;
+    let tempCorridors = [...this.hallInfo.column_corridors];
+    let tempColumns_number = this.hallInfo.columns_number;
     let tempLockedSeats = JSON.parse(
       JSON.stringify(this.hallInfo.lockedSeats)
     ); // DEEP COPY THE REAL ONE.
@@ -23,10 +23,10 @@ export function isThisColumnCorridor(uniqueColumnNumber) {
     const BeforeMeIndex = tempCorridors.indexOf(uniqueColumnNumber - 1);
     if (afterMeIndex != -1 && BeforeMeIndex != -1) {
       tempCorridors.splice(afterMeIndex, 1);
-      tempColumnsNumber--;
+      tempColumns_number--;
     }
     // if after delete, is there a corridor will be number 1 or last one. -not acceptable- (delete that corridor)
-    if (uniqueColumnNumber + 1 === 2 || uniqueColumnNumber === this.hallInfo.columnsNumber) {
+    if (uniqueColumnNumber + 1 === 2 || uniqueColumnNumber === this.hallInfo.columns_number) {
       const corridorNumber =
       uniqueColumnNumber + 1 === 2
           ? tempCorridors.indexOf(uniqueColumnNumber + 1)
@@ -34,7 +34,7 @@ export function isThisColumnCorridor(uniqueColumnNumber) {
       if (corridorNumber != -1) {
         tempCorridors.splice(corridorNumber, 1);
         wrapNumber++;
-        tempColumnsNumber--;
+        tempColumns_number--;
       }
     }
     // to delete all lockedSeats in the deleted column:
@@ -62,10 +62,10 @@ export function isThisColumnCorridor(uniqueColumnNumber) {
       return locked;
     });
 
-    tempColumnsNumber--;
+    tempColumns_number--;
 
-    this.hallInfo.columnsNumber = tempColumnsNumber;
-    this.hallInfo.columnCorridors = tempCorridors;
+    this.hallInfo.columns_number = tempColumns_number;
+    this.hallInfo.column_corridors = tempCorridors;
     this.hallInfo.lockedSeats = tempLockedSeats;
     this.clicked = "";
   };
@@ -77,7 +77,7 @@ export function isThisColumnCorridor(uniqueColumnNumber) {
   
   
   export function convertColumnToCorridor(uniqueColumnNumber, realColumnNumber) {
-    let tempCorridors = [...this.hallInfo.columnCorridors];
+    let tempCorridors = [...this.hallInfo.column_corridors];
     let tempLockedSeats = JSON.parse(
       JSON.stringify(this.hallInfo.lockedSeats)
     ); // DEEP COPY THE REAL ONE.
@@ -97,7 +97,7 @@ export function isThisColumnCorridor(uniqueColumnNumber) {
       return locked;
     });
 
-    this.hallInfo.columnCorridors = tempCorridors;
+    this.hallInfo.column_corridors = tempCorridors;
     this.hallInfo.lockedSeats = tempLockedSeats;
     this.clicked = "";
   };
@@ -114,8 +114,8 @@ export function isThisColumnCorridor(uniqueColumnNumber) {
   
   
   export function addColumn(uniqueColumnNumber, realColumnNumber, place) {
-    let tempColumnsNumber = this.hallInfo.columnsNumber;
-    let tempCorridors = [...this.hallInfo.columnCorridors];
+    let tempColumns_number = this.hallInfo.columns_number;
+    let tempCorridors = [...this.hallInfo.column_corridors];
     let tempLockedSeats = JSON.parse(
       JSON.stringify(this.hallInfo.lockedSeats)
     ); // DEEP COPY THE REAL ONE.
@@ -146,10 +146,10 @@ export function isThisColumnCorridor(uniqueColumnNumber) {
     });
 
 
-    tempColumnsNumber++;
-    this.hallInfo.columnsNumber = tempColumnsNumber;
+    tempColumns_number++;
+    this.hallInfo.columns_number = tempColumns_number;
     this.hallInfo.lockedSeats = tempLockedSeats;
-    this.hallInfo.columnCorridors = tempCorridors;
+    this.hallInfo.column_corridors = tempCorridors;
     this.clicked = "";
   };
 
@@ -160,8 +160,8 @@ export function isThisColumnCorridor(uniqueColumnNumber) {
   
 
   export function addColumnCorridor(uniqueColumnNumber, place) {
-    let tempColumnsNumber = this.hallInfo.columnsNumber;
-    let tempCorridors = [...this.hallInfo.columnCorridors];
+    let tempColumns_number = this.hallInfo.columns_number;
+    let tempCorridors = [...this.hallInfo.column_corridors];
     let tempLockedSeats = JSON.parse(
       JSON.stringify(this.hallInfo.lockedSeats)
     ); // DEEP COPY THE REAL ONE.
@@ -180,7 +180,7 @@ export function isThisColumnCorridor(uniqueColumnNumber) {
     });
 
 
-    tempColumnsNumber++;
+    tempColumns_number++;
 
     if (place === "before") {
         tempCorridors.push(uniqueColumnNumber);
@@ -188,8 +188,8 @@ export function isThisColumnCorridor(uniqueColumnNumber) {
         tempCorridors.push(uniqueColumnNumber + 1);
     }
 
-    this.hallInfo.columnsNumber = tempColumnsNumber;
+    this.hallInfo.columns_number = tempColumns_number;
     this.hallInfo.lockedSeats = tempLockedSeats;
-    this.hallInfo.columnCorridors = tempCorridors;
+    this.hallInfo.column_corridors = tempCorridors;
     this.clicked = "";
   };

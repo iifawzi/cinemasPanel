@@ -86,10 +86,12 @@ export default {
       hall_info: {
         hall_name: "",
         hall_description: "",
+        rows_number: 0,
+        columns_number: 0,
         hall_status: false,
       },
-      rowCorridors: [],
-      columnCorridors: [],
+      row_corridors: [],
+      column_corridors: [],
       locked_seats: [],
       corridors: [],
     };
@@ -118,12 +120,12 @@ export default {
     },
 
     checkSeats(data) {
-      this.hall_info.rows_number = data.rowsNumber;
-      this.hall_info.columns_number = data.columnsNumber;
-      this.rowCorridors = data.rowCorridors.filter(
+      this.hall_info.rows_number = data.rows_number;
+      this.hall_info.columns_number = data.columns_number;
+      this.row_corridors = data.row_corridors.filter(
         (corridor) => corridor !== null
       );
-      this.columnCorridors = data.columnCorridors.filter(
+      this.column_corridors = data.column_corridors.filter(
         (corridor) => corridor !== null
       );
       this.locked_seats = data.lockedSeats;
@@ -131,20 +133,20 @@ export default {
     },
 
     mergeCorridors() {
-      // creating an array contain the columnCorridors and rowCorridors:
-      let rowCorridors = this.rowCorridors.map((corridor_number) => {
+      // creating an array contain the column_corridors and row_corridors:
+      let row_corridors = this.row_corridors.map((corridor_number) => {
         return {
           corridor_number: corridor_number,
           direction: "row",
         };
       });
-      let columnCorridors = this.columnCorridors.map((corridor_number) => {
+      let column_corridors = this.column_corridors.map((corridor_number) => {
         return {
           corridor_number: corridor_number,
           direction: "column",
         };
       });
-      this.corridors = [...columnCorridors, ...rowCorridors];
+      this.corridors = [...column_corridors, ...row_corridors];
     },
 
     async addHallInfo(hallInfo, corridorsInfo, lockedSeatsInfo) {

@@ -1,7 +1,7 @@
 // Rows Functions
 
   export function isThisRowCorridor(rowNumber) {
-    return this.hallInfo.rowCorridors.includes(rowNumber);
+    return this.hallInfo.row_corridors.includes(rowNumber);
   };
 
 
@@ -14,8 +14,8 @@
   
   
   export function deleteRow(rowNumber, realRowNumber) {
-    let tempCorridors = [...this.hallInfo.rowCorridors];
-    let tempRowsNumber = this.hallInfo.rowsNumber;
+    let tempCorridors = [...this.hallInfo.row_corridors];
+    let tempRows_number = this.hallInfo.rows_number;
     let tempLockedSeats = JSON.parse(
       JSON.stringify(this.hallInfo.lockedSeats)
     ); // DEEP COPY THE REAL ONE.
@@ -25,10 +25,10 @@
     const BeforeMeIndex = tempCorridors.indexOf(rowNumber - 1);
     if (afterMeIndex != -1 && BeforeMeIndex != -1) {
       tempCorridors.splice(afterMeIndex, 1);
-      tempRowsNumber--;
+      tempRows_number--;
     }
     // if after delete, is there a corridor will be number 1 or last one. -not acceptable- (delete that corridor)
-    if (rowNumber + 1 === 2 || rowNumber === this.hallInfo.rowsNumber) {
+    if (rowNumber + 1 === 2 || rowNumber === this.hallInfo.rows_number) {
       const corridorNumber =
         rowNumber + 1 === 2
           ? tempCorridors.indexOf(rowNumber + 1)
@@ -36,7 +36,7 @@
       if (corridorNumber != -1) {
         tempCorridors.splice(corridorNumber, 1);
         wrapNumber++;
-        tempRowsNumber--;
+        tempRows_number--;
       }
     }
     // to delete all lockedSeats in the deleted Row:
@@ -64,10 +64,10 @@
       return locked;
     });
 
-    tempRowsNumber--;
+    tempRows_number--;
 
-    this.hallInfo.rowsNumber = tempRowsNumber;
-    this.hallInfo.rowCorridors = tempCorridors;
+    this.hallInfo.rows_number = tempRows_number;
+    this.hallInfo.row_corridors = tempCorridors;
     this.hallInfo.lockedSeats = tempLockedSeats;
     this.clicked = "";
   };
@@ -79,7 +79,7 @@
   
   
   export function convertRowToCorridor(rowNumber, realRowNumber) {
-    let tempCorridors = [...this.hallInfo.rowCorridors];
+    let tempCorridors = [...this.hallInfo.row_corridors];
     let tempLockedSeats = JSON.parse(
       JSON.stringify(this.hallInfo.lockedSeats)
     ); // DEEP COPY THE REAL ONE.
@@ -99,7 +99,7 @@
       return locked;
     });
 
-    this.hallInfo.rowCorridors = tempCorridors;
+    this.hallInfo.row_corridors = tempCorridors;
     this.hallInfo.lockedSeats = tempLockedSeats;
     this.clicked = "";
   };
@@ -116,8 +116,8 @@
   
   
   export function addRow(rowNumber, realRowNumber, place) {
-    let tempRowsNumber = this.hallInfo.rowsNumber;
-    let tempCorridors = [...this.hallInfo.rowCorridors];
+    let tempRows_number = this.hallInfo.rows_number;
+    let tempCorridors = [...this.hallInfo.row_corridors];
     let tempLockedSeats = JSON.parse(
       JSON.stringify(this.hallInfo.lockedSeats)
     ); // DEEP COPY THE REAL ONE.
@@ -150,10 +150,10 @@
 
 
 
-    tempRowsNumber++;
-    this.hallInfo.rowsNumber = tempRowsNumber;
+    tempRows_number++;
+    this.hallInfo.rows_number = tempRows_number;
     this.hallInfo.lockedSeats = tempLockedSeats;
-    this.hallInfo.rowCorridors = tempCorridors;
+    this.hallInfo.row_corridors = tempCorridors;
     this.clicked = "";
   };
 
@@ -164,8 +164,8 @@
   
 
   export function addCorridor(rowNumber, place) {
-    let tempRowsNumber = this.hallInfo.rowsNumber;
-    let tempCorridors = [...this.hallInfo.rowCorridors];
+    let tempRows_number = this.hallInfo.rows_number;
+    let tempCorridors = [...this.hallInfo.row_corridors];
     let tempLockedSeats = JSON.parse(
       JSON.stringify(this.hallInfo.lockedSeats)
     ); // DEEP COPY THE REAL ONE.
@@ -182,7 +182,7 @@
         return corridorNumber;
       });
         
-    tempRowsNumber++;
+    tempRows_number++;
 
     if (place === "above") {
         tempCorridors.push(rowNumber);
@@ -190,8 +190,8 @@
         tempCorridors.push(rowNumber + 1);
     }
 
-    this.hallInfo.rowsNumber = tempRowsNumber;
+    this.hallInfo.rows_number = tempRows_number;
     this.hallInfo.lockedSeats = tempLockedSeats;
-    this.hallInfo.rowCorridors = tempCorridors;
+    this.hallInfo.row_corridors = tempCorridors;
     this.clicked = "";
   };
