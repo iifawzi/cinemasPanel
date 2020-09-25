@@ -277,7 +277,7 @@ import {
   addColumnCorridor,
 } from "./columnFunctions";
 export default {
-  mounted(){
+  created(){
  if (this.dbHallData){
    const dbHallData = this.dbHallData
    this.hallInfo.rows_number = dbHallData.rows_number;
@@ -325,7 +325,6 @@ export default {
         this.hallInfo.column_corridors,
         this.hallInfo.lockedSeats
       );
-      this.$emit("iscorrect", this.hallInfo);
       return updatedSeats;
     },
   },
@@ -357,6 +356,9 @@ export default {
           column: realColumnNumber,
         });
       }
+    },
+    emitUpdatedData(){
+      this.$emit("iscorrect", this.hallInfo);
     },
   },
 };

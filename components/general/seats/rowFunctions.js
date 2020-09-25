@@ -14,6 +14,8 @@
   
   
   export function deleteRow(rowNumber, realRowNumber) {
+    this.emitUpdatedData();
+
     let tempCorridors = [...this.hallInfo.row_corridors];
     let tempRows_number = this.hallInfo.rows_number;
     let tempLockedSeats = JSON.parse(
@@ -79,6 +81,8 @@
   
   
   export function convertRowToCorridor(rowNumber, realRowNumber) {
+    this.emitUpdatedData();
+
     let tempCorridors = [...this.hallInfo.row_corridors];
     let tempLockedSeats = JSON.parse(
       JSON.stringify(this.hallInfo.lockedSeats)
@@ -116,6 +120,8 @@
   
   
   export function addRow(rowNumber, realRowNumber, place) {
+    this.emitUpdatedData();
+
     let tempRows_number = this.hallInfo.rows_number;
     let tempCorridors = [...this.hallInfo.row_corridors];
     let tempLockedSeats = JSON.parse(
@@ -164,6 +170,8 @@
   
 
   export function addCorridor(rowNumber, place) {
+    this.emitUpdatedData();
+
     let tempRows_number = this.hallInfo.rows_number;
     let tempCorridors = [...this.hallInfo.row_corridors];
     let tempLockedSeats = JSON.parse(

@@ -12,6 +12,8 @@ export function isThisColumnCorridor(uniqueColumnNumber) {
 
   
   export function deleteColumn(uniqueColumnNumber, realColumnNumber) {
+    this.emitUpdatedData();
+
     let tempCorridors = [...this.hallInfo.column_corridors];
     let tempColumns_number = this.hallInfo.columns_number;
     let tempLockedSeats = JSON.parse(
@@ -77,6 +79,8 @@ export function isThisColumnCorridor(uniqueColumnNumber) {
   
   
   export function convertColumnToCorridor(uniqueColumnNumber, realColumnNumber) {
+    this.emitUpdatedData();
+
     let tempCorridors = [...this.hallInfo.column_corridors];
     let tempLockedSeats = JSON.parse(
       JSON.stringify(this.hallInfo.lockedSeats)
@@ -114,6 +118,8 @@ export function isThisColumnCorridor(uniqueColumnNumber) {
   
   
   export function addColumn(uniqueColumnNumber, realColumnNumber, place) {
+    this.emitUpdatedData();
+    
     let tempColumns_number = this.hallInfo.columns_number;
     let tempCorridors = [...this.hallInfo.column_corridors];
     let tempLockedSeats = JSON.parse(
@@ -160,6 +166,8 @@ export function isThisColumnCorridor(uniqueColumnNumber) {
   
 
   export function addColumnCorridor(uniqueColumnNumber, place) {
+    this.emitUpdatedData();
+
     let tempColumns_number = this.hallInfo.columns_number;
     let tempCorridors = [...this.hallInfo.column_corridors];
     let tempLockedSeats = JSON.parse(

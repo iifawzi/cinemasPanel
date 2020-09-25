@@ -20,8 +20,8 @@
 
       <div class="tabs__content" v-show="!loading.status">
         <div class="content" v-if="dbHallData != ''">
-          <info @iscorrect="checkInfo" :dbHallData="dbHallData.data.data" class="info"  />
-          <seats class="seats" @iscorrect="checkSeats" :dbHallData="dbHallData.data.data" />
+          <info @iscorrect="checkInfo" :dbHallData="dbHallData" class="info"  />
+          <seats class="seats" @iscorrect="checkSeats" :dbHallData="dbHallData" />
         </div>
 
         <div class="switcher">
@@ -62,7 +62,7 @@ export default {
     );
     this.hallLoading = false;
     if (hall) {
-      this.dbHallData = hall;
+      this.dbHallData = hall.data.data;
     } else {
       this.hallError = true;
     }
@@ -149,54 +149,58 @@ export default {
       this.corridors = [...column_corridors, ...row_corridors];
     },
 
-    async addHallInfo(hallInfo, corridorsInfo, lockedSeatsInfo) {
-      const [hall, hall_error] = await handle(
-        this.$api.post("halls/addhall", {
-          hallInfo,
-          corridorsInfo,
-          lockedSeatsInfo,
-        })
-      );
-      if (hall) {
-        return hall;
-      } else {
-        this.loading.status = false;
-        if (!hall_error.response || !hall_error.response.status) {
-          this.error.message = this.$i18n.t("errors.500");
-        } else {
-          switch (hall_error.response.status) {
-            case 400:
-              this.error.message = this.$i18n.t("errors.400");
-              break;
-            case 401:
-              this.error.message = this.$i18n.t("errors.401");
-              break;
-            case 409:
-              this.error.message = this.$i18n.t("errors.addHall_409");
-              break;
-            default:
-              this.error.message = this.$i18n.t("errors.500");
-          }
-        }
-        return false;
-      }
+
+    async addHallInfo(oldData,hallInfo, corridorsInfo, lockedSeatsInfo) {
+      const newHallInfo = Object.entries(hallInfo);
+      console.log(newHallInfo);
+      // const [hall, hall_error] = await handle(
+      //   this.$api.post("halls/addhall", {
+      //     hallInfo,
+      //     corridorsInfo,
+      //     lockedSeatsInfo,
+      //   })
+      // );
+      // if (hall) {
+      //   return hall;
+      // } else {
+      //   this.loading.status = false;
+      //   if (!hall_error.response || !hall_error.response.status) {
+      //     this.error.message = this.$i18n.t("errors.500");
+      //   } else {
+      //     switch (hall_error.response.status) {
+      //       case 400:
+      //         this.error.message = this.$i18n.t("errors.400");
+      //         break;
+      //       case 401:
+      //         this.error.message = this.$i18n.t("errors.401");
+      //         break;
+      //       case 409:
+      //         this.error.message = this.$i18n.t("errors.addHall_409");
+      //         break;
+      //       default:
+      //         this.error.message = this.$i18n.t("errors.500");
+      //     }
+      //   }
+      //   return false;
+      // }
     },
 
     async confirm() {
-      this.loading.status = true;
-      this.loading.step = 1;
-      this.error.message = "";
+      // this.loading.status = true;
+      // this.loading.step = 1;
+      // this.error.message = "";
 
       this.mergeCorridors();
 
       const addedHall = await this.addHallInfo(
+        this.dbHallData,
         this.hall_info,
         this.corridors,
         this.locked_seats
       );
-      if (addedHall) {
-        this.loading.step = 2;
-      }
+      // if (addedHall) {
+      //   this.loading.step = 2;
+      // }
     },
   },
   computed: {
