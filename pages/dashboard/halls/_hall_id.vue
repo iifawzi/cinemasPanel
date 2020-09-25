@@ -2,7 +2,7 @@
   <div class="edithall">
     <pageInfo :title="$t('pages.edithall.title')" :desc="$t('pages.edithall.desc')" />
     <div class="content">
-      <edithallForm />
+      <edithallForm @rerender="rerenderComponent" :key="keyToUpdate" />
     </div>
   </div>
 </template>
@@ -20,11 +20,21 @@ export default {
       title: "Edit Hall",
     };
   },
+  data(){
+    return {
+      keyToUpdate: 0,
+    }
+  },
   layout: "dashboard",
   components: {
     pageInfo,
     edithallForm,
     loading,
+  },
+  methods: {
+    rerenderComponent(){
+      this.keyToUpdate++;
+    }
   },
 };
 </script>

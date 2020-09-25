@@ -14,7 +14,7 @@
 
       <div class="loading" style="padding-top: 25px" v-show="loading.step === 2">
         <div class="status">
-          <success>{{$t("short_texts.added")}}</success>
+          <success>{{$t("short_texts.edited")}}</success>
         </div>
       </div>
 
@@ -222,14 +222,9 @@ export default {
     
     },
 
-    async addHallInfo(hallInfo, corridorsInfo, lockedSeatsInfo) {
+    async addHallInfo(hall_id,hallInfo, newLockedSeats,deletedLockedSeats,deletedCorridors,newCorridors) {
       const [hall, hall_error] = await handle(
-        this.$api.post("halls/addhall", {
-          hallInfo,
-          corridorsInfo,
-          lockedSeatsInfo,
-        })
-      );
+        this.$api.patch("halls/updateHall", {hall_id,hallInfo, newLockedSeats,deletedLockedSeats,deletedCorridors,newCorridors}));
       if (hall) {
         return hall;
       } else {
@@ -259,16 +254,16 @@ export default {
       this.loading.status = true;
       this.loading.step = 1;
       this.error.message = "";
+      const hall_id = this.$route.params.hall_id;
       this.filterHallInfo(this.dbHallData);
       this.filterCorridors(this.dbHallData);
       this.filterLockedSeats(this.dbHallData);
-      const addedHall = await this.addHallInfo(
-        this.hall_info,
-        this.corridors,
-        this.lockedSeats
-      );
+      const addedHall = await this.addHallInfo(hall_id,this.hall_info, this.newLockedSeats,this.deletedLockedSeats,this.deletedCorridors,this.newCorridors);
       if (addedHall) {
-        this.loading.step = 2;
+      this.loading.step = 2;
+      setTimeout(() => {
+        this.$emit('rerender');
+      }, 1000);
       }
     },
   },

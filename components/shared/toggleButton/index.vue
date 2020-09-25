@@ -12,7 +12,7 @@ export default {
     language() {
       return this.$store.getters.getLocale;
     },
-  },
+  }
 };
 </script>
 

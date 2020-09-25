@@ -42,7 +42,7 @@
       </div>
       <div class="input--container toggle-input">
         <label for="status-input">{{$t('general.status')}}</label>
-        <toggleButton @input="checkCorrectance" v-model="$v.hall_info.hall_status.$model" />
+        <toggleButton @input="checkCorrectance" :checked=this.hall_info.hall_status v-model="$v.hall_info.hall_status.$model" />
       </div>
     </div>
   </form>
