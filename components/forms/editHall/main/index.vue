@@ -118,7 +118,6 @@ export default {
     checkSeats(data) {
       this.hall_info.rows_number = data.rows_number;
       this.hall_info.columns_number = data.columns_number;
-      console.log(this.hall_info.rows_number ,data, data.rows_number);
       this.row_corridors = data.row_corridors.filter(
         (corridor) => corridor !== null
       );
@@ -129,27 +128,19 @@ export default {
       this.tabs.seatsStatus = true;
     },
 
-    mergeCorridors() {
-      // creating an array contain the column_corridors and row_corridors:
-      let row_corridors = this.row_corridors.map((corridor_number) => {
-        return {
-          corridor_number: corridor_number,
-          direction: "row",
-        };
-      });
-      let column_corridors = this.column_corridors.map((corridor_number) => {
-        return {
-          corridor_number: corridor_number,
-          direction: "column",
-        };
-      });
-      this.corridors = [...column_corridors, ...row_corridors];
+    filterHallInfo(oldData){
+      // filter the hall's info: 
+      const updatedHallInfo = Object.entries(this.hall_info);
+      this.hall_info = updatedHallInfo.filter(element=>{ // to filter only the data that differs from the old one, to update them only.
+        if (element[1] !== oldData[element[0]]){
+          return true;
+        }else {
+          return false;
+        }
+      }).reduce((acc,[key,value])=>({...acc,[key]:value}),{});
     },
 
-
-    async addHallInfo(oldData,hallInfo, corridorsInfo, lockedSeatsInfo) {
-      const newHallInfo = Object.entries(hallInfo);
-      console.log(newHallInfo);
+    async addHallInfo(hallInfo, corridorsInfo, lockedSeatsInfo) {
       // const [hall, hall_error] = await handle(
       //   this.$api.post("halls/addhall", {
       //     hallInfo,
@@ -186,15 +177,14 @@ export default {
       // this.loading.status = true;
       // this.loading.step = 1;
       // this.error.message = "";
+      this.filterHallInfo(this.dbHallData);
 
-      this.mergeCorridors();
 
-      const addedHall = await this.addHallInfo(
-        this.dbHallData,
-        this.hall_info,
-        this.corridors,
-        this.locked_seats
-      );
+      // const addedHall = await this.addHallInfo(
+      //   this.hall_info,
+      //   this.corridors,
+      //   this.locked_seats
+      // );
       // if (addedHall) {
       //   this.loading.step = 2;
       // }
