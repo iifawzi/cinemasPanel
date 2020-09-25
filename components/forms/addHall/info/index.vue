@@ -60,7 +60,7 @@ export default {
   methods:{
     checkCorrectance(){
       if (this.$v.$invalid === false){
-      this.$emit("iscorrect", {...this.hall_info}); // if correct send data else send false
+      this.$emit("iscorrect", this.hall_info); // if correct send data else send false
       }else {
       this.$emit("iscorrect", false); // if correct send data else send false
       }

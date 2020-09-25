@@ -112,6 +112,7 @@ export default {
       } else {
         this.hall_info.hall_name = data.hall_name;
         this.hall_info.hall_description = data.hall_description;
+        this.hall_info.hall_status = data.hall_status;
         this.tabs.infoStatus = true;
       }
     },
