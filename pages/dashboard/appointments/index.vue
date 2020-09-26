@@ -1,18 +1,21 @@
 <template>
-  <div class="addhall">
-    <div class="content">
-
-    </div>
+  <div class="appointments">
+    <pageInfo :title="$t('pages.appointments.title')" :desc="$t('pages.appointments.desc')" />
+    <div class="content"></div>
   </div>
 </template>
 
 
 <script>
+import pageInfo from "~/components/shared/pageInfo";
 export default {
   head() {
     return {
       title: "Appointments",
     };
+  },
+  components: {
+    pageInfo,
   },
 
   layout: "dashboard",

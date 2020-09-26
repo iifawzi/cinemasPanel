@@ -95,6 +95,14 @@
         "edithall": {
             "title": "Editing Hall", 
             "desc": "Editing hall's information and seats"
+        },
+        "appointments": {
+            "title": "Appointments", 
+            "desc": "All Opened and closed Appointments"
+        },
+        "addappointment": {
+            "title": "Add Appointment", 
+            "desc": "Add Appointments for the movies"
         }
     }, 
     "confirm": {
