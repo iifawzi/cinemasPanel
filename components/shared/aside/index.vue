@@ -15,8 +15,13 @@
       <listItem itemType="section" icon="fas fa-home" :title="$t('aside.dashboard')" goto="/dashboard" />
 
        <listItem itemType="main" :title="$t('aside.halls')" />
-       <listItem itemType="section" icon="fas fa-film" :title="$t('aside.halls')"  goto="/dashboard/halls"/>
+       <listItem itemType="section" icon="fas fa-vihara" :title="$t('aside.halls')"  goto="/dashboard/halls"/>
        <listItem itemType="section" icon="fas fa-plus-square" :title="$t('aside.addhall')"  goto="/dashboard/halls/addhall"/>
+
+       <listItem itemType="main" :title="$t('aside.appointments')" />
+       <listItem itemType="section" icon="fas fa-calendar-alt" :title="$t('aside.appointments')"  goto="/dashboard/appointments"/>
+       <listItem itemType="section" icon="fas fa-plus-square" :title="$t('aside.addAppointment')"  goto="/dashboard/appointments/addAppointment"/>
+
        <listItem itemType="main" :title="$t('aside.preferences')" />
        <listItem itemType="section" icon="fas fa-calendar-check" :title="$t('aside.shows')" goto="shows"  />
        <listItem itemType="section" icon="fas fa-ticket-alt" :title="$t('aside.tickets')" goto="tickets" />

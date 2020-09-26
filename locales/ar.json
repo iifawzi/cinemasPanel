@@ -79,7 +79,9 @@
         "control": "التحكم",
         "admins": "الموظفين",
         "support": "الدعم",
-        "addTicket": "حجز تذكرة"
+        "addTicket": "حجز تذكرة",
+        "appointments": "المواعيد",
+        "addAppointment": "إضافة موعد"
     }, 
     "pages": {
         "addhall": {

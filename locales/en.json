@@ -79,7 +79,9 @@
         "control": "Control",
         "admins": "Workers",
         "support": "Support",
-        "addTicket": "Book a ticket"
+        "addTicket": "Book a ticket",
+        "appointments": "Appointments",
+        "addAppointment": "Add Appointment"
     },
     "pages": {
         "addhall": {
