@@ -32,12 +32,14 @@ export default {
       calendarOptions: {
         plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
         locales: [arLocale],
+        initialView: "dayGridMonth",
+        locale: "en",
         eventClick: this.handleDateClick,
         select: this.handleEventSelect,
         selectAllow: this.isSelectAllowed,
         selectable: true,
         unselectAuto: true,
-        selectOverlap:false,
+        selectOverlap: false,
         headerToolbar: {
           left: "prev,next today",
           center: "title",
@@ -51,8 +53,6 @@ export default {
             color: "green",
           },
         ],
-        initialView: "dayGridMonth",
-        locale: "en",
       },
     };
   },
@@ -66,12 +66,13 @@ export default {
     handleEventSelect(arg) {
       // console.log(arg);
     },
-    isSelectAllowed(arg){
-      if (Math.abs(arg.start.getDate() - arg.end.getDate()) !== 0 && Math.abs(arg.start.getDate() - arg.end.getDate()) !== 1){ // allow just the slots in the same day, or the slots that starts and end in the same day, or end in the day after (11pm to 1am next day for example.) 
-      return false;
+    isSelectAllowed(arg) {
+      if (!arg.allDay && (Math.abs(arg.start.getDate() - arg.end.getDate()) === 0 || Math.abs(arg.start.getDate() - arg.end.getDate()) === 1)) {
+        // allow just the slots in the same day, or the slots that starts and end in the same day, or end in the day after (11pm to 1am next day for example.)
+        return true;
       }
-      return true;
-    }
+      return false;
+    },
   },
 };
 </script>
