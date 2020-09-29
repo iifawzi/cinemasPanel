@@ -13,6 +13,7 @@ import pageInfo from "~/components/shared/pageInfo";
 import FullCalendar from "@fullcalendar/vue";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
+import interactionPlugin from "@fullcalendar/interaction";
 import arLocale from "@fullcalendar/core/locales/ar";
 
 export default {
@@ -29,9 +30,14 @@ export default {
   data() {
     return {
       calendarOptions: {
-        plugins: [dayGridPlugin, timeGridPlugin],
+        plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
         locales: [arLocale],
         eventClick: this.handleDateClick,
+        select: this.handleEventSelect,
+        selectAllow: this.isSelectAllowed,
+        selectable: true,
+        unselectAuto: true,
+        selectOverlap:false,
         headerToolbar: {
           left: "prev,next today",
           center: "title",
@@ -42,7 +48,6 @@ export default {
             title: "White House Down",
             start: "2020-09-30T20:00:00Z",
             end: "2020-09-30T21:00:00Z",
-            description: 'description for All Day Event',
             color: "green",
           },
         ],
@@ -57,11 +62,17 @@ export default {
       return this.$store.getters.getLocale;
     },
   },
-   methods: {
-    handleDateClick: function(arg) {
-      console.log(arg);
+  methods: {
+    handleEventSelect(arg) {
+      // console.log(arg);
+    },
+    isSelectAllowed(arg){
+      if (Math.abs(arg.start.getDate() - arg.end.getDate()) !== 0 && Math.abs(arg.start.getDate() - arg.end.getDate()) !== 1){ // allow just the slots in the same day, or the slots that starts and end in the same day, or end in the day after (11pm to 1am next day for example.) 
+      return false;
+      }
+      return true;
     }
-  }
+  },
 };
 </script>
 
