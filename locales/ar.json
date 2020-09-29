@@ -80,8 +80,7 @@
         "admins": "الموظفين",
         "support": "الدعم",
         "addTicket": "حجز تذكرة",
-        "appointments": "المواعيد",
-        "addAppointment": "إضافة موعد"
+        "appointments": "المواعيد"
     }, 
     "pages": {
         "addhall": {

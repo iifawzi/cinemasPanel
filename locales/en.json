@@ -80,8 +80,7 @@
         "admins": "Workers",
         "support": "Support",
         "addTicket": "Book a ticket",
-        "appointments": "Appointments",
-        "addAppointment": "Add Appointment"
+        "appointments": "Appointments"
     },
     "pages": {
         "addhall": {

@@ -20,7 +20,6 @@
 
        <listItem itemType="main" :title="$t('aside.appointments')" />
        <listItem itemType="section" icon="fas fa-calendar-alt" :title="$t('aside.appointments')"  goto="/dashboard/appointments"/>
-       <listItem itemType="section" icon="fas fa-plus-square" :title="$t('aside.addAppointment')"  goto="/dashboard/appointments/addappointment"/>
 
        <listItem itemType="main" :title="$t('aside.preferences')" />
        <listItem itemType="section" icon="fas fa-calendar-check" :title="$t('aside.shows')" goto="shows"  />
