@@ -9,10 +9,8 @@
 
 
 <script>
-import handle from "~/helpers/handle";
 import pageInfo from "~/components/shared/pageInfo";
 import edithallForm from "~/components/forms/editHall/main/";
-import loading from "~/components/shared/loading";
 
 export default {
   head() {
@@ -29,7 +27,6 @@ export default {
   components: {
     pageInfo,
     edithallForm,
-    loading,
   },
   methods: {
     rerenderComponent(){

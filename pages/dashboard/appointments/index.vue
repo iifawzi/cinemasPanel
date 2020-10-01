@@ -1,8 +1,15 @@
 <template>
   <div class="appointments">
     <pageInfo :title="$t('pages.appointments.title')" :desc="$t('pages.appointments.desc')" />
-    <div class="content" :class="language" v-if="!loading">
+    <div class="content" :class="language">
+      <div class="calendar-container" v-if="!loading">
       <FullCalendar :options="calendarOptions" />
+      </div>
+      
+      <div class="loading" v-if="loading">
+        <loading type="circles" />
+      </div>
+      
     </div>
     <notification :label="error" v-if="error != ''" />
   </div>
@@ -18,6 +25,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 import arLocale from "@fullcalendar/core/locales/ar";
 import handle from "~/helpers/handle";
 import notification from "~/components/shared/notification";
+import loading from "~/components/shared/loading";
 
 export default {
   async created() {
@@ -59,6 +67,7 @@ export default {
     pageInfo,
     FullCalendar,
     notification,
+    loading
   },
   layout: "dashboard",
   data() {
