@@ -1,9 +1,10 @@
 <template>
   <div class="appointments">
     <pageInfo :title="$t('pages.appointments.title')" :desc="$t('pages.appointments.desc')" />
-    <div class="content" :class="language">
+    <div class="content" :class="language" v-if="!loading">
       <FullCalendar :options="calendarOptions" />
     </div>
+    <notification :label="error" v-if="error != ''" />
   </div>
 </template>
 
@@ -15,8 +16,40 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import arLocale from "@fullcalendar/core/locales/ar";
+import handle from "~/helpers/handle";
+import notification from "~/components/shared/notification";
 
 export default {
+  async created() {
+    const [slots, slots_error] = await handle(this.$api.post("slots/getSlots"));
+    this.loading = false;
+    if (slots) {
+      for (const slot of slots.data.data) {
+        this.calendarOptions.events.push({
+          title: slot.movie_name,
+          start: slot.start_time,
+          end: slot.end_time,
+          color: slot.slot_status === 1 ? "green" : "red",
+        });
+      }
+    } else {
+      this.loading = false;
+      if (!slots_error.response || !slots_error.response.status) {
+        this.error = this.$i18n.t("errors.500");
+      } else {
+        switch (slots_error.response.status) {
+          case 400:
+            this.error = this.$i18n.t("errors.400");
+            break;
+          case 401:
+            this.error = this.$i18n.t("errors.401");
+            break;
+          default:
+            this.error = this.$i18n.t("errors.500");
+        }
+      }
+    }
+  },
   head() {
     return {
       title: "Appointments",
@@ -25,10 +58,13 @@ export default {
   components: {
     pageInfo,
     FullCalendar,
+    notification,
   },
   layout: "dashboard",
   data() {
     return {
+      error: "",
+      loading: true,
       calendarOptions: {
         plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
         locales: [arLocale],
@@ -45,14 +81,7 @@ export default {
           center: "title",
           right: "dayGridMonth,timeGridWeek,timeGridDay",
         },
-        events: [
-          {
-            title: "White House Down",
-            start: "2020-09-30T20:00:00Z",
-            end: "2020-09-30T21:00:00Z",
-            color: "green",
-          },
-        ],
+        events: [],
       },
     };
   },
@@ -67,7 +96,11 @@ export default {
       // console.log(arg);
     },
     isSelectAllowed(arg) {
-      if (!arg.allDay && (Math.abs(arg.start.getDate() - arg.end.getDate()) === 0 || Math.abs(arg.start.getDate() - arg.end.getDate()) === 1)) {
+      if (
+        !arg.allDay &&
+        (Math.abs(arg.start.getDate() - arg.end.getDate()) === 0 ||
+          Math.abs(arg.start.getDate() - arg.end.getDate()) === 1)
+      ) {
         // allow just the slots in the same day, or the slots that starts and end in the same day, or end in the day after (11pm to 1am next day for example.)
         return true;
       }
