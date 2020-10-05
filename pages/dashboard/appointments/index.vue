@@ -3,15 +3,14 @@
     <pageInfo :title="$t('pages.appointments.title')" :desc="$t('pages.appointments.desc')" />
     <div class="content" :class="language">
       <div class="calendar-container" v-if="!loading">
-      <FullCalendar :options="calendarOptions" />
+        <FullCalendar :options="calendarOptions" />
       </div>
-      
       <div class="loading" v-if="loading">
         <loading type="circles" />
       </div>
-      
     </div>
     <notification :label="error" v-if="error != ''" />
+      <fixedDialog @askToClose="closeDialog" v-if="dialogStatus">hala wallah</fixedDialog>
   </div>
 </template>
 
@@ -26,6 +25,7 @@ import arLocale from "@fullcalendar/core/locales/ar";
 import handle from "~/helpers/handle";
 import notification from "~/components/shared/notification";
 import loading from "~/components/shared/loading";
+import fixedDialog from "~/components/shared/fixedDialog";
 
 export default {
   async created() {
@@ -38,6 +38,7 @@ export default {
           start: slot.start_time,
           end: slot.end_time,
           color: slot.slot_status === 1 ? "green" : "red",
+          slotInfo: slot,
         });
       }
     } else {
@@ -56,7 +57,7 @@ export default {
             this.error = this.$i18n.t("errors.500");
         }
       }
-    }
+    } 
   },
   head() {
     return {
@@ -67,20 +68,23 @@ export default {
     pageInfo,
     FullCalendar,
     notification,
-    loading
+    loading,
+    fixedDialog,
   },
   layout: "dashboard",
   data() {
     return {
       error: "",
       loading: true,
+      dialogStatus: false,
+      selectedSlot: {},
       calendarOptions: {
         plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
         locales: [arLocale],
         initialView: "dayGridMonth",
         locale: "en",
-        eventClick: this.handleDateClick,
-        select: this.handleEventSelect,
+        eventClick: this.handleEventClick,
+        select: this.handleDateSelect,
         selectAllow: this.isSelectAllowed,
         selectable: true,
         unselectAuto: true,
@@ -101,7 +105,13 @@ export default {
     },
   },
   methods: {
-    handleEventSelect(arg) {
+    handleEventClick(arg) {
+      // console.log(arg.event._def.extendedProps);
+      this.selectedSlot = arg.event._def.extendedProps.slotInfo;
+      console.log(this.selectedSlot);
+      this.dialogStatus = true;
+    },
+    handleDateSelect(arg) {
       // console.log(arg);
     },
     isSelectAllowed(arg) {
@@ -115,6 +125,9 @@ export default {
       }
       return false;
     },
+    closeDialog(){
+      this.dialogStatus = false;
+    }
   },
 };
 </script>
