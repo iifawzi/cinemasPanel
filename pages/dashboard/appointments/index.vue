@@ -10,7 +10,11 @@
       </div>
     </div>
     <notification :label="error" v-if="error != ''" />
-      <fixedDialog @askToClose="closeDialog" v-if="dialogStatus">hala wallah</fixedDialog>
+      <fixedDialog @askToClose="closeDialog" v-if="dialogStatus">
+        <div class="slot-info">
+          <slotInfoComponent :slotData="this.selectedSlot"/>
+        </div>
+      </fixedDialog>
   </div>
 </template>
 
@@ -26,7 +30,7 @@ import handle from "~/helpers/handle";
 import notification from "~/components/shared/notification";
 import loading from "~/components/shared/loading";
 import fixedDialog from "~/components/shared/fixedDialog";
-
+import slotInfoComponent from "~/components/appointments/slotInfo"
 export default {
   async created() {
     const [slots, slots_error] = await handle(this.$api.post("slots/getSlots"));
@@ -70,6 +74,7 @@ export default {
     notification,
     loading,
     fixedDialog,
+    slotInfoComponent
   },
   layout: "dashboard",
   data() {
@@ -106,9 +111,7 @@ export default {
   },
   methods: {
     handleEventClick(arg) {
-      // console.log(arg.event._def.extendedProps);
       this.selectedSlot = arg.event._def.extendedProps.slotInfo;
-      console.log(this.selectedSlot);
       this.dialogStatus = true;
     },
     handleDateSelect(arg) {

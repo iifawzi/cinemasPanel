@@ -19,7 +19,13 @@
         "status": "الحالة",
         "actions": "الخيارات",
         "open": "مفتوح",
-        "close": "مغلق"
+        "close": "مغلق",
+        "to": "إلى",
+        "from": "من",
+        "available": "متاح",
+        "notavailable": "غير متاح",
+        "EGP": "جنيه مصري",
+        "minute": "دقيقه"
 
 
     },

@@ -19,7 +19,13 @@
         "status": "Status",
         "actions": "Actions",
         "open": "Open",
-        "close": "Close"
+        "close": "Close",
+        "to": "To",
+        "from": "From",
+        "available": "Available",
+        "notavailable": "Not Available",
+        "EGP": "EGP",
+        "minute": "Minute"
     },
     "functions": {
         "addRowBelow": "Add Row Below",

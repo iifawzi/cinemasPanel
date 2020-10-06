@@ -1,0 +1,60 @@
+.slotInfo {
+  width: 700px;
+
+  &__content {
+    display: flex;
+    flex-flow: row;
+
+    .movie-info {
+      display: flex;
+      flex-flow: row;
+
+      .left {
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+
+        .cover {
+          width: 200px;
+          height: 300px;
+          border-radius: 20px;
+        }
+
+        .movie-name {
+          margin-top: 8px;
+          font-size: 2rem;
+          font-weight: 900;
+        }
+        .movie-category {
+          color: $blue;
+        }
+      }
+
+      .right {
+        padding: 8px 20px;
+
+        .movie-desc {
+          display: inline-block;
+          text-align: justify
+        }
+        .slotSpecific {
+          margin-top: 30px;
+          display: flex;
+          flex-flow: row;
+          justify-content: space-around;
+          .list {
+            display: flex;
+            flex-flow: column;
+            .icon {
+              width: 25px;
+            }
+            .list-item:not(:first-child) {
+              margin-top: 10px;
+            }
+          }
+        }
+      }
+
+    }
+  }
+}
