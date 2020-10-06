@@ -1,5 +1,4 @@
 .slotInfo {
-  width: 700px;
 
   &__content {
     display: flex;
@@ -35,7 +34,8 @@
 
         .movie-desc {
           display: inline-block;
-          text-align: justify
+          text-align: justify;
+          width: 500px;
         }
         .slotSpecific {
           margin-top: 30px;
