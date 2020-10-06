@@ -48,7 +48,8 @@
         "previous": "Previous",
         "confirm": "Confirm",
         "add": "Add",
-        "edit": "Edit"
+        "edit": "Edit",
+        "bookticket":"Book a ticket"
 
     },
     "short_texts": {

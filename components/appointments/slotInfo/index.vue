@@ -48,6 +48,14 @@
               </span>
             </div>
           </div>
+          <div class="buttons">
+              <div class="btn-container">
+              <submitButton color="red" :title="$t('buttons.edit')"/>
+              </div>
+               <div class="btn-container">
+              <submitButton color="green" :title="$t('buttons.bookticket')"/>
+              </div>
+          </div>
         </div>
       </div>
       <div class="slot-info"></div>
@@ -56,7 +64,11 @@
 </template>
 
 <script>
+import submitButton from "~/components/shared/submitButton"
 export default {
+  components: {
+      submitButton,
+  },
   props: {
     slotData: Object,
   },

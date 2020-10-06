@@ -50,7 +50,8 @@
         "previous": "السابق",
         "confirm": "تأكيد",
         "add": "إضافة",
-        "edit": "تعديل"
+        "edit": "تعديل",
+        "bookticket":"احجز تذكرة"
     },
     "short_texts": {
         "welcomeBack": "اهلا بعودتك!",

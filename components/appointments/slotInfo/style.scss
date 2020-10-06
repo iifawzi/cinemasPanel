@@ -53,6 +53,19 @@
             }
           }
         }
+        .buttons {
+          margin-top: 50px;
+          display: flex;
+          flex-flow: row;
+          justify-content: center;
+          .btn-container {
+            width: 100px;
+            height: 30px;
+          }
+          .btn-container:not(:first-child){
+            margin: 0px 10px;
+          }
+        }
       }
 
     }
